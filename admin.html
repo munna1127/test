@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard - Tomar Ji</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
         const savedTheme = localStorage.getItem('portalTheme') || 'default';
@@ -18,72 +18,20 @@
         });
     </script>
     <style>
+        /* CSS PURANI WALI HI HAI (THEMES WALI) */
         :root {
-            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --bg-card: rgba(255, 255, 255, 0.95);
-            --text-main: #2d3748;
-            --text-heading: #1a202c;
-            --primary-color: #3b82f6;
-            --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-            --input-bg: #f8fafc;
-            --input-border: #e2e8f0;
-            --shadow: 0 10px 30px rgba(0,0,0,0.06);
-            --table-head-bg: #f1f5f9;
-            --table-head-text: #475569;
-            --table-border: #e2e8f0;
-            --table-hover: #f8fafc;
-            --correct-bg: #ecfdf5;
-            --correct-text: #065f46;
+            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.95); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); --input-bg: #f8fafc; --input-border: #e2e8f0; --shadow: 0 10px 30px rgba(0,0,0,0.06); --table-head-bg: #f1f5f9; --table-head-text: #475569; --table-border: #e2e8f0; --table-hover: #f8fafc; --correct-bg: #ecfdf5; --correct-text: #065f46;
         }
         [data-theme="dark"] {
-            --bg-main: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #cbd5e1;
-            --text-heading: #f8fafc;
-            --primary-color: #3b82f6;
-            --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
-            --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-            --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
-            --input-bg: #0f172a;
-            --input-border: #334155;
-            --shadow: 0 10px 30px rgba(0,0,0,0.4);
-            --table-head-bg: #0f172a;
-            --table-head-text: #f8fafc;
-            --table-border: #334155;
-            --table-hover: #334155;
-            --correct-bg: #064e3b;
-            --correct-text: #a7f3d0;
+            --bg-main: #0f172a; --bg-card: #1e293b; --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); --input-bg: #0f172a; --input-border: #334155; --shadow: 0 10px 30px rgba(0,0,0,0.4); --table-head-bg: #0f172a; --table-head-text: #f8fafc; --table-border: #334155; --table-hover: #334155; --correct-bg: #064e3b; --correct-text: #a7f3d0;
         }
         [data-theme="glass"] {
-            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-            --bg-card: rgba(255, 255, 255, 0.4);
-            --text-main: #1f2937;
-            --text-heading: #111827;
-            --primary-color: #e11d48;
-            --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
-            --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%);
-            --input-bg: rgba(255, 255, 255, 0.6);
-            --input-border: rgba(255, 255, 255, 0.4);
-            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            --table-head-bg: rgba(255,255,255,0.6);
-            --table-head-text: #111827;
-            --table-border: rgba(255,255,255,0.4);
-            --table-hover: rgba(255,255,255,0.5);
-            --correct-bg: rgba(212, 237, 218, 0.8);
-            --correct-text: #155724;
+            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724;
         }
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
-        
         .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
         .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
-        
         .container { background: var(--bg-card); padding: 35px; border-radius: 16px; max-width: 950px; margin: 60px auto 20px auto; box-shadow: var(--shadow); border: 1px solid var(--input-border); backdrop-filter: blur(15px); transition: all 0.3s ease;}
         h2, h3, h4 { color: var(--text-heading); }
         h2 { border-bottom: none; padding-bottom: 0; text-align: center; margin-top:0; margin-bottom:25px; font-size: 26px; font-weight: 700;}
@@ -93,27 +41,21 @@
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color);}
         button { background: var(--primary-btn); color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
         button:hover { filter: brightness(1.1); transform: translateY(-1px);}
-        
         .tab-btn { background: var(--input-bg); color: var(--text-main); margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; border: 1px solid var(--input-border);}
         .tab-btn:hover { filter: brightness(0.9); }
         .tab-btn.active { background: var(--primary-btn); color: white; border: none;}
-        
         .filter-box { background: var(--input-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid var(--input-border);}
-        
         table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--table-border); margin-top:10px;}
         th, td { padding: 14px 16px; text-align: left; }
         th { background-color: var(--table-head-bg); color: var(--table-head-text); font-weight: 600; text-transform: uppercase; font-size: 12px; border-bottom: 1px solid var(--table-border);}
         td { border-bottom: 1px solid var(--table-border); background: var(--bg-card); color: var(--text-main);}
         tr:last-child td { border-bottom: none; }
         tr:hover td { background-color: var(--table-hover); }
-        
         .action-btn { padding: 6px 12px; margin: 2px; font-size: 12px; border-radius: 6px; }
         .edit-btn { background: var(--warning-btn); }
         .del-btn { background: var(--danger-btn); }
-
         .view-toggle-btn { background: var(--table-head-bg); color: var(--table-head-text); font-size: 13px; border: 1px solid var(--table-border);}
         .add-new-btn { background: var(--success-btn); font-size: 13px; }
-        
         .card-view { display: none; } 
         .q-card { background: var(--bg-card); border: 1px solid var(--input-border); border-left: 4px solid var(--primary-color); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); }
         .q-card h4 { margin-top: 0; margin-bottom: 15px; font-size: 16px; font-weight: 600;}
@@ -121,7 +63,6 @@
         .q-card-options li { padding: 10px 12px; border: 1px solid var(--input-border); margin-bottom: 8px; border-radius: 6px; font-size: 14px; background: var(--input-bg); color: var(--text-main);}
         .q-card-options li.correct { background: var(--correct-bg); border-color: var(--correct-text); font-weight: 600; color: var(--correct-text);}
         .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--input-border); padding-top: 15px; font-size: 13px; flex-wrap: wrap; gap: 10px;}
-
         #status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
         .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); opacity: 0.7; font-weight: 600; letter-spacing: 1px;}
     </style>
@@ -157,7 +98,7 @@
         </div>
 
         <div id="add-tab">
-            <h3 id="form-title" style="margin-bottom: 20px;">Add New Question</h3>
+            <h3 id="form-title" style="margin-bottom: 20px; color: var(--primary-color);">Add New Question</h3>
             <form id="add-q-form">
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
@@ -173,6 +114,20 @@
                             <option value="">-- Select Exam First --</option>
                         </select>
                         <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
+                    </div>
+                </div>
+
+                <!-- NAYA UI: Subject aur Topic add karne ke liye -->
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 45%;">
+                        <label>Subject (e.g. Physics, Maths)</label>
+                        <input type="text" id="subject-name" list="subject-list" required placeholder="Enter Subject...">
+                        <datalist id="subject-list"></datalist>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;">
+                        <label>Chapter / Topic</label>
+                        <input type="text" id="topic-name" list="topic-list" required placeholder="Enter Topic...">
+                        <datalist id="topic-list"></datalist>
                     </div>
                 </div>
 
@@ -203,7 +158,7 @@
 
         <div id="manage-tab" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; gap: 10px;">
-                <h3 style="margin: 0;">📋 Manage All Questions</h3>
+                <h3 style="margin: 0; color: var(--primary-color);">📋 Manage All Questions</h3>
                 <div style="display: flex; gap: 8px;">
                     <button class="add-new-btn" onclick="startAddFromManage()" style="width: auto; margin: 0;">➕ Add New</button>
                     <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; margin: 0;">👁️ Detailed View</button>
@@ -229,8 +184,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Exam</th>
-                            <th>Test</th>
+                            <th>Exam / Subject</th>
+                            <th>Test / Topic</th>
                             <th>Question</th>
                             <th style="min-width: 130px;">Action</th>
                         </tr>
@@ -244,7 +199,7 @@
         </div>
 
         <div id="results-tab" style="display: none;">
-            <h3 style="margin-bottom: 20px;">📊 Student Performance</h3>
+            <h3 style="margin-bottom: 20px; color: var(--primary-color);">📊 Student Performance</h3>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -262,7 +217,6 @@
                 </table>
             </div>
         </div>
-
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
@@ -337,23 +291,23 @@
                 const results = await res.json();
                 
                 if(results.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">No student submissions found.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>';
                     return;
                 }
 
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date);
-                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
+                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
                     return `
                     <tr>
                         <td style="font-size:13px;">${formattedDate}</td>
-                        <td><strong>${r.userName}</strong><br><span style="font-size:12px;">${r.userEmail}</span></td>
-                        <td><strong>${r.examName}</strong><br><span style="font-size:12px;">${r.testName}</span></td>
+                        <td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td>
+                        <td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td>
                         <td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td>
                         <td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
                     </tr>`;
                 }).join('');
-            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Error fetching results!</td></tr>'; }
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn);">Error fetching results!</td></tr>'; }
         }
 
         function toggleViewMode() {
@@ -387,21 +341,16 @@
         function handleExamChange() {
             const examVal = document.getElementById('exam-select').value;
             toggleCustomInput('exam');
-            
             if (!examVal) {
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
                 document.getElementById('custom-test').style.display = 'none';
                 document.getElementById('custom-test').removeAttribute('required');
                 return;
             }
-
             let tests = [];
-            if(examVal !== 'NEW_ITEM') {
-                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
-            }
+            if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             
             document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`;
-            
             if (examVal === 'NEW_ITEM') {
                 document.getElementById('test-select').value = 'NEW_ITEM';
                 toggleCustomInput('test');
@@ -415,12 +364,19 @@
             try {
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
+                
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
+                const subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))];
+                const topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
                 
                 document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
+                // Datalists populate karna
+                document.getElementById('subject-list').innerHTML = subjects.map(s => `<option value="${s}">`).join('');
+                document.getElementById('topic-list').innerHTML = topics.map(t => `<option value="${t}">`).join('');
+
+                document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 handleFilterExamChange(); 
             } catch(e) { console.log(e); }
         }
@@ -445,16 +401,16 @@
             const cardContainer = document.getElementById('card-view-container');
 
             if(filtered.length === 0) {
-                const emptyMsg = '<tr><td colspan="4" style="text-align:center; padding:30px;">No questions found for this filter.</td></tr>';
+                const emptyMsg = '<tr><td colspan="4" style="text-align:center; padding:30px; color:var(--danger-btn);">No questions found for this filter.</td></tr>';
                 tbody.innerHTML = emptyMsg;
-                cardContainer.innerHTML = '<div style="text-align:center; padding:30px; background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>';
+                cardContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--danger-btn); background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>';
                 return;
             }
             
             tbody.innerHTML = filtered.map(q => `
                 <tr>
-                    <td><strong>${q.examName || '-'}</strong></td>
-                    <td>${q.testName || '-'}</td>
+                    <td><strong>${q.examName || '-'}</strong><br><span style="font-size:11px; opacity:0.7;">${q.subject || 'General'}</span></td>
+                    <td>${q.testName || '-'}<br><span style="font-size:11px; opacity:0.7;">${q.topic || 'Mixed'}</span></td>
                     <td>${(q.text || '').substring(0, 50)}...</td>
                     <td>
                         <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
@@ -478,6 +434,7 @@
                         <div>
                             <strong>Exam:</strong> <span>${q.examName || '-'}</span> <br>
                             <strong>Test:</strong> <span>${q.testName || '-'}</span> <br>
+                            <strong>Sub/Topic:</strong> <span style="color:var(--primary-color);">${q.subject || 'General'}</span> / <span>${q.topic || 'Mixed'}</span> <br>
                             <strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span>
                         </div>
                         <div style="margin-top: 10px;">
@@ -498,7 +455,7 @@
             if(!q) return;
             editingId = id;
             document.getElementById('form-title').innerText = "✏️ Edit Question";
-            document.getElementById('submit-btn').innerText = "Update Data";
+            document.getElementById('submit-btn').innerText = "Update Question";
             document.getElementById('submit-btn').style.background = "var(--warning-btn)";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
@@ -506,6 +463,9 @@
             handleExamChange(); 
             document.getElementById('test-select').value = q.testName || '';
             toggleCustomInput('test');
+
+            document.getElementById('subject-name').value = q.subject || 'General';
+            document.getElementById('topic-name').value = q.topic || 'Mixed';
 
             document.getElementById('q-text').value = q.text || '';
             document.getElementById('opt-0').value = q.options[0] || '';
@@ -537,7 +497,11 @@
             if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
 
             const payload = {
-                examName: finalExam, testName: finalTest, text: document.getElementById('q-text').value,
+                examName: finalExam, 
+                testName: finalTest, 
+                subject: document.getElementById('subject-name').value.trim() || 'General',
+                topic: document.getElementById('topic-name').value.trim() || 'Mixed',
+                text: document.getElementById('q-text').value,
                 options: [document.getElementById('opt-0').value, document.getElementById('opt-1').value, document.getElementById('opt-2').value, document.getElementById('opt-3').value],
                 correctOptionIndex: parseInt(document.getElementById('correct-opt').value),
                 positiveMarks: parseInt(document.getElementById('pos-marks').value),
@@ -554,7 +518,7 @@
                 const data = await res.json();
                 if(res.ok) {
                     statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "var(--success-btn)";
-                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2000);
+                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2500);
                     if(editingId) cancelEdit(); 
                     else {
                         document.getElementById('q-text').value = '';
@@ -565,7 +529,7 @@
                     }
                     fetchAllData(); 
                 } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "var(--danger-btn)"; }
-            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
+            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "var(--danger-btn)"; }
         });
     </script>
 </body>
