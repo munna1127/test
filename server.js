@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const Question = require('./models/Question');
 const User = require('./models/User');
-const Result = require('./models/Result'); // Naya Result Model
+const Result = require('./models/Result');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +15,18 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Database connected successfully!'))
     .catch((err) => console.log('❌ Error:', err.message));
 
+// --- ADMIN LOGIN API ---
+app.post('/admin-login', (req, res) => {
+    const { username, password } = req.body;
+    // Yahan tum apna admin ID aur password change kar sakte ho baad me
+    if (username === 'admin' && password === 'TomarJi123') {
+        res.status(200).json({ message: "Welcome Admin!" });
+    } else {
+        res.status(400).json({ error: "Galat ID ya Password!" });
+    }
+});
+
+// --- STUDENT AUTH APIs ---
 app.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -35,6 +47,7 @@ app.post('/login', async (req, res) => {
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
+// --- PORTAL APIs ---
 app.post('/add-question', async (req, res) => {
     try {
         const newQuestion = new Question(req.body);
@@ -58,7 +71,6 @@ app.post('/get-test-questions', async (req, res) => {
     catch (error) { res.status(500).json({ error: "Questions fetch error" }); }
 });
 
-// Nayi API: Result Save karne ke liye
 app.post('/save-result', async (req, res) => {
     try {
         const newResult = new Result(req.body);

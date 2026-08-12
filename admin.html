@@ -3,24 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Add Questions</title>
+    <title>Admin Panel - Tomar Ji</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #2c3e50; color: white;}
-        .container { background: #34495e; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; }
-        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; }
+        .container { background: #34495e; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);}
+        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; margin-top:0; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #bdc3c7;}
-        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 10px; border: none; border-radius: 5px; box-sizing: border-box; }
-        button { background: #e74c3c; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px;}
+        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: none; border-radius: 5px; box-sizing: border-box; font-size: 15px;}
+        button { background: #e74c3c; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; font-size: 16px;}
         button:hover { background: #c0392b; }
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
         .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #95a5a6; font-weight: bold;}
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>⚙️ Admin Panel - Test Portal</h2>
-        <form id="add-q-form">
+
+    <!-- ADMIN LOGIN SECTION -->
+    <div id="admin-login-section" class="container">
+        <h2>🔒 Admin Login</h2>
+        <div class="form-group">
+            <label>Admin ID:</label>
+            <input type="text" id="admin-user" placeholder="Username daalo">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="admin-pass" placeholder="Password daalo">
+        </div>
+        <button onclick="handleAdminLogin()">Login as Admin</button>
+        <div id="login-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
+        <div class="footer">Developed by Tomar Ji</div>
+    </div>
+
+    <!-- MAIN ADMIN PANEL (Hidden until login) -->
+    <div id="admin-panel-section" class="container" style="display: none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="margin: 0; border: none;">⚙️ Admin Panel</h2>
+            <button onclick="adminLogout()" style="width:auto; background:#7f8c8d; padding:8px 15px; margin:0;">Logout</button>
+        </div>
+        <p style="color: #2ecc71; text-align:center; font-weight:bold; margin-top:10px;">Welcome Back, Tomar Ji!</p>
+        
+        <form id="add-q-form" style="margin-top: 20px;">
             <div style="display: flex; gap: 10px;">
                 <div class="form-group" style="flex: 1;">
                     <label>Exam Name (e.g. JEE):</label>
@@ -59,6 +82,53 @@
     </div>
 
     <script>
+        // Check Login Status on Page Load
+        function checkAdminLogin() {
+            if(localStorage.getItem('isAdminLoggedIn') === 'true') {
+                document.getElementById('admin-login-section').style.display = 'none';
+                document.getElementById('admin-panel-section').style.display = 'block';
+            } else {
+                document.getElementById('admin-login-section').style.display = 'block';
+                document.getElementById('admin-panel-section').style.display = 'none';
+            }
+        }
+        window.onload = checkAdminLogin;
+
+        // Handle Admin Login API Call
+        async function handleAdminLogin() {
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+            const status = document.getElementById('login-status');
+
+            if(!user || !pass) return status.innerText = "❌ Details daalo!", status.style.color = "#e74c3c";
+            status.innerText = "Loading..."; status.style.color = "#f1c40f";
+
+            try {
+                const res = await fetch('/admin-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+                const data = await res.json();
+
+                if(res.ok) {
+                    localStorage.setItem('isAdminLoggedIn', 'true');
+                    checkAdminLogin();
+                } else {
+                    status.innerText = "❌ " + data.error; status.style.color = "#e74c3c";
+                }
+            } catch (err) {
+                status.innerText = "❌ Server error!"; status.style.color = "#e74c3c";
+            }
+        }
+
+        // Handle Admin Logout
+        function adminLogout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            checkAdminLogin();
+        }
+
+        // Add Question Logic
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const payload = {
@@ -77,7 +147,7 @@
             };
 
             const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Loading..."; statusDiv.style.color = "yellow";
+            statusDiv.innerHTML = "Loading..."; statusDiv.style.color = "#f1c40f";
 
             try {
                 const response = await fetch('/add-question', {
@@ -88,7 +158,6 @@
                 const data = await response.json();
                 if(response.ok) {
                     statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "#2ecc71";
-                    // Taki bar bar exam aur test ka naam na dalna pade, unko clear nahi karenge
                     document.getElementById('q-text').value = '';
                     document.getElementById('opt-0').value = '';
                     document.getElementById('opt-1').value = '';
