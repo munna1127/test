@@ -6,43 +6,41 @@
     <title>Admin Panel - Add Questions</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #2c3e50; color: white;}
-        .container { background: #34495e; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 600px; margin: auto; }
-        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; color: #ecf0f1; text-align: center; }
+        .container { background: #34495e; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; }
+        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #bdc3c7;}
-        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 10px; border: none; border-radius: 5px; box-sizing: border-box; background: #ecf0f1; }
-        button { background: #e74c3c; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; margin-top: 10px;}
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 10px; border: none; border-radius: 5px; box-sizing: border-box; }
+        button { background: #e74c3c; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px;}
         button:hover { background: #c0392b; }
-        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #95a5a6; font-weight: bold;}
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
+        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #95a5a6; font-weight: bold;}
     </style>
 </head>
 <body>
     <div class="container">
         <h2>⚙️ Admin Panel - Test Portal</h2>
         <form id="add-q-form">
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>Exam Name (e.g. JEE):</label>
+                    <input type="text" id="exam-name" required>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>Test Name (e.g. Mock 1):</label>
+                    <input type="text" id="test-name" required>
+                </div>
+            </div>
             <div class="form-group">
                 <label>Question Text:</label>
-                <textarea id="q-text" rows="3" placeholder="Bacchon se kya puchhna hai?" required></textarea>
+                <textarea id="q-text" rows="3" required></textarea>
             </div>
+            <div class="form-group"><label>Option 1:</label><input type="text" id="opt-0" required></div>
+            <div class="form-group"><label>Option 2:</label><input type="text" id="opt-1" required></div>
+            <div class="form-group"><label>Option 3:</label><input type="text" id="opt-2" required></div>
+            <div class="form-group"><label>Option 4:</label><input type="text" id="opt-3" required></div>
             <div class="form-group">
-                <label>Option 1:</label>
-                <input type="text" id="opt-0" required>
-            </div>
-            <div class="form-group">
-                <label>Option 2:</label>
-                <input type="text" id="opt-1" required>
-            </div>
-            <div class="form-group">
-                <label>Option 3:</label>
-                <input type="text" id="opt-2" required>
-            </div>
-            <div class="form-group">
-                <label>Option 4:</label>
-                <input type="text" id="opt-3" required>
-            </div>
-            <div class="form-group">
-                <label>Sahi Jawab Konsa Hai?</label>
+                <label>Sahi Jawab:</label>
                 <select id="correct-opt">
                     <option value="0">Option 1</option>
                     <option value="1">Option 2</option>
@@ -51,16 +49,10 @@
                 </select>
             </div>
             <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Sahi par Marks (+):</label>
-                    <input type="number" id="pos-marks" value="4" required>
-                </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>Galat par Minus (-):</label>
-                    <input type="number" id="neg-marks" value="1" required>
-                </div>
+                <div class="form-group" style="flex: 1;"><label>Marks (+):</label><input type="number" id="pos-marks" value="4" required></div>
+                <div class="form-group" style="flex: 1;"><label>Minus (-):</label><input type="number" id="neg-marks" value="1" required></div>
             </div>
-            <button type="submit">Add Question to Database</button>
+            <button type="submit">Add Question</button>
             <div id="status"></div>
         </form>
         <div class="footer">Developed by Tomar Ji</div>
@@ -69,8 +61,9 @@
     <script>
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const payload = {
+                examName: document.getElementById('exam-name').value.trim(),
+                testName: document.getElementById('test-name').value.trim(),
                 text: document.getElementById('q-text').value,
                 options: [
                     document.getElementById('opt-0').value,
@@ -84,31 +77,27 @@
             };
 
             const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Loading...";
-            statusDiv.style.color = "yellow";
+            statusDiv.innerHTML = "Loading..."; statusDiv.style.color = "yellow";
 
             try {
-                // Localhost hatakar sirf '/add-question' kar diya hai
                 const response = await fetch('/add-question', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
                 const data = await response.json();
-                
                 if(response.ok) {
-                    statusDiv.innerHTML = "✅ " + data.message;
-                    statusDiv.style.color = "#2ecc71";
-                    document.getElementById('add-q-form').reset();
+                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "#2ecc71";
+                    // Taki bar bar exam aur test ka naam na dalna pade, unko clear nahi karenge
+                    document.getElementById('q-text').value = '';
+                    document.getElementById('opt-0').value = '';
+                    document.getElementById('opt-1').value = '';
+                    document.getElementById('opt-2').value = '';
+                    document.getElementById('opt-3').value = '';
                 } else {
-                    statusDiv.innerHTML = "❌ Error: " + data.error;
-                    statusDiv.style.color = "#e74c3c";
+                    statusDiv.innerHTML = "❌ " + data.error; statusDiv.style.color = "#e74c3c";
                 }
-            } catch (error) {
-                statusDiv.innerHTML = "❌ Server se connect nahi ho paya!";
-                statusDiv.style.color = "#e74c3c";
-            }
+            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "#e74c3c"; }
         });
     </script>
 </body>

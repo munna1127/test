@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
+    examName: { type: String, required: true },
+    testName: { type: String, required: true },
     text: { type: String, required: true },
     options: [{ type: String, required: true }],
     correctOptionIndex: { type: Number, required: true },

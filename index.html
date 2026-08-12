@@ -8,46 +8,115 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; }
         .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
         h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .selection-box { background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        select, button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
         .question { margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-left: 4px solid #007bff; border-radius: 4px; }
         .marks { color: #666; font-size: 0.9em; float: right; }
         .options { list-style: none; padding: 0; }
         .options li { margin: 10px 0; }
         .options label { cursor: pointer; display: block; padding: 8px; border: 1px solid #ddd; border-radius: 4px; transition: 0.2s; }
         .options label:hover { background: #e9ecef; }
-        button { background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
-        button:hover { background: #218838; }
+        .submit-btn { background: #28a745; margin-top: 20px;}
+        .submit-btn:hover { background: #218838; }
         #result { margin-top: 20px; padding: 20px; background: #d4edda; border-radius: 5px; display: none; border: 1px solid #c3e6cb;}
         .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #888; font-weight: bold;}
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>📝 Live Test</h2>
-        <div id="test-container">Loading...</div>
-        <button onclick="submitTest()" id="submit-btn" style="display:none;">Submit Test</button>
-        <div id="result"></div>
+        <h2>📝 Live Test Portal</h2>
+        
+        <!-- Exam and Test Selection -->
+        <div id="selection-area" class="selection-box">
+            <label><strong>Select Exam:</strong></label>
+            <select id="exam-select" onchange="fetchTests()">
+                <option value="">-- Exam chuno --</option>
+            </select>
+
+            <label style="display:block; margin-top:15px;"><strong>Select Test:</strong></label>
+            <select id="test-select">
+                <option value="">-- Pehle Exam chuno --</option>
+            </select>
+
+            <button onclick="startTest()">🚀 Start Test</button>
+        </div>
+
+        <!-- Main Test Area (Hidden until started) -->
+        <div id="test-area" style="display: none;">
+            <h3 id="test-title" style="color: #007bff;"></h3>
+            <div id="test-container"></div>
+            <button class="submit-btn" onclick="submitTest()" id="submit-btn">Submit Test</button>
+            <div id="result"></div>
+        </div>
+
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
     <script>
         let questionsData = [];
 
-        // Localhost hatakar sirf '/get-questions' kar diya hai
-        fetch('/get-questions')
-            .then(response => response.json())
+        // Page load hote hi Exams fetch karo
+        fetch('/get-exams').then(res => res.json()).then(exams => {
+            const examSelect = document.getElementById('exam-select');
+            exams.forEach(exam => {
+                if(exam) examSelect.innerHTML += `<option value="${exam}">${exam}</option>`;
+            });
+        });
+
+        // Jab baccha exam chune, toh uske tests fetch karo
+        function fetchTests() {
+            const examName = document.getElementById('exam-select').value;
+            const testSelect = document.getElementById('test-select');
+            testSelect.innerHTML = '<option value="">-- Loading... --</option>';
+            
+            if(!examName) {
+                testSelect.innerHTML = '<option value="">-- Pehle Exam chuno --</option>';
+                return;
+            }
+
+            fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => {
+                testSelect.innerHTML = '<option value="">-- Test chuno --</option>';
+                tests.forEach(test => {
+                    if(test) testSelect.innerHTML += `<option value="${test}">${test}</option>`;
+                });
+            });
+        }
+
+        // Test start karna
+        function startTest() {
+            const examName = document.getElementById('exam-select').value;
+            const testName = document.getElementById('test-select').value;
+            
+            if(!examName || !testName) {
+                alert("Bhai, pehle Exam aur Test dono select kar!");
+                return;
+            }
+
+            document.getElementById('selection-area').style.display = 'none';
+            document.getElementById('test-area').style.display = 'block';
+            document.getElementById('test-title').innerText = `${examName} - ${testName}`;
+            document.getElementById('test-container').innerHTML = 'Loading Questions...';
+
+            fetch('/get-test-questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ examName, testName })
+            })
+            .then(res => res.json())
             .then(data => {
                 questionsData = data;
                 renderTest();
-            })
-            .catch(err => {
-                document.getElementById('test-container').innerHTML = '<p style="color:red;">Error: Database se questions nahi aaye.</p>';
             });
+        }
 
         function renderTest() {
             const container = document.getElementById('test-container');
             container.innerHTML = '';
             if(questionsData.length === 0) {
-                container.innerHTML = 'Abhi tak koi question add nahi hua hai.';
+                container.innerHTML = 'Is test mein koi questions nahi hain.';
+                document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
 
@@ -55,33 +124,25 @@
                 let html = `<div class="question">
                     <p><strong>Q${index + 1}: ${q.text}</strong> <span class="marks">(+${q.positiveMarks} / -${q.negativeMarks})</span></p>
                     <ul class="options">`;
-                
                 q.options.forEach((opt, optIndex) => {
                     html += `<li><label><input type="radio" name="q${index}" value="${optIndex}"> ${opt}</label></li>`;
                 });
-
                 html += `</ul></div>`;
                 container.innerHTML += html;
             });
-            document.getElementById('submit-btn').style.display = 'block';
         }
 
         function submitTest() {
             let score = 0, correct = 0, wrong = 0, skipped = 0;
-
             questionsData.forEach((q, index) => {
                 const selected = document.querySelector(`input[name="q${index}"]:checked`);
                 if (selected) {
                     if (parseInt(selected.value) === q.correctOptionIndex) {
-                        score += q.positiveMarks;
-                        correct++;
+                        score += q.positiveMarks; correct++;
                     } else {
-                        score -= q.negativeMarks;
-                        wrong++;
+                        score -= q.negativeMarks; wrong++;
                     }
-                } else {
-                    skipped++;
-                }
+                } else { skipped++; }
             });
 
             const resDiv = document.getElementById('result');
