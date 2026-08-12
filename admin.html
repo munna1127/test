@@ -3,22 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Tomar Ji</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Admin Dashboard - Safalta Quiz Bhagalpur</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         const savedTheme = localStorage.getItem('portalTheme') || 'default';
         document.documentElement.setAttribute('data-theme', savedTheme);
-        function changeTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('portalTheme', theme);
-        }
-        window.addEventListener('DOMContentLoaded', () => {
-            const select = document.getElementById('theme-switcher');
-            if(select) select.value = savedTheme;
-        });
+        function changeTheme(theme) { document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('portalTheme', theme); }
+        window.addEventListener('DOMContentLoaded', () => { const select = document.getElementById('theme-switcher'); if(select) select.value = savedTheme; });
     </script>
     <style>
-        /* CSS PURANI WALI HI HAI (THEMES WALI) */
         :root {
             --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.95); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); --input-bg: #f8fafc; --input-border: #e2e8f0; --shadow: 0 10px 30px rgba(0,0,0,0.06); --table-head-bg: #f1f5f9; --table-head-text: #475569; --table-border: #e2e8f0; --table-hover: #f8fafc; --correct-bg: #ecfdf5; --correct-text: #065f46;
         }
@@ -34,7 +27,6 @@
         .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
         .container { background: var(--bg-card); padding: 35px; border-radius: 16px; max-width: 950px; margin: 60px auto 20px auto; box-shadow: var(--shadow); border: 1px solid var(--input-border); backdrop-filter: blur(15px); transition: all 0.3s ease;}
         h2, h3, h4 { color: var(--text-heading); }
-        h2 { border-bottom: none; padding-bottom: 0; text-align: center; margin-top:0; margin-bottom:25px; font-size: 26px; font-weight: 700;}
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;}
         input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px 14px; margin-top: 5px; border: 1px solid var(--input-border); border-radius: 8px; box-sizing: border-box; font-size: 14px; background: var(--input-bg); color: var(--text-main); transition: 0.2s;}
@@ -65,6 +57,19 @@
         .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--input-border); padding-top: 15px; font-size: 13px; flex-wrap: wrap; gap: 10px;}
         #status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
         .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); opacity: 0.7; font-weight: 600; letter-spacing: 1px;}
+
+        /* ✨ PREMIUM ANIMATED BRAND LOGO ✨ */
+        .brand-title {
+            font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase;
+            background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6);
+            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: shine 3s linear infinite; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px;
+        }
+        .brand-title span {
+            display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px;
+            color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
     </style>
 </head>
 <body>
@@ -78,7 +83,10 @@
     </div>
 
     <div id="admin-login-section" class="container" style="max-width: 450px;">
-        <h2>🔒 Admin Access</h2>
+        <!-- PREMIUM LOGO -->
+        <h1 class="brand-title">Safalta Quiz<span>Bhagalpur</span></h1>
+        
+        <h2 style="font-size: 20px; color: var(--text-main); opacity:0.8;">🔒 Admin Access</h2>
         <div class="form-group"><label>Admin ID</label><input type="text" id="admin-user" placeholder="Enter Username"></div>
         <div class="form-group"><label>Password</label><input type="password" id="admin-pass" placeholder="Enter Password"></div>
         <button onclick="handleAdminLogin()" style="width:100%; margin-top: 10px; padding: 14px; font-size: 15px;">Login to Dashboard</button>
@@ -87,7 +95,8 @@
 
     <div id="admin-panel-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
-            <h2 style="margin: 0;">⚙️ Dashboard</h2>
+            <!-- SMALLER LOGO FOR DASHBOARD -->
+            <h1 class="brand-title" style="font-size: 24px; margin-bottom: 0; text-align: left;">Safalta Quiz<span style="font-size: 12px; letter-spacing: 2px;">Bhagalpur</span></h1>
             <button onclick="adminLogout()" style="background:var(--danger-btn); padding: 8px 16px;">Logout</button>
         </div>
         
@@ -103,39 +112,32 @@
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Exam Name</label>
-                        <select id="exam-select" onchange="handleExamChange()" required>
-                            <option value="">-- Select Exam --</option>
-                        </select>
+                        <select id="exam-select" onchange="handleExamChange()" required><option value="">-- Select Exam --</option></select>
                         <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
                     </div>
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Test Name</label>
-                        <select id="test-select" onchange="toggleCustomInput('test')" required>
-                            <option value="">-- Select Exam First --</option>
-                        </select>
+                        <select id="test-select" onchange="toggleCustomInput('test')" required><option value="">-- Select Exam First --</option></select>
                         <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
                     </div>
                 </div>
 
-                <!-- NAYA UI: Subject aur Topic add karne ke liye -->
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Subject (e.g. Physics, Maths)</label>
-                        <input type="text" id="subject-name" list="subject-list" required placeholder="Enter Subject...">
+                        <label>Subject</label><input type="text" id="subject-name" list="subject-list" required placeholder="Enter Subject...">
                         <datalist id="subject-list"></datalist>
                     </div>
                     <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Chapter / Topic</label>
-                        <input type="text" id="topic-name" list="topic-list" required placeholder="Enter Topic...">
+                        <label>Chapter / Topic</label><input type="text" id="topic-name" list="topic-list" required placeholder="Enter Topic...">
                         <datalist id="topic-list"></datalist>
                     </div>
                 </div>
 
                 <div class="form-group"><label>Question Text</label><textarea id="q-text" rows="3" required placeholder="Type the question here..."></textarea></div>
-                <div class="form-group"><label>Option 1</label><input type="text" id="opt-0" required placeholder="First option"></div>
-                <div class="form-group"><label>Option 2</label><input type="text" id="opt-1" required placeholder="Second option"></div>
-                <div class="form-group"><label>Option 3</label><input type="text" id="opt-2" required placeholder="Third option"></div>
-                <div class="form-group"><label>Option 4</label><input type="text" id="opt-3" required placeholder="Fourth option"></div>
+                <div class="form-group"><label>Option 1</label><input type="text" id="opt-0" required></div>
+                <div class="form-group"><label>Option 2</label><input type="text" id="opt-1" required></div>
+                <div class="form-group"><label>Option 3</label><input type="text" id="opt-2" required></div>
+                <div class="form-group"><label>Option 4</label><input type="text" id="opt-3" required></div>
                 
                 <div class="form-group">
                     <label>Correct Answer</label>
@@ -145,9 +147,12 @@
                     </select>
                 </div>
                 
-                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-                    <div class="form-group" style="flex: 1; margin-bottom:0;"><label>Positive Marks (+)</label><input type="number" id="pos-marks" value="4" required></div>
-                    <div class="form-group" style="flex: 1; margin-bottom:0;"><label>Negative Marks (-)</label><input type="number" id="neg-marks" value="1" required></div>
+                <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <!-- DECIMAL SUPPORT ADDED (step="any") -->
+                    <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>Positive Marks (+)</label><input type="number" step="any" id="pos-marks" value="4" required></div>
+                    <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>Negative Marks (-)</label><input type="number" step="any" id="neg-marks" value="1" required></div>
+                    <!-- ADMIN TIMER ADDED -->
+                    <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>⏱️ Test Duration (Mins)</label><input type="number" id="test-duration" value="60" required title="This sets the timer for the entire test."></div>
                 </div>
                 
                 <button type="submit" id="submit-btn" style="width:100%; padding: 14px; font-size: 15px;">Save Question</button>
@@ -168,27 +173,18 @@
             <div class="filter-box">
                 <div style="flex: 1; min-width: 150px;">
                     <label>Filter by Exam</label>
-                    <select id="filter-exam" onchange="handleFilterExamChange()">
-                        <option value="">-- All Exams --</option>
-                    </select>
+                    <select id="filter-exam" onchange="handleFilterExamChange()"><option value="">-- All Exams --</option></select>
                 </div>
                 <div style="flex: 1; min-width: 150px;">
                     <label>Filter by Test</label>
-                    <select id="filter-test" onchange="renderFilteredTable()">
-                        <option value="">-- All Tests --</option>
-                    </select>
+                    <select id="filter-test" onchange="renderFilteredTable()"><option value="">-- All Tests --</option></select>
                 </div>
             </div>
 
             <div id="table-view-container" style="overflow-x: auto;">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Exam / Subject</th>
-                            <th>Test / Topic</th>
-                            <th>Question</th>
-                            <th style="min-width: 130px;">Action</th>
-                        </tr>
+                        <tr><th>Exam / Subject</th><th>Test / Topic</th><th>Question</th><th style="min-width: 130px;">Action</th></tr>
                     </thead>
                     <tbody id="questions-table-body">
                         <tr><td colspan="4" style="text-align:center; padding: 30px;">Loading data...</td></tr>
@@ -203,13 +199,7 @@
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Timestamp</th>
-                            <th>Student Info</th>
-                            <th>Exam & Test</th>
-                            <th>Score</th>
-                            <th>Breakdown</th>
-                        </tr>
+                        <tr><th>Timestamp</th><th>Student Info</th><th>Exam & Test</th><th>Score</th><th>Breakdown</th></tr>
                     </thead>
                     <tbody id="results-table-body">
                         <tr><td colspan="5" style="text-align:center; padding: 30px;">Loading results...</td></tr>
@@ -241,7 +231,6 @@
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value;
             const status = document.getElementById('login-status');
-
             if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "var(--danger-btn)";
             status.innerText = "Authenticating..."; status.style.color = "var(--primary-color)";
             try {
@@ -257,11 +246,9 @@
             document.getElementById('add-tab').style.display = tab === 'add' ? 'block' : 'none';
             document.getElementById('manage-tab').style.display = tab === 'manage' ? 'block' : 'none';
             document.getElementById('results-tab').style.display = tab === 'results' ? 'block' : 'none';
-            
             document.getElementById('tab-add-btn').className = tab === 'add' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-manage-btn').className = tab === 'manage' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-results-btn').className = tab === 'results' ? 'tab-btn active' : 'tab-btn';
-            
             if(tab === 'manage') fetchAllData();
             if(tab === 'results') fetchResultsData(); 
         }
@@ -270,7 +257,6 @@
             cancelEdit(); 
             const currentFilterExam = document.getElementById('filter-exam').value;
             const currentFilterTest = document.getElementById('filter-test').value;
-            
             switchTab('add');
             if(currentFilterExam) {
                 document.getElementById('exam-select').value = currentFilterExam;
@@ -289,17 +275,14 @@
             try {
                 const res = await fetch('/all-results');
                 const results = await res.json();
-                
                 if(results.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>';
                     return;
                 }
-
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date);
                     const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
-                    return `
-                    <tr>
+                    return `<tr>
                         <td style="font-size:13px;">${formattedDate}</td>
                         <td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td>
                         <td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td>
@@ -328,14 +311,8 @@
         function toggleCustomInput(type) {
             const selectVal = document.getElementById(type + '-select').value;
             const customInput = document.getElementById('custom-' + type);
-            if(selectVal === 'NEW_ITEM') {
-                customInput.style.display = 'block';
-                customInput.setAttribute('required', 'true');
-            } else {
-                customInput.style.display = 'none';
-                customInput.removeAttribute('required');
-                customInput.value = '';
-            }
+            if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } 
+            else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; }
         }
 
         function handleExamChange() {
@@ -343,39 +320,28 @@
             toggleCustomInput('exam');
             if (!examVal) {
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                document.getElementById('custom-test').style.display = 'none';
-                document.getElementById('custom-test').removeAttribute('required');
+                document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required');
                 return;
             }
             let tests = [];
             if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
-            
             document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`;
-            if (examVal === 'NEW_ITEM') {
-                document.getElementById('test-select').value = 'NEW_ITEM';
-                toggleCustomInput('test');
-            } else {
-                document.getElementById('custom-test').style.display = 'none';
-                document.getElementById('custom-test').removeAttribute('required');
-            }
+            if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } 
+            else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); }
         }
 
         async function fetchAllData() {
             try {
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
-                
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 const subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))];
                 const topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
                 
                 document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                
-                // Datalists populate karna
                 document.getElementById('subject-list').innerHTML = subjects.map(s => `<option value="${s}">`).join('');
                 document.getElementById('topic-list').innerHTML = topics.map(t => `<option value="${t}">`).join('');
-
                 document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 handleFilterExamChange(); 
             } catch(e) { console.log(e); }
@@ -401,8 +367,7 @@
             const cardContainer = document.getElementById('card-view-container');
 
             if(filtered.length === 0) {
-                const emptyMsg = '<tr><td colspan="4" style="text-align:center; padding:30px; color:var(--danger-btn);">No questions found for this filter.</td></tr>';
-                tbody.innerHTML = emptyMsg;
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:var(--danger-btn);">No questions found for this filter.</td></tr>';
                 cardContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--danger-btn); background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>';
                 return;
             }
@@ -435,7 +400,8 @@
                             <strong>Exam:</strong> <span>${q.examName || '-'}</span> <br>
                             <strong>Test:</strong> <span>${q.testName || '-'}</span> <br>
                             <strong>Sub/Topic:</strong> <span style="color:var(--primary-color);">${q.subject || 'General'}</span> / <span>${q.topic || 'Mixed'}</span> <br>
-                            <strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span>
+                            <strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span> <br>
+                            <strong>Timer:</strong> <span>${q.testDuration || 60} mins</span>
                         </div>
                         <div style="margin-top: 10px;">
                             <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Edit</button>
@@ -463,18 +429,18 @@
             handleExamChange(); 
             document.getElementById('test-select').value = q.testName || '';
             toggleCustomInput('test');
-
             document.getElementById('subject-name').value = q.subject || 'General';
             document.getElementById('topic-name').value = q.topic || 'Mixed';
-
             document.getElementById('q-text').value = q.text || '';
             document.getElementById('opt-0').value = q.options[0] || '';
             document.getElementById('opt-1').value = q.options[1] || '';
             document.getElementById('opt-2').value = q.options[2] || '';
             document.getElementById('opt-3').value = q.options[3] || '';
             document.getElementById('correct-opt').value = q.correctOptionIndex;
+            
             document.getElementById('pos-marks').value = q.positiveMarks;
             document.getElementById('neg-marks').value = q.negativeMarks;
+            document.getElementById('test-duration').value = q.testDuration || 60;
 
             switchTab('add');
             window.scrollTo(0, 0);
@@ -497,15 +463,15 @@
             if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
 
             const payload = {
-                examName: finalExam, 
-                testName: finalTest, 
+                examName: finalExam, testName: finalTest, 
                 subject: document.getElementById('subject-name').value.trim() || 'General',
                 topic: document.getElementById('topic-name').value.trim() || 'Mixed',
                 text: document.getElementById('q-text').value,
                 options: [document.getElementById('opt-0').value, document.getElementById('opt-1').value, document.getElementById('opt-2').value, document.getElementById('opt-3').value],
                 correctOptionIndex: parseInt(document.getElementById('correct-opt').value),
-                positiveMarks: parseInt(document.getElementById('pos-marks').value),
-                negativeMarks: parseInt(document.getElementById('neg-marks').value)
+                positiveMarks: parseFloat(document.getElementById('pos-marks').value), // Decimal Support
+                negativeMarks: parseFloat(document.getElementById('neg-marks').value), // Decimal Support
+                testDuration: parseInt(document.getElementById('test-duration').value) // Timer value
             };
 
             const statusDiv = document.getElementById('status');
