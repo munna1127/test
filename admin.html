@@ -3,58 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Tomar Ji</title>
+    <title>Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        const savedTheme = localStorage.getItem('portalTheme') || 'default';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        function changeTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('portalTheme', theme);
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const select = document.getElementById('theme-switcher');
+            if(select) select.value = savedTheme;
+        });
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background-color: #f8fafc; color: #0f172a;}
-        .container { background: #ffffff; padding: 35px; border-radius: 16px; max-width: 950px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;}
-        h2 { border-bottom: none; padding-bottom: 0; text-align: center; margin-top:0; margin-bottom:25px; color: #0f172a; font-size: 26px; font-weight: 700;}
+        :root {
+            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-main: #2d3748;
+            --text-heading: #1a202c;
+            --primary-color: #3b82f6;
+            --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --input-bg: #f8fafc;
+            --input-border: #e2e8f0;
+            --shadow: 0 10px 30px rgba(0,0,0,0.06);
+            --table-head-bg: #f1f5f9;
+            --table-head-text: #475569;
+            --table-border: #e2e8f0;
+            --table-hover: #f8fafc;
+            --correct-bg: #ecfdf5;
+            --correct-text: #065f46;
+        }
+        [data-theme="dark"] {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #cbd5e1;
+            --text-heading: #f8fafc;
+            --primary-color: #3b82f6;
+            --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+            --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+            --input-bg: #0f172a;
+            --input-border: #334155;
+            --shadow: 0 10px 30px rgba(0,0,0,0.4);
+            --table-head-bg: #0f172a;
+            --table-head-text: #f8fafc;
+            --table-border: #334155;
+            --table-hover: #334155;
+            --correct-bg: #064e3b;
+            --correct-text: #a7f3d0;
+        }
+        [data-theme="glass"] {
+            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            --bg-card: rgba(255, 255, 255, 0.4);
+            --text-main: #1f2937;
+            --text-heading: #111827;
+            --primary-color: #e11d48;
+            --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+            --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%);
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(255, 255, 255, 0.4);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --table-head-bg: rgba(255,255,255,0.6);
+            --table-head-text: #111827;
+            --table-border: rgba(255,255,255,0.4);
+            --table-hover: rgba(255,255,255,0.5);
+            --correct-bg: rgba(212, 237, 218, 0.8);
+            --correct-text: #155724;
+        }
+
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
+        
+        .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
+        .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
+        
+        .container { background: var(--bg-card); padding: 35px; border-radius: 16px; max-width: 950px; margin: 60px auto 20px auto; box-shadow: var(--shadow); border: 1px solid var(--input-border); backdrop-filter: blur(15px); transition: all 0.3s ease;}
+        h2, h3, h4 { color: var(--text-heading); }
+        h2 { border-bottom: none; padding-bottom: 0; text-align: center; margin-top:0; margin-bottom:25px; font-size: 26px; font-weight: 700;}
         .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; color: #475569; font-size: 14px;}
-        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px 14px; margin-top: 5px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; font-size: 14px; background: #f8fafc; transition: 0.2s; font-family: 'Inter', sans-serif;}
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); background: #fff;}
-        button { background: #3b82f6; color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
-        button:hover { background: #2563eb; transform: translateY(-1px);}
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;}
+        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px 14px; margin-top: 5px; border: 1px solid var(--input-border); border-radius: 8px; box-sizing: border-box; font-size: 14px; background: var(--input-bg); color: var(--text-main); transition: 0.2s;}
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color);}
+        button { background: var(--primary-btn); color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
+        button:hover { filter: brightness(1.1); transform: translateY(-1px);}
         
-        .tab-btn { background: #f1f5f9; color: #475569; margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; box-shadow: none;}
-        .tab-btn:hover { background: #e2e8f0; color: #0f172a; transform: none;}
-        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25); }
+        .tab-btn { background: var(--input-bg); color: var(--text-main); margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; border: 1px solid var(--input-border);}
+        .tab-btn:hover { filter: brightness(0.9); }
+        .tab-btn.active { background: var(--primary-btn); color: white; border: none;}
         
-        .filter-box { background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid #e2e8f0;}
+        .filter-box { background: var(--input-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid var(--input-border);}
         
-        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; margin-top:10px;}
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--table-border); margin-top:10px;}
         th, td { padding: 14px 16px; text-align: left; }
-        th { background-color: #f1f5f9; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0;}
-        td { border-bottom: 1px solid #e2e8f0; color: #334155;}
+        th { background-color: var(--table-head-bg); color: var(--table-head-text); font-weight: 600; text-transform: uppercase; font-size: 12px; border-bottom: 1px solid var(--table-border);}
+        td { border-bottom: 1px solid var(--table-border); background: var(--bg-card); color: var(--text-main);}
         tr:last-child td { border-bottom: none; }
-        tr:hover td { background-color: #f8fafc; }
+        tr:hover td { background-color: var(--table-hover); }
         
         .action-btn { padding: 6px 12px; margin: 2px; font-size: 12px; border-radius: 6px; }
-        .edit-btn { background: #f59e0b; }
-        .edit-btn:hover { background: #d97706; }
-        .del-btn { background: #ef4444; }
-        .del-btn:hover { background: #dc2626; }
+        .edit-btn { background: var(--warning-btn); }
+        .del-btn { background: var(--danger-btn); }
 
-        .view-toggle-btn { background: #1e293b; font-size: 13px; }
-        .view-toggle-btn:hover { background: #0f172a; }
-        .add-new-btn { background: #10b981; font-size: 13px; }
-        .add-new-btn:hover { background: #059669; }
+        .view-toggle-btn { background: var(--table-head-bg); color: var(--table-head-text); font-size: 13px; border: 1px solid var(--table-border);}
+        .add-new-btn { background: var(--success-btn); font-size: 13px; }
         
         .card-view { display: none; } 
-        .q-card { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .q-card h4 { margin-top: 0; margin-bottom: 15px; color: #0f172a; font-size: 16px; font-weight: 600;}
+        .q-card { background: var(--bg-card); border: 1px solid var(--input-border); border-left: 4px solid var(--primary-color); border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: var(--shadow); }
+        .q-card h4 { margin-top: 0; margin-bottom: 15px; font-size: 16px; font-weight: 600;}
         .q-card-options { list-style-type: none; padding-left: 0; margin-bottom: 15px; }
-        .q-card-options li { padding: 10px 12px; border: 1px solid #e2e8f0; margin-bottom: 8px; border-radius: 6px; font-size: 14px; background: #f8fafc; color: #475569;}
-        .q-card-options li.correct { background-color: #ecfdf5; border-color: #a7f3d0; font-weight: 600; color: #065f46;}
-        .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 10px;}
+        .q-card-options li { padding: 10px 12px; border: 1px solid var(--input-border); margin-bottom: 8px; border-radius: 6px; font-size: 14px; background: var(--input-bg); color: var(--text-main);}
+        .q-card-options li.correct { background: var(--correct-bg); border-color: var(--correct-text); font-weight: 600; color: var(--correct-text);}
+        .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--input-border); padding-top: 15px; font-size: 13px; flex-wrap: wrap; gap: 10px;}
 
         #status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
-        .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: #94a3b8; font-weight: 600; letter-spacing: 1px;}
+        .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); opacity: 0.7; font-weight: 600; letter-spacing: 1px;}
     </style>
 </head>
 <body>
 
-    <div id="admin-login-section" class="container" style="max-width: 450px; margin-top: 80px;">
+    <div class="theme-selector">
+        <select id="theme-switcher" onchange="changeTheme(this.value)">
+            <option value="default">🎨 Clean Premium</option>
+            <option value="dark">🌙 Dark Hacker</option>
+            <option value="glass">🔮 Glassmorphism</option>
+        </select>
+    </div>
+
+    <div id="admin-login-section" class="container" style="max-width: 450px;">
         <h2>🔒 Admin Access</h2>
         <div class="form-group"><label>Admin ID</label><input type="text" id="admin-user" placeholder="Enter Username"></div>
         <div class="form-group"><label>Password</label><input type="password" id="admin-pass" placeholder="Enter Password"></div>
@@ -65,7 +147,7 @@
     <div id="admin-panel-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
             <h2 style="margin: 0;">⚙️ Dashboard</h2>
-            <button onclick="adminLogout()" style="background:#64748b; padding: 8px 16px;">Logout</button>
+            <button onclick="adminLogout()" style="background:var(--danger-btn); padding: 8px 16px;">Logout</button>
         </div>
         
         <div style="margin-bottom: 25px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
@@ -74,9 +156,8 @@
             <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Student Results</button>
         </div>
 
-        <!-- ADD TAB -->
         <div id="add-tab">
-            <h3 id="form-title" style="color: #3b82f6; margin-bottom: 20px;">Add New Question</h3>
+            <h3 id="form-title" style="margin-bottom: 20px;">Add New Question</h3>
             <form id="add-q-form">
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
@@ -84,14 +165,14 @@
                         <select id="exam-select" onchange="handleExamChange()" required>
                             <option value="">-- Select Exam --</option>
                         </select>
-                        <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid #3b82f6;">
+                        <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
                     </div>
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Test Name</label>
                         <select id="test-select" onchange="toggleCustomInput('test')" required>
                             <option value="">-- Select Exam First --</option>
                         </select>
-                        <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid #3b82f6;">
+                        <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
                     </div>
                 </div>
 
@@ -115,16 +196,14 @@
                 </div>
                 
                 <button type="submit" id="submit-btn" style="width:100%; padding: 14px; font-size: 15px;">Save Question</button>
-                <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:#94a3b8; margin-top:10px; padding: 14px; display:none;">Cancel Edit</button>
+                <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:var(--input-bg); color:var(--text-main); border:1px solid var(--input-border); margin-top:10px; padding: 14px; display:none;">Cancel Edit</button>
                 <div id="status"></div>
             </form>
         </div>
 
-        <!-- MANAGE TAB -->
         <div id="manage-tab" style="display: none;">
-            
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; gap: 10px;">
-                <h3 style="color: #3b82f6; margin: 0;">📋 Manage All Questions</h3>
+                <h3 style="margin: 0;">📋 Manage All Questions</h3>
                 <div style="display: flex; gap: 8px;">
                     <button class="add-new-btn" onclick="startAddFromManage()" style="width: auto; margin: 0;">➕ Add New</button>
                     <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; margin: 0;">👁️ Detailed View</button>
@@ -164,9 +243,8 @@
             <div id="card-view-container" class="card-view"></div>
         </div>
 
-        <!-- RESULTS TAB -->
         <div id="results-tab" style="display: none;">
-            <h3 style="color: #3b82f6; margin-bottom: 20px;">📊 Student Performance</h3>
+            <h3 style="margin-bottom: 20px;">📊 Student Performance</h3>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -188,7 +266,6 @@
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
-    <!-- JS WAHI PURANA WALA HAI, KOI CHANGE NAHI KIYA -->
     <script>
         let allQuestions = [];
         let editingId = null;
@@ -211,12 +288,12 @@
             const pass = document.getElementById('admin-pass').value;
             const status = document.getElementById('login-status');
 
-            if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "#ef4444";
-            status.innerText = "Authenticating..."; status.style.color = "#f59e0b";
+            if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "var(--danger-btn)";
+            status.innerText = "Authenticating..."; status.style.color = "var(--primary-color)";
             try {
                 const res = await fetch('/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) });
                 if(res.ok) { localStorage.setItem('isAdminLoggedIn', 'true'); checkAdminLogin(); } 
-                else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "#ef4444"; }
+                else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "var(--danger-btn)"; }
             } catch (err) { status.innerText = "❌ Server error!"; }
         }
 
@@ -260,23 +337,23 @@
                 const results = await res.json();
                 
                 if(results.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ef4444; padding:30px;">No student submissions found.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">No student submissions found.</td></tr>';
                     return;
                 }
 
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date);
-                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="color:#94a3b8; font-size:11px;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
+                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
                     return `
                     <tr>
                         <td style="font-size:13px;">${formattedDate}</td>
-                        <td><strong style="color:#0f172a;">${r.userName}</strong><br><span style="font-size:12px; color:#64748b;">${r.userEmail}</span></td>
-                        <td><strong style="color:#0f172a;">${r.examName}</strong><br><span style="font-size:12px; color:#64748b;">${r.testName}</span></td>
-                        <td style="color:#10b981; font-size:18px; font-weight:700;">${r.score}</td>
-                        <td style="font-size:13px; color:#475569;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
+                        <td><strong>${r.userName}</strong><br><span style="font-size:12px;">${r.userEmail}</span></td>
+                        <td><strong>${r.examName}</strong><br><span style="font-size:12px;">${r.testName}</span></td>
+                        <td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td>
+                        <td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
                     </tr>`;
                 }).join('');
-            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ef4444;">Error fetching results!</td></tr>'; }
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Error fetching results!</td></tr>'; }
         }
 
         function toggleViewMode() {
@@ -284,12 +361,10 @@
             const btn = document.getElementById('view-toggle-btn');
             if (currentViewMode === 'table') {
                 btn.innerHTML = '👁️ Detailed View';
-                btn.style.background = '#1e293b';
                 document.getElementById('table-view-container').style.display = 'block';
                 document.getElementById('card-view-container').style.display = 'none';
             } else {
                 btn.innerHTML = '🗜️ Table View';
-                btn.style.background = '#8b5cf6';
                 document.getElementById('table-view-container').style.display = 'none';
                 document.getElementById('card-view-container').style.display = 'block';
             }
@@ -325,7 +400,7 @@
                 tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             }
             
-            document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#3b82f6;">➕ Add New Test</option>`;
+            document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`;
             
             if (examVal === 'NEW_ITEM') {
                 document.getElementById('test-select').value = 'NEW_ITEM';
@@ -342,7 +417,7 @@
                 allQuestions = await res.json();
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 
-                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#3b82f6;">➕ Add New Exam</option>`;
+                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
                 document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
@@ -370,15 +445,15 @@
             const cardContainer = document.getElementById('card-view-container');
 
             if(filtered.length === 0) {
-                const emptyMsg = '<tr><td colspan="4" style="text-align:center; color:#ef4444; padding:30px;">No questions found for this filter.</td></tr>';
+                const emptyMsg = '<tr><td colspan="4" style="text-align:center; padding:30px;">No questions found for this filter.</td></tr>';
                 tbody.innerHTML = emptyMsg;
-                cardContainer.innerHTML = '<div style="text-align:center; color:#ef4444; padding:30px; background:#fff; border-radius:10px; border:1px solid #e2e8f0;">No questions found for this filter.</div>';
+                cardContainer.innerHTML = '<div style="text-align:center; padding:30px; background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>';
                 return;
             }
             
             tbody.innerHTML = filtered.map(q => `
                 <tr>
-                    <td><strong style="color:#0f172a;">${q.examName || '-'}</strong></td>
+                    <td><strong>${q.examName || '-'}</strong></td>
                     <td>${q.testName || '-'}</td>
                     <td>${(q.text || '').substring(0, 50)}...</td>
                     <td>
@@ -401,9 +476,9 @@
                     <ul class="q-card-options">${optionsHtml}</ul>
                     <div class="q-card-footer">
                         <div>
-                            <strong>Exam:</strong> <span style="color:#0f172a;">${q.examName || '-'}</span> <br>
-                            <strong>Test:</strong> <span style="color:#0f172a;">${q.testName || '-'}</span> <br>
-                            <strong>Marks:</strong> <span style="color:#10b981; font-weight:600;">+${q.positiveMarks}</span> / <span style="color:#ef4444; font-weight:600;">-${q.negativeMarks}</span>
+                            <strong>Exam:</strong> <span>${q.examName || '-'}</span> <br>
+                            <strong>Test:</strong> <span>${q.testName || '-'}</span> <br>
+                            <strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span>
                         </div>
                         <div style="margin-top: 10px;">
                             <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Edit</button>
@@ -423,8 +498,8 @@
             if(!q) return;
             editingId = id;
             document.getElementById('form-title').innerText = "✏️ Edit Question";
-            document.getElementById('submit-btn').innerText = "Update Question";
-            document.getElementById('submit-btn').style.background = "#f59e0b";
+            document.getElementById('submit-btn').innerText = "Update Data";
+            document.getElementById('submit-btn').style.background = "var(--warning-btn)";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
             document.getElementById('exam-select').value = q.examName || '';
@@ -449,7 +524,7 @@
             editingId = null;
             document.getElementById('form-title').innerText = "Add New Question";
             document.getElementById('submit-btn').innerText = "Save Question";
-            document.getElementById('submit-btn').style.background = "#3b82f6";
+            document.getElementById('submit-btn').style.background = "var(--primary-btn)";
             document.getElementById('cancel-edit-btn').style.display = "none";
             document.getElementById('q-text').value = '';
         }
@@ -470,7 +545,7 @@
             };
 
             const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "#f59e0b";
+            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "var(--warning-btn)";
             const endpoint = editingId ? `/update-question/${editingId}` : '/add-question';
             const method = editingId ? 'PUT' : 'POST';
 
@@ -478,8 +553,8 @@
                 const res = await fetch(endpoint, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await res.json();
                 if(res.ok) {
-                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "#10b981";
-                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2500);
+                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "var(--success-btn)";
+                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2000);
                     if(editingId) cancelEdit(); 
                     else {
                         document.getElementById('q-text').value = '';
@@ -489,8 +564,8 @@
                         document.getElementById('opt-3').value = '';
                     }
                     fetchAllData(); 
-                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "#ef4444"; }
-            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "#ef4444"; }
+                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "var(--danger-btn)"; }
+            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
         });
     </script>
 </body>
