@@ -28,8 +28,11 @@
         .del-btn { background: #e74c3c; }
         .del-btn:hover { background: #c0392b; }
 
-        .view-toggle-btn { background: #9b59b6; margin-bottom: 10px; font-size: 13px; }
-        .view-toggle-btn:hover { background: #8e44ad; }
+        .view-toggle-btn { background: #34495e; font-size: 13px; }
+        .view-toggle-btn:hover { background: #2c3e50; }
+        .add-new-btn { background: #27ae60; font-size: 13px; }
+        .add-new-btn:hover { background: #219653; }
+        
         .card-view { display: none; } 
         .q-card { background: #fff; border: 1px solid #ddd; border-left: 4px solid #3498db; border-radius: 5px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .q-card h4 { margin-top: 0; margin-bottom: 10px; color: #2c3e50; font-size: 16px;}
@@ -107,11 +110,15 @@
             </form>
         </div>
 
-        <!-- 2. MANAGE TAB WITH FILTERS & VIEW TOGGLE -->
+        <!-- 2. MANAGE TAB -->
         <div id="manage-tab" style="display: none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h3 style="color: #2980b9; margin-bottom: 10px;">📋 Questions Manage Karo</h3>
-                <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto;">👁️ Detailed View dekhein</button>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px; gap: 10px;">
+                <h3 style="color: #2980b9; margin: 0;">📋 Questions Manage Karo</h3>
+                <div style="display: flex; gap: 5px;">
+                    <button class="add-new-btn" onclick="startAddFromManage()" style="width: auto; padding: 8px 12px; margin: 0;">➕ Add New</button>
+                    <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; padding: 8px 12px; margin: 0;">👁️ Detailed View</button>
+                </div>
             </div>
             
             <div class="filter-box">
@@ -209,7 +216,6 @@
 
         function adminLogout() { localStorage.removeItem('isAdminLoggedIn'); checkAdminLogin(); }
 
-        // TAB SWITCHER
         function switchTab(tab) {
             document.getElementById('add-tab').style.display = tab === 'add' ? 'block' : 'none';
             document.getElementById('manage-tab').style.display = tab === 'manage' ? 'block' : 'none';
@@ -220,10 +226,29 @@
             document.getElementById('tab-results-btn').className = tab === 'results' ? 'tab-btn active' : 'tab-btn';
             
             if(tab === 'manage') fetchAllData();
-            if(tab === 'results') fetchResultsData(); // Results load karo
+            if(tab === 'results') fetchResultsData(); 
         }
 
-        // RESULTS FETCH LOGIC
+        // NAYA FUNCTION: Manage tab se directly Add karne ke liye (Shortcut)
+        function startAddFromManage() {
+            cancelEdit(); // Agar pehle se koi edit chal raha hai toh hata do
+            const currentFilterExam = document.getElementById('filter-exam').value;
+            const currentFilterTest = document.getElementById('filter-test').value;
+            
+            switchTab('add');
+            
+            // Filters ki value seedha Add Form mein bhar do
+            if(currentFilterExam) {
+                document.getElementById('exam-select').value = currentFilterExam;
+                handleExamChange(); // Ye tests ko populate kar dega
+                if(currentFilterTest) {
+                    document.getElementById('test-select').value = currentFilterTest;
+                    toggleCustomInput('test');
+                }
+            }
+            window.scrollTo(0, 0);
+        }
+
         async function fetchResultsData() {
             const tbody = document.getElementById('results-table-body');
             tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Fetching Results...</td></tr>';
@@ -237,10 +262,8 @@
                 }
 
                 tbody.innerHTML = results.map(r => {
-                    // Date ko ache se dikhane ke liye format karna
                     const dateObj = new Date(r.date);
                     const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> ' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
-                    
                     return `
                     <tr>
                         <td style="font-size:12px;">${formattedDate}</td>
@@ -248,26 +271,22 @@
                         <td><strong>${r.examName}</strong><br><span style="font-size:12px;">${r.testName}</span></td>
                         <td style="color:#27ae60; font-size:18px;"><strong>${r.score}</strong></td>
                         <td style="font-size:12px;">✅ Sahi: ${r.correct}<br>❌ Galat: ${r.wrong}<br>⚠️ Skip: ${r.skipped}</td>
-                    </tr>
-                    `;
+                    </tr>`;
                 }).join('');
-            } catch(e) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Error fetching results!</td></tr>';
-            }
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Error fetching results!</td></tr>'; }
         }
 
-        // VIEW MODE TOGGLE (Manage Questions)
         function toggleViewMode() {
             currentViewMode = currentViewMode === 'table' ? 'card' : 'table';
             const btn = document.getElementById('view-toggle-btn');
             if (currentViewMode === 'table') {
-                btn.innerHTML = '👁️ Detailed View dekhein';
-                btn.style.background = '#9b59b6';
+                btn.innerHTML = '👁️ Detailed View';
+                btn.style.background = '#34495e';
                 document.getElementById('table-view-container').style.display = 'block';
                 document.getElementById('card-view-container').style.display = 'none';
             } else {
-                btn.innerHTML = '🗜️ Table View dekhein';
-                btn.style.background = '#34495e';
+                btn.innerHTML = '🗜️ Table View';
+                btn.style.background = '#9b59b6';
                 document.getElementById('table-view-container').style.display = 'none';
                 document.getElementById('card-view-container').style.display = 'block';
             }
