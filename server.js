@@ -15,23 +15,25 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Database connected successfully!'))
     .catch((err) => console.log('❌ Error:', err.message));
 
+// --- ADMIN API ---
 app.post('/admin-login', (req, res) => {
     const { username, password } = req.body;
     if (username === 'admin' && password === 'TomarJi123') {
         res.status(200).json({ message: "Welcome Admin!" });
     } else {
-        res.status(400).json({ error: "Galat ID ya Password!" });
+        res.status(400).json({ error: "Invalid Credentials!" });
     }
 });
 
+// --- STUDENT AUTH APIs ---
 app.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const existingUser = await User.findOne({ email });
-        if (existingUser) return res.status(400).json({ error: "Ye email pehle se registered hai!" });
+        if (existingUser) return res.status(400).json({ error: "Email is already registered!" });
         const newUser = new User({ name, email, password });
         await newUser.save();
-        res.status(201).json({ message: "Account ban gaya! Ab login karo." });
+        res.status(201).json({ message: "Account created successfully! Please login." });
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
@@ -39,26 +41,28 @@ app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email, password });
-        if (!user) return res.status(400).json({ error: "Email ya Password galat hai!" });
+        if (!user) return res.status(400).json({ error: "Invalid Email or Password!" });
         res.status(200).json({ message: "Login Successful", name: user.name, email: user.email });
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
+// --- FETCH DATA APIs ---
 app.get('/get-exams', async (req, res) => {
     try { res.status(200).json(await Question.distinct('examName')); } 
-    catch (error) { res.status(500).json({ error: "Exams nahi mile" }); }
+    catch (error) { res.status(500).json({ error: "Failed to fetch exams" }); }
 });
 
 app.get('/get-tests/:examName', async (req, res) => {
     try { res.status(200).json(await Question.distinct('testName', { examName: req.params.examName })); } 
-    catch (error) { res.status(500).json({ error: "Tests nahi mile" }); }
+    catch (error) { res.status(500).json({ error: "Failed to fetch tests" }); }
 });
 
 app.post('/get-test-questions', async (req, res) => {
     try { res.status(200).json(await Question.find({ examName: req.body.examName, testName: req.body.testName })); } 
-    catch (error) { res.status(500).json({ error: "Questions fetch error" }); }
+    catch (error) { res.status(500).json({ error: "Error fetching questions" }); }
 });
 
+// --- RESULTS & LEADERBOARD APIs ---
 app.post('/save-result', async (req, res) => {
     try {
         const newResult = new Result(req.body);
@@ -67,11 +71,28 @@ app.post('/save-result', async (req, res) => {
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
+app.post('/leaderboard', async (req, res) => {
+    try {
+        const { examName, testName } = req.body;
+        // Sort by score (descending) and then date (ascending) for tie-breakers
+        const leaderboard = await Result.find({ examName, testName }).sort({ score: -1, date: 1 });
+        res.status(200).json(leaderboard);
+    } catch (error) { res.status(500).json({ error: "Failed to fetch leaderboard" }); }
+});
+
+app.get('/all-results', async (req, res) => {
+    try {
+        const results = await Result.find().sort({ date: -1 }); 
+        res.status(200).json(results);
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+// --- ADMIN CRUD APIs ---
 app.post('/add-question', async (req, res) => {
     try {
         const newQuestion = new Question(req.body);
         await newQuestion.save();
-        res.status(201).json({ message: "Question add ho gaya!" });
+        res.status(201).json({ message: "Question added successfully!" });
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
@@ -85,22 +106,14 @@ app.get('/all-questions', async (req, res) => {
 app.put('/update-question/:id', async (req, res) => {
     try {
         await Question.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).json({ message: "Question update ho gaya!" });
+        res.status(200).json({ message: "Question updated successfully!" });
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
 app.delete('/delete-question/:id', async (req, res) => {
     try {
         await Question.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "Question delete ho gaya!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-// --- NAYI API: Sabhi baccho ka Result fetch karne ke liye ---
-app.get('/all-results', async (req, res) => {
-    try {
-        const results = await Result.find().sort({ date: -1 }); // Naya sabse upar dikhega
-        res.status(200).json(results);
+        res.status(200).json({ message: "Question deleted successfully!" });
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
