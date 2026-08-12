@@ -23,7 +23,7 @@
 <body>
     <div class="container">
         <h2>📝 Live Test</h2>
-        <div id="test-container">Loading... Server on karo bhai!</div>
+        <div id="test-container">Loading...</div>
         <button onclick="submitTest()" id="submit-btn" style="display:none;">Submit Test</button>
         <div id="result"></div>
         <div class="footer">Developed by Tomar Ji</div>
@@ -32,8 +32,8 @@
     <script>
         let questionsData = [];
 
-        // Backend se automatically questions mangwana
-        fetch('http://localhost:5000/get-questions')
+        // Localhost hatakar sirf '/get-questions' kar diya hai
+        fetch('/get-questions')
             .then(response => response.json())
             .then(data => {
                 questionsData = data;
@@ -66,7 +66,6 @@
             document.getElementById('submit-btn').style.display = 'block';
         }
 
-        // Test Submit karne par Number calculate karna
         function submitTest() {
             let score = 0, correct = 0, wrong = 0, skipped = 0;
 
@@ -92,7 +91,7 @@
                 <p>✅ Sahi Jawab: ${correct} | ❌ Galat Jawab: ${wrong} | ⚠️ Chhod diye: ${skipped}</p>
             `;
             document.getElementById('submit-btn').style.display = 'none';
-            document.getElementById('test-container').style.pointerEvents = 'none'; // Test lock karna
+            document.getElementById('test-container').style.pointerEvents = 'none';
         }
     </script>
 </body>
