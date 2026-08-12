@@ -16,7 +16,9 @@
         .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px;}
         .tab-btn.active { background: #e74c3c; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        .filter-box { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
+        
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
         th { background-color: #34495e; color: white; }
         tr:nth-child(even) { background-color: #f9f9f9; }
@@ -51,10 +53,10 @@
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage All Questions</button>
         </div>
 
+        <!-- ADD / EDIT TAB -->
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
-                <!-- Interlinked Dropdown System -->
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Exam Name:</label>
@@ -94,8 +96,25 @@
             </form>
         </div>
 
+        <!-- MANAGE TAB WITH FILTERS -->
         <div id="manage-tab" style="display: none;">
-            <h3 style="color: #2980b9;">Saare Tests aur Questions</h3>
+            <h3 style="color: #2980b9;">📋 Questions Manage Karo</h3>
+            
+            <div class="filter-box">
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="color: #2c3e50;">Filter by Exam:</label>
+                    <select id="filter-exam" onchange="handleFilterExamChange()">
+                        <option value="">-- Sabhi Exams Dekho --</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="color: #2c3e50;">Filter by Test:</label>
+                    <select id="filter-test" onchange="renderFilteredTable()">
+                        <option value="">-- Sabhi Tests Dekho --</option>
+                    </select>
+                </div>
+            </div>
+
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -156,7 +175,6 @@
             if(tab === 'manage') fetchAllData();
         }
 
-        // Toggle custom inputs
         function toggleCustomInput(type) {
             const selectVal = document.getElementById(type + '-select').value;
             const customInput = document.getElementById('custom-' + type);
@@ -170,14 +188,12 @@
             }
         }
 
-        // Yahan par EXAM chunne par Test filter honge
         function handleExamChange() {
             const examVal = document.getElementById('exam-select').value;
             toggleCustomInput('exam');
 
             let tests = [];
             if(examVal && examVal !== 'NEW_ITEM') {
-                // Sirf wahi tests lo jo selected exam ke hain
                 tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             }
 
@@ -186,7 +202,6 @@
                 tests.map(t => `<option value="${t}">${t}</option>`).join('') +
                 `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
 
-            // Agar naya exam bana raha hai, toh test bhi automatically naya type karne ka option khul jaye
             if (examVal === 'NEW_ITEM') {
                 document.getElementById('test-select').value = 'NEW_ITEM';
                 toggleCustomInput('test');
@@ -201,35 +216,70 @@
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
                 
-                // Sirf Exams load karo shuru mein
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
+                
+                // ADD TAB Dropdowns
                 document.getElementById('exam-select').innerHTML = 
                     `<option value="">-- Select Exam --</option>` + 
                     exams.map(e => `<option value="${e}">${e}</option>`).join('') +
                     `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
-                    
-                // Test dropdown ko khali kar do taaki jab tak Exam na chune tab tak band rahe
                 document.getElementById('test-select').innerHTML = `<option value="">-- Pehle Exam Chuno --</option><option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
 
-                const tbody = document.getElementById('questions-table-body');
-                if(allQuestions.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Koi question nahi mila. Pehle ek add karo!</td></tr>';
-                    return;
-                }
+                // MANAGE TAB Filter Dropdowns
+                document.getElementById('filter-exam').innerHTML = 
+                    `<option value="">-- Sabhi Exams Dekho --</option>` + 
+                    exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
-                tbody.innerHTML = allQuestions.map(q => `
-                    <tr>
-                        <td><strong>${q.examName || '-'}</strong></td>
-                        <td>${q.testName || '-'}</td>
-                        <td>${(q.text || '').substring(0, 50)}...</td>
-                        <td>
-                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
-                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
-                        </td>
-                    </tr>
-                `).join('');
+                handleFilterExamChange(); // Ye filter table ko initial load par set kar dega
+
             } catch(e) { console.log(e); }
         }
+
+        // --- NEW: Filter Logic for Manage Table ---
+        function handleFilterExamChange() {
+            const examVal = document.getElementById('filter-exam').value;
+            let tests = [];
+            
+            if(examVal) {
+                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            } else {
+                tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
+            }
+
+            document.getElementById('filter-test').innerHTML = 
+                `<option value="">-- Sabhi Tests Dekho --</option>` + 
+                tests.map(t => `<option value="${t}">${t}</option>`).join('');
+                
+            renderFilteredTable();
+        }
+
+        function renderFilteredTable() {
+            const examVal = document.getElementById('filter-exam').value;
+            const testVal = document.getElementById('filter-test').value;
+
+            let filtered = allQuestions;
+            if(examVal) filtered = filtered.filter(q => q.examName === examVal);
+            if(testVal) filtered = filtered.filter(q => q.testName === testVal);
+
+            const tbody = document.getElementById('questions-table-body');
+            if(filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Is filter mein koi question nahi mila.</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filtered.map(q => `
+                <tr>
+                    <td><strong>${q.examName || '-'}</strong></td>
+                    <td>${q.testName || '-'}</td>
+                    <td>${(q.text || '').substring(0, 50)}...</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
+                        <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        // ------------------------------------------
 
         async function deleteQuestion(id) {
             if(confirm("Pakka is question ko delete karna hai?")) {
@@ -249,7 +299,7 @@
             document.getElementById('cancel-edit-btn').style.display = "block";
             
             document.getElementById('exam-select').value = q.examName || '';
-            handleExamChange(); // Update tests list manually for selected exam
+            handleExamChange(); 
             
             document.getElementById('test-select').value = q.testName || '';
             toggleCustomInput('test');
