@@ -4,32 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Test Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; color: #333;}
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
-        h2 { color: #2c3e50; border-bottom: 2px solid #007bff; padding-bottom: 10px; text-align: center;}
-        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; box-sizing: border-box;}
-        .selection-box { background: #e9ecef; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        select, button { width: 100%; padding: 12px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px; }
-        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; transition: 0.3s;}
-        button:hover { background: #0056b3; }
-        .question { margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-left: 4px solid #007bff; border-radius: 4px; }
-        .marks { color: #666; font-size: 0.9em; float: right; }
-        .options { list-style: none; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; color: #2d3748;}
+        .container { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); max-width: 650px; margin: 20px auto; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(10px);}
+        h2 { color: #1a202c; border-bottom: none; padding-bottom: 0; text-align: center; font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 25px;}
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 15px; box-sizing: border-box; background: #f8fafc; transition: all 0.3s;}
+        input:focus { border-color: #4299e1; outline: none; box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15); background: #fff;}
+        .selection-box { background: #f8fafc; padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #edf2f7; }
+        select { width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 15px; background: #fff; cursor: pointer; transition: all 0.3s;}
+        select:focus { border-color: #4299e1; outline: none; box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);}
+        button { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px; border: none; cursor: pointer; font-weight: 600; border-radius: 12px; font-size: 16px; width: 100%; margin-top: 15px; transition: all 0.3s ease; letter-spacing: 0.5px;}
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+        .question { margin-bottom: 25px; padding: 20px; background: #fff; border-left: 5px solid #4299e1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;}
+        .marks { color: #718096; font-size: 0.85em; float: right; font-weight: 600; background: #edf2f7; padding: 4px 8px; border-radius: 6px;}
+        .options { list-style: none; padding: 0; margin-top: 15px;}
         .options li { margin: 10px 0; }
-        .options label { cursor: pointer; display: block; padding: 8px; border: 1px solid #ddd; border-radius: 4px; transition: 0.2s; }
-        .options label:hover { background: #e9ecef; }
-        .submit-btn { background: #28a745; margin-top: 20px;}
-        .submit-btn:hover { background: #218838; }
-        
-        /* Leaderboard Styles */
-        .result-box { margin-top: 20px; padding: 20px; background: #d4edda; border-radius: 8px; border: 1px solid #c3e6cb; text-align: center;}
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #2c3e50; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-
-        .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #888; font-weight: bold;}
+        .options label { cursor: pointer; display: block; padding: 12px 15px; border: 2px solid #edf2f7; border-radius: 10px; transition: all 0.2s; font-size: 15px; color: #4a5568;}
+        .options label:hover { background: #ebf8ff; border-color: #90cdf4; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); accent-color: #4299e1;}
+        .submit-btn { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); margin-top: 25px;}
+        .submit-btn:hover { box-shadow: 0 8px 15px rgba(56, 161, 105, 0.3); }
+        .result-box { margin-top: 25px; padding: 25px; background: #f0fff4; border-radius: 16px; border: 1px solid #c6f6d5; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05);}
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 14px; border-radius: 12px; overflow: hidden; border: 1px solid #edf2f7;}
+        th, td { padding: 15px; text-align: left; }
+        th { background-color: #2d3748; color: white; font-weight: 500; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px;}
+        td { border-bottom: 1px solid #edf2f7; background: #fff;}
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f7fafc; }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: #a0aec0; font-weight: 600; letter-spacing: 1px;}
     </style>
 </head>
 <body>
@@ -39,17 +42,17 @@
         <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
         <input type="email" id="auth-email" placeholder="Email Address">
         <input type="password" id="auth-password" placeholder="Password">
-        <button onclick="handleAuth()" id="auth-btn">Login</button>
-        <p style="text-align:center; cursor:pointer; color:#007bff; margin-top: 15px;" onclick="toggleAuth()">New user? <strong>Create an Account</strong></p>
-        <div id="auth-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
+        <button onclick="handleAuth()" id="auth-btn">Login to Portal</button>
+        <p style="text-align:center; cursor:pointer; color:#4299e1; margin-top: 20px; font-weight: 500;" onclick="toggleAuth()">New user? <strong>Create an Account</strong></p>
+        <div id="auth-status" style="text-align:center; margin-top:15px; font-weight:600;"></div>
     </div>
 
     <div id="portal-section" class="container" style="display: none;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin: 0; border: none;">📝 Test Portal</h2>
-            <button onclick="logout()" style="width:auto; background:#dc3545; padding:8px 15px; margin:0;">Logout</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 25px;">
+            <h2 style="margin: 0;">📝 Test Portal</h2>
+            <button onclick="logout()" style="width:auto; background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); padding:8px 20px; margin:0; font-size: 14px; border-radius: 8px;">Logout</button>
         </div>
-        <h4 style="color:#28a745; margin-bottom: 20px;">Welcome, <span id="user-display-name"></span>!</h4>
+        <h4 style="color:#38a169; margin-bottom: 25px; font-size: 18px;">Welcome back, <span id="user-display-name" style="color:#2d3748; font-weight:700;"></span>!</h4>
         
         <div id="selection-area" class="selection-box">
             <label><strong>Select Exam:</strong></label>
@@ -57,16 +60,16 @@
                 <option value="">-- Select Exam --</option>
             </select>
 
-            <label style="display:block; margin-top:15px;"><strong>Select Test:</strong></label>
+            <label style="display:block; margin-top:20px;"><strong>Select Test:</strong></label>
             <select id="test-select">
                 <option value="">-- Select Exam First --</option>
             </select>
 
-            <button onclick="startTest()">🚀 Start Test</button>
+            <button onclick="startTest()" style="margin-top: 25px;">🚀 Start Test</button>
         </div>
 
         <div id="test-area" style="display: none;">
-            <h3 id="test-title" style="color: #007bff;"></h3>
+            <h3 id="test-title" style="color: #4299e1; text-align: center; margin-bottom: 25px; font-size: 22px;"></h3>
             <div id="test-container"></div>
             <button class="submit-btn" onclick="submitTest()" id="submit-btn">Submit Test</button>
             <div id="result"></div>
@@ -82,7 +85,7 @@
         function toggleAuth() {
             isLogin = !isLogin;
             document.getElementById('auth-title').innerText = isLogin ? "🎓 Student Login" : "📝 Student Registration";
-            document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
+            document.getElementById('auth-btn').innerText = isLogin ? "Login to Portal" : "Register Account";
             document.getElementById('auth-name').style.display = isLogin ? "none" : "block";
             document.getElementById('auth-status').innerText = "";
         }
@@ -95,11 +98,11 @@
 
             if(!email || !password || (!isLogin && !name)) {
                 status.innerText = "❌ Please fill all fields!";
-                status.style.color = "red";
+                status.style.color = "#e53e3e";
                 return;
             }
 
-            status.innerText = "Processing..."; status.style.color = "#007bff";
+            status.innerText = "Processing..."; status.style.color = "#4299e1";
             const endpoint = isLogin ? '/login' : '/signup';
             const payload = isLogin ? { email, password } : { name, email, password };
 
@@ -117,14 +120,14 @@
                         localStorage.setItem('userEmail', data.email);
                         checkLogin();
                     } else {
-                        status.innerText = "✅ " + data.message; status.style.color = "green";
+                        status.innerText = "✅ " + data.message; status.style.color = "#38a169";
                         setTimeout(toggleAuth, 1500);
                     }
                 } else {
-                    status.innerText = "❌ " + data.error; status.style.color = "red";
+                    status.innerText = "❌ " + data.error; status.style.color = "#e53e3e";
                 }
             } catch (e) {
-                status.innerText = "❌ Server error!"; status.style.color = "red";
+                status.innerText = "❌ Server error!"; status.style.color = "#e53e3e";
             }
         }
 
@@ -189,7 +192,7 @@
             document.getElementById('selection-area').style.display = 'none';
             document.getElementById('test-area').style.display = 'block';
             document.getElementById('test-title').innerText = `${examName} - ${testName}`;
-            document.getElementById('test-container').innerHTML = '<p style="text-align:center;">Loading Questions...</p>';
+            document.getElementById('test-container').innerHTML = '<p style="text-align:center; color:#718096; font-weight:500;">Loading Questions...</p>';
 
             fetch('/get-test-questions', {
                 method: 'POST',
@@ -207,14 +210,14 @@
             const container = document.getElementById('test-container');
             container.innerHTML = '';
             if(questionsData.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:red;">No questions available for this test.</p>';
+                container.innerHTML = '<p style="text-align:center; color:#e53e3e; font-weight:600;">No questions available for this test.</p>';
                 document.getElementById('submit-btn').style.display = 'none';
                 return;
             }
 
             questionsData.forEach((q, index) => {
                 let html = `<div class="question">
-                    <p><strong>Q${index + 1}: ${q.text}</strong> <span class="marks">(+${q.positiveMarks} / -${q.negativeMarks})</span></p>
+                    <p style="font-size: 16px; margin-top:0;"><strong>Q${index + 1}: ${q.text}</strong> <span class="marks">+${q.positiveMarks} / -${q.negativeMarks}</span></p>
                     <ul class="options">`;
                 
                 q.options.forEach((opt, optIndex) => {
@@ -259,29 +262,25 @@
             };
 
             const container = document.getElementById('test-container');
-            container.innerHTML = '<h3 style="text-align:center; color:#007bff;">Submitting Test & Generating Leaderboard...</h3>';
+            container.innerHTML = '<h3 style="text-align:center; color:#4299e1;">Submitting Test & Generating Leaderboard...</h3>';
             document.getElementById('submit-btn').style.display = 'none';
 
             try {
-                // 1. Save Result
                 await fetch('/save-result', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-
-                // 2. Fetch Leaderboard
                 const lbRes = await fetch('/leaderboard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) });
                 const leaderboard = await lbRes.json();
 
-                // 3. Render Final UI
                 let userRank = leaderboard.findIndex(r => r.userEmail === userEmail && r.score === score) + 1;
                 
                 let resultHtml = `
                     <div class="result-box">
-                        <h2 style="color:#28a745; margin-top:0;">Test Submitted Successfully!</h2>
-                        <h3>📊 Your Score: ${score}</h3>
-                        <p>✅ Correct: ${correct} | ❌ Incorrect: ${wrong} | ⚠️ Skipped: ${skipped}</p>
-                        <h2 style="color:#007bff; border:2px dashed #007bff; display:inline-block; padding:10px; border-radius:5px;">🏆 Your Rank: #${userRank} out of ${leaderboard.length}</h2>
+                        <h2 style="color:#2f855a; margin-top:0;">Test Submitted Successfully!</h2>
+                        <h3 style="color:#2d3748; font-size: 24px;">📊 Your Score: ${score}</h3>
+                        <p style="color:#4a5568; font-weight:500;">✅ Correct: ${correct} &nbsp;|&nbsp; ❌ Incorrect: ${wrong} &nbsp;|&nbsp; ⚠️ Skipped: ${skipped}</p>
+                        <h2 style="color:#2b6cb0; border:2px dashed #3182ce; display:inline-block; padding:12px 25px; border-radius:12px; background:#ebf8ff;">🏆 Your Rank: #${userRank} <span style="font-size:16px; font-weight:500; color:#4a5568;">out of ${leaderboard.length}</span></h2>
                     </div>
                     
-                    <h3 style="margin-top: 30px; color: #2c3e50; border-bottom: 2px solid #ccc; padding-bottom: 5px;">🏅 Live Leaderboard</h3>
+                    <h3 style="margin-top: 40px; color: #2d3748; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; text-align:left;">🏅 Live Leaderboard</h3>
                     <div style="overflow-x: auto;">
                     <table>
                         <thead><tr><th>Rank</th><th>Student Name</th><th>Score</th></tr></thead>
@@ -290,22 +289,22 @@
 
                 leaderboard.forEach((entry, idx) => {
                     const isCurrentUser = (entry.userEmail === userEmail && entry.score === score);
-                    const rowStyle = isCurrentUser ? 'background-color: #d4edda; font-weight: bold; border-left: 4px solid #28a745;' : '';
+                    const rowStyle = isCurrentUser ? 'background-color: #f0fff4; font-weight: 600; color: #2f855a;' : '';
                     const medal = idx === 0 ? '🥇 ' : (idx === 1 ? '🥈 ' : (idx === 2 ? '🥉 ' : ''));
                     resultHtml += `<tr style="${rowStyle}">
-                        <td>${medal}#${idx + 1}</td>
-                        <td>${entry.userName} ${isCurrentUser ? '(You)' : ''}</td>
-                        <td><strong>${entry.score}</strong></td>
+                        <td><strong style="font-size:16px;">${medal}#${idx + 1}</strong></td>
+                        <td>${entry.userName} ${isCurrentUser ? '<span style="font-size:12px; background:#48bb78; color:white; padding:2px 6px; border-radius:10px; margin-left:5px;">You</span>' : ''}</td>
+                        <td><strong style="font-size:16px;">${entry.score}</strong></td>
                     </tr>`;
                 });
 
                 resultHtml += `</tbody></table></div>
-                <button onclick="location.reload()" style="margin-top:20px; background:#6c757d;">Return to Dashboard</button>`;
+                <button onclick="location.reload()" style="margin-top:25px; background: #718096;">Return to Dashboard</button>`;
 
                 container.innerHTML = resultHtml;
 
             } catch (error) {
-                container.innerHTML = '<p style="color:red; text-align:center;">Error processing result. Please refresh.</p>';
+                container.innerHTML = '<p style="color:#e53e3e; text-align:center; font-weight:bold;">Error processing result. Please refresh.</p>';
             }
         }
     </script>

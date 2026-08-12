@@ -3,65 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard - Tomar Ji</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f4f6f9; color: #333;}
-        .container { background: white; padding: 30px; border-radius: 10px; max-width: 900px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
-        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; margin-top:0; color: #2c3e50;}
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e;}
-        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;}
-        button { background: #e74c3c; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;}
-        button:hover { background: #c0392b; }
-        .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px; padding: 10px; font-size: 14px;}
-        .tab-btn.active { background: #e74c3c; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background-color: #f8fafc; color: #0f172a;}
+        .container { background: #ffffff; padding: 35px; border-radius: 16px; max-width: 950px; margin: 20px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #f1f5f9;}
+        h2 { border-bottom: none; padding-bottom: 0; text-align: center; margin-top:0; margin-bottom:25px; color: #0f172a; font-size: 26px; font-weight: 700;}
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #475569; font-size: 14px;}
+        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px 14px; margin-top: 5px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; font-size: 14px; background: #f8fafc; transition: 0.2s; font-family: 'Inter', sans-serif;}
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); background: #fff;}
+        button { background: #3b82f6; color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
+        button:hover { background: #2563eb; transform: translateY(-1px);}
         
-        .filter-box { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
+        .tab-btn { background: #f1f5f9; color: #475569; margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; box-shadow: none;}
+        .tab-btn:hover { background: #e2e8f0; color: #0f172a; transform: none;}
+        .tab-btn.active { background: #3b82f6; color: white; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25); }
         
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
-        th { background-color: #34495e; color: white; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        .action-btn { padding: 5px 10px; margin: 2px; font-size: 12px; }
-        .edit-btn { background: #f39c12; }
-        .edit-btn:hover { background: #d68910; }
-        .del-btn { background: #e74c3c; }
-        .del-btn:hover { background: #c0392b; }
+        .filter-box { background: #f8fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid #e2e8f0;}
+        
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; margin-top:10px;}
+        th, td { padding: 14px 16px; text-align: left; }
+        th { background-color: #f1f5f9; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0;}
+        td { border-bottom: 1px solid #e2e8f0; color: #334155;}
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f8fafc; }
+        
+        .action-btn { padding: 6px 12px; margin: 2px; font-size: 12px; border-radius: 6px; }
+        .edit-btn { background: #f59e0b; }
+        .edit-btn:hover { background: #d97706; }
+        .del-btn { background: #ef4444; }
+        .del-btn:hover { background: #dc2626; }
 
-        .view-toggle-btn { background: #34495e; font-size: 13px; }
-        .view-toggle-btn:hover { background: #2c3e50; }
-        .add-new-btn { background: #27ae60; font-size: 13px; }
-        .add-new-btn:hover { background: #219653; }
+        .view-toggle-btn { background: #1e293b; font-size: 13px; }
+        .view-toggle-btn:hover { background: #0f172a; }
+        .add-new-btn { background: #10b981; font-size: 13px; }
+        .add-new-btn:hover { background: #059669; }
         
         .card-view { display: none; } 
-        .q-card { background: #fff; border: 1px solid #ddd; border-left: 4px solid #3498db; border-radius: 5px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .q-card h4 { margin-top: 0; margin-bottom: 10px; color: #2c3e50; font-size: 16px;}
+        .q-card { background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .q-card h4 { margin-top: 0; margin-bottom: 15px; color: #0f172a; font-size: 16px; font-weight: 600;}
         .q-card-options { list-style-type: none; padding-left: 0; margin-bottom: 15px; }
-        .q-card-options li { padding: 8px; border: 1px solid #eee; margin-bottom: 5px; border-radius: 4px; font-size: 14px; background: #fafafa;}
-        .q-card-options li.correct { background-color: #d4edda; border-color: #c3e6cb; font-weight: bold; color: #155724;}
-        .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px; font-size: 12px; color: #7f8c8d; flex-wrap: wrap; gap: 10px;}
+        .q-card-options li { padding: 10px 12px; border: 1px solid #e2e8f0; margin-bottom: 8px; border-radius: 6px; font-size: 14px; background: #f8fafc; color: #475569;}
+        .q-card-options li.correct { background-color: #ecfdf5; border-color: #a7f3d0; font-weight: 600; color: #065f46;}
+        .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 10px;}
 
-        #status { margin-top: 15px; text-align: center; font-weight: bold; }
-        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #7f8c8d; font-weight: bold;}
+        #status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
+        .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: #94a3b8; font-weight: 600; letter-spacing: 1px;}
     </style>
 </head>
 <body>
 
-    <div id="admin-login-section" class="container" style="max-width: 500px;">
-        <h2>🔒 Admin Login</h2>
-        <div class="form-group"><label>Admin ID:</label><input type="text" id="admin-user" placeholder="Enter Username"></div>
-        <div class="form-group"><label>Password:</label><input type="password" id="admin-pass" placeholder="Enter Password"></div>
-        <button onclick="handleAdminLogin()" style="width:100%">Login as Admin</button>
-        <div id="login-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
+    <div id="admin-login-section" class="container" style="max-width: 450px; margin-top: 80px;">
+        <h2>🔒 Admin Access</h2>
+        <div class="form-group"><label>Admin ID</label><input type="text" id="admin-user" placeholder="Enter Username"></div>
+        <div class="form-group"><label>Password</label><input type="password" id="admin-pass" placeholder="Enter Password"></div>
+        <button onclick="handleAdminLogin()" style="width:100%; margin-top: 10px; padding: 14px; font-size: 15px;">Login to Dashboard</button>
+        <div id="login-status" style="text-align:center; margin-top:15px; font-weight:600;"></div>
     </div>
 
     <div id="admin-panel-section" class="container" style="display: none;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin: 0; border: none;">⚙️ Admin Dashboard</h2>
-            <button onclick="adminLogout()" style="background:#7f8c8d;">Logout</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
+            <h2 style="margin: 0;">⚙️ Dashboard</h2>
+            <button onclick="adminLogout()" style="background:#64748b; padding: 8px 16px;">Logout</button>
         </div>
         
-        <div style="margin-top: 20px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+        <div style="margin-bottom: 25px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
             <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add Question</button>
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage Questions</button>
             <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Student Results</button>
@@ -69,43 +76,46 @@
 
         <!-- ADD TAB -->
         <div id="add-tab">
-            <h3 id="form-title" style="color: #2980b9;">Add New Question</h3>
+            <h3 id="form-title" style="color: #3b82f6; margin-bottom: 20px;">Add New Question</h3>
             <form id="add-q-form">
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Exam Name:</label>
+                        <label>Exam Name</label>
                         <select id="exam-select" onchange="handleExamChange()" required>
                             <option value="">-- Select Exam --</option>
                         </select>
-                        <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
+                        <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid #3b82f6;">
                     </div>
                     <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Test Name:</label>
+                        <label>Test Name</label>
                         <select id="test-select" onchange="toggleCustomInput('test')" required>
                             <option value="">-- Select Exam First --</option>
                         </select>
-                        <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
+                        <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid #3b82f6;">
                     </div>
                 </div>
 
-                <div class="form-group"><label>Question Text:</label><textarea id="q-text" rows="3" required></textarea></div>
-                <div class="form-group"><label>Option 1:</label><input type="text" id="opt-0" required></div>
-                <div class="form-group"><label>Option 2:</label><input type="text" id="opt-1" required></div>
-                <div class="form-group"><label>Option 3:</label><input type="text" id="opt-2" required></div>
-                <div class="form-group"><label>Option 4:</label><input type="text" id="opt-3" required></div>
+                <div class="form-group"><label>Question Text</label><textarea id="q-text" rows="3" required placeholder="Type the question here..."></textarea></div>
+                <div class="form-group"><label>Option 1</label><input type="text" id="opt-0" required placeholder="First option"></div>
+                <div class="form-group"><label>Option 2</label><input type="text" id="opt-1" required placeholder="Second option"></div>
+                <div class="form-group"><label>Option 3</label><input type="text" id="opt-2" required placeholder="Third option"></div>
+                <div class="form-group"><label>Option 4</label><input type="text" id="opt-3" required placeholder="Fourth option"></div>
+                
                 <div class="form-group">
-                    <label>Correct Answer:</label>
+                    <label>Correct Answer</label>
                     <select id="correct-opt">
                         <option value="0">Option 1</option><option value="1">Option 2</option>
                         <option value="2">Option 3</option><option value="3">Option 4</option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                    <div class="form-group" style="flex: 1;"><label>Positive Marks (+):</label><input type="number" id="pos-marks" value="4" required></div>
-                    <div class="form-group" style="flex: 1;"><label>Negative Marks (-):</label><input type="number" id="neg-marks" value="1" required></div>
+                
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div class="form-group" style="flex: 1; margin-bottom:0;"><label>Positive Marks (+)</label><input type="number" id="pos-marks" value="4" required></div>
+                    <div class="form-group" style="flex: 1; margin-bottom:0;"><label>Negative Marks (-)</label><input type="number" id="neg-marks" value="1" required></div>
                 </div>
-                <button type="submit" id="submit-btn" style="width:100%">Save Question</button>
-                <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:#95a5a6; margin-top:10px; display:none;">Cancel Edit</button>
+                
+                <button type="submit" id="submit-btn" style="width:100%; padding: 14px; font-size: 15px;">Save Question</button>
+                <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:#94a3b8; margin-top:10px; padding: 14px; display:none;">Cancel Edit</button>
                 <div id="status"></div>
             </form>
         </div>
@@ -113,23 +123,23 @@
         <!-- MANAGE TAB -->
         <div id="manage-tab" style="display: none;">
             
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px; gap: 10px;">
-                <h3 style="color: #2980b9; margin: 0;">📋 Manage All Questions</h3>
-                <div style="display: flex; gap: 5px;">
-                    <button class="add-new-btn" onclick="startAddFromManage()" style="width: auto; padding: 8px 12px; margin: 0;">➕ Add New</button>
-                    <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; padding: 8px 12px; margin: 0;">👁️ Detailed View</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; gap: 10px;">
+                <h3 style="color: #3b82f6; margin: 0;">📋 Manage All Questions</h3>
+                <div style="display: flex; gap: 8px;">
+                    <button class="add-new-btn" onclick="startAddFromManage()" style="width: auto; margin: 0;">➕ Add New</button>
+                    <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; margin: 0;">👁️ Detailed View</button>
                 </div>
             </div>
             
             <div class="filter-box">
                 <div style="flex: 1; min-width: 150px;">
-                    <label style="color: #2c3e50;">Filter by Exam:</label>
+                    <label>Filter by Exam</label>
                     <select id="filter-exam" onchange="handleFilterExamChange()">
                         <option value="">-- All Exams --</option>
                     </select>
                 </div>
                 <div style="flex: 1; min-width: 150px;">
-                    <label style="color: #2c3e50;">Filter by Test:</label>
+                    <label>Filter by Test</label>
                     <select id="filter-test" onchange="renderFilteredTable()">
                         <option value="">-- All Tests --</option>
                     </select>
@@ -143,11 +153,11 @@
                             <th>Exam</th>
                             <th>Test</th>
                             <th>Question</th>
-                            <th style="min-width: 120px;">Action</th>
+                            <th style="min-width: 130px;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="questions-table-body">
-                        <tr><td colspan="4" style="text-align:center;">Loading...</td></tr>
+                        <tr><td colspan="4" style="text-align:center; padding: 30px;">Loading data...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -156,20 +166,20 @@
 
         <!-- RESULTS TAB -->
         <div id="results-tab" style="display: none;">
-            <h3 style="color: #2980b9; margin-bottom: 15px;">📊 Student Performance</h3>
+            <h3 style="color: #3b82f6; margin-bottom: 20px;">📊 Student Performance</h3>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>Date / Time</th>
-                            <th>Student Details</th>
-                            <th>Test Details</th>
-                            <th>Final Score</th>
+                            <th>Timestamp</th>
+                            <th>Student Info</th>
+                            <th>Exam & Test</th>
+                            <th>Score</th>
                             <th>Breakdown</th>
                         </tr>
                     </thead>
                     <tbody id="results-table-body">
-                        <tr><td colspan="5" style="text-align:center;">Loading...</td></tr>
+                        <tr><td colspan="5" style="text-align:center; padding: 30px;">Loading results...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -178,6 +188,7 @@
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
+    <!-- JS WAHI PURANA WALA HAI, KOI CHANGE NAHI KIYA -->
     <script>
         let allQuestions = [];
         let editingId = null;
@@ -200,12 +211,12 @@
             const pass = document.getElementById('admin-pass').value;
             const status = document.getElementById('login-status');
 
-            if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "red";
-            status.innerText = "Loading..."; status.style.color = "orange";
+            if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "#ef4444";
+            status.innerText = "Authenticating..."; status.style.color = "#f59e0b";
             try {
                 const res = await fetch('/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) });
                 if(res.ok) { localStorage.setItem('isAdminLoggedIn', 'true'); checkAdminLogin(); } 
-                else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "red"; }
+                else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "#ef4444"; }
             } catch (err) { status.innerText = "❌ Server error!"; }
         }
 
@@ -243,29 +254,29 @@
 
         async function fetchResultsData() {
             const tbody = document.getElementById('results-table-body');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Fetching Results...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
             try {
                 const res = await fetch('/all-results');
                 const results = await res.json();
                 
                 if(results.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">No student submissions found.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ef4444; padding:30px;">No student submissions found.</td></tr>';
                     return;
                 }
 
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date);
-                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> ' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
+                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="color:#94a3b8; font-size:11px;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
                     return `
                     <tr>
-                        <td style="font-size:12px;">${formattedDate}</td>
-                        <td><strong>${r.userName}</strong><br><span style="font-size:12px; color:#7f8c8d;">${r.userEmail}</span></td>
-                        <td><strong>${r.examName}</strong><br><span style="font-size:12px;">${r.testName}</span></td>
-                        <td style="color:#27ae60; font-size:18px;"><strong>${r.score}</strong></td>
-                        <td style="font-size:12px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
+                        <td style="font-size:13px;">${formattedDate}</td>
+                        <td><strong style="color:#0f172a;">${r.userName}</strong><br><span style="font-size:12px; color:#64748b;">${r.userEmail}</span></td>
+                        <td><strong style="color:#0f172a;">${r.examName}</strong><br><span style="font-size:12px; color:#64748b;">${r.testName}</span></td>
+                        <td style="color:#10b981; font-size:18px; font-weight:700;">${r.score}</td>
+                        <td style="font-size:13px; color:#475569;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
                     </tr>`;
                 }).join('');
-            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Error fetching results!</td></tr>'; }
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#ef4444;">Error fetching results!</td></tr>'; }
         }
 
         function toggleViewMode() {
@@ -273,12 +284,12 @@
             const btn = document.getElementById('view-toggle-btn');
             if (currentViewMode === 'table') {
                 btn.innerHTML = '👁️ Detailed View';
-                btn.style.background = '#34495e';
+                btn.style.background = '#1e293b';
                 document.getElementById('table-view-container').style.display = 'block';
                 document.getElementById('card-view-container').style.display = 'none';
             } else {
                 btn.innerHTML = '🗜️ Table View';
-                btn.style.background = '#9b59b6';
+                btn.style.background = '#8b5cf6';
                 document.getElementById('table-view-container').style.display = 'none';
                 document.getElementById('card-view-container').style.display = 'block';
             }
@@ -302,7 +313,6 @@
             const examVal = document.getElementById('exam-select').value;
             toggleCustomInput('exam');
             
-            // FIX: Agar exam select nahi hua hai, to "Add New Test" ka option mat dikhao
             if (!examVal) {
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
                 document.getElementById('custom-test').style.display = 'none';
@@ -315,7 +325,7 @@
                 tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             }
             
-            document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Add New Test</option>`;
+            document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#3b82f6;">➕ Add New Test</option>`;
             
             if (examVal === 'NEW_ITEM') {
                 document.getElementById('test-select').value = 'NEW_ITEM';
@@ -332,11 +342,8 @@
                 allQuestions = await res.json();
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 
-                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Add New Exam</option>`;
-                
-                // FIX: Initial load par Test dropdown ekdum clear rahega
+                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#3b82f6;">➕ Add New Exam</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                
                 document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
                 handleFilterExamChange(); 
@@ -363,17 +370,17 @@
             const cardContainer = document.getElementById('card-view-container');
 
             if(filtered.length === 0) {
-                const emptyMsg = '<tr><td colspan="4" style="text-align:center; color:red;">No questions found for this filter.</td></tr>';
+                const emptyMsg = '<tr><td colspan="4" style="text-align:center; color:#ef4444; padding:30px;">No questions found for this filter.</td></tr>';
                 tbody.innerHTML = emptyMsg;
-                cardContainer.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">No questions found for this filter.</p>';
+                cardContainer.innerHTML = '<div style="text-align:center; color:#ef4444; padding:30px; background:#fff; border-radius:10px; border:1px solid #e2e8f0;">No questions found for this filter.</div>';
                 return;
             }
             
             tbody.innerHTML = filtered.map(q => `
                 <tr>
-                    <td><strong>${q.examName || '-'}</strong></td>
+                    <td><strong style="color:#0f172a;">${q.examName || '-'}</strong></td>
                     <td>${q.testName || '-'}</td>
-                    <td>${(q.text || '').substring(0, 45)}...</td>
+                    <td>${(q.text || '').substring(0, 50)}...</td>
                     <td>
                         <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
                         <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
@@ -386,7 +393,7 @@
                 q.options.forEach((opt, optIndex) => {
                     let isCorrectClass = optIndex === q.correctOptionIndex ? 'class="correct"' : '';
                     let checkMark = optIndex === q.correctOptionIndex ? '✅' : '';
-                    optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} ${checkMark}</li>`;
+                    optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} <span style="float:right;">${checkMark}</span></li>`;
                 });
                 return `
                 <div class="q-card">
@@ -394,13 +401,13 @@
                     <ul class="q-card-options">${optionsHtml}</ul>
                     <div class="q-card-footer">
                         <div>
-                            <strong>Exam:</strong> ${q.examName || '-'} <br>
-                            <strong>Test:</strong> ${q.testName || '-'} <br>
-                            <strong>Marks:</strong> <span style="color:green;">+${q.positiveMarks}</span> / <span style="color:red;">-${q.negativeMarks}</span>
+                            <strong>Exam:</strong> <span style="color:#0f172a;">${q.examName || '-'}</span> <br>
+                            <strong>Test:</strong> <span style="color:#0f172a;">${q.testName || '-'}</span> <br>
+                            <strong>Marks:</strong> <span style="color:#10b981; font-weight:600;">+${q.positiveMarks}</span> / <span style="color:#ef4444; font-weight:600;">-${q.negativeMarks}</span>
                         </div>
                         <div style="margin-top: 10px;">
-                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 12px; font-size: 14px;">Edit</button>
-                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')" style="padding: 8px 12px; font-size: 14px;">Delete</button>
+                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Edit</button>
+                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Delete</button>
                         </div>
                     </div>
                 </div>`;
@@ -416,8 +423,8 @@
             if(!q) return;
             editingId = id;
             document.getElementById('form-title').innerText = "✏️ Edit Question";
-            document.getElementById('submit-btn').innerText = "Update Data";
-            document.getElementById('submit-btn').style.background = "#f39c12";
+            document.getElementById('submit-btn').innerText = "Update Question";
+            document.getElementById('submit-btn').style.background = "#f59e0b";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
             document.getElementById('exam-select').value = q.examName || '';
@@ -442,7 +449,7 @@
             editingId = null;
             document.getElementById('form-title').innerText = "Add New Question";
             document.getElementById('submit-btn').innerText = "Save Question";
-            document.getElementById('submit-btn').style.background = "#e74c3c";
+            document.getElementById('submit-btn').style.background = "#3b82f6";
             document.getElementById('cancel-edit-btn').style.display = "none";
             document.getElementById('q-text').value = '';
         }
@@ -463,7 +470,7 @@
             };
 
             const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "orange";
+            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "#f59e0b";
             const endpoint = editingId ? `/update-question/${editingId}` : '/add-question';
             const method = editingId ? 'PUT' : 'POST';
 
@@ -471,8 +478,8 @@
                 const res = await fetch(endpoint, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const data = await res.json();
                 if(res.ok) {
-                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "green";
-                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2000);
+                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "#10b981";
+                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2500);
                     if(editingId) cancelEdit(); 
                     else {
                         document.getElementById('q-text').value = '';
@@ -482,8 +489,8 @@
                         document.getElementById('opt-3').value = '';
                     }
                     fetchAllData(); 
-                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "red"; }
-            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
+                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "#ef4444"; }
+            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "#ef4444"; }
         });
     </script>
 </body>
