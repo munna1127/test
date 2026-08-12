@@ -18,6 +18,7 @@
         
         .filter-box { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
         
+        /* Table Styles */
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
         th { background-color: #34495e; color: white; }
@@ -27,6 +28,17 @@
         .edit-btn:hover { background: #d68910; }
         .del-btn { background: #e74c3c; }
         .del-btn:hover { background: #c0392b; }
+
+        /* Card View Styles (Naya Interface) */
+        .view-toggle-btn { background: #9b59b6; margin-bottom: 10px; font-size: 13px; }
+        .view-toggle-btn:hover { background: #8e44ad; }
+        .card-view { display: none; } /* Default hidden */
+        .q-card { background: #fff; border: 1px solid #ddd; border-left: 4px solid #3498db; border-radius: 5px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .q-card h4 { margin-top: 0; margin-bottom: 10px; color: #2c3e50; font-size: 16px;}
+        .q-card-options { list-style-type: none; padding-left: 0; margin-bottom: 15px; }
+        .q-card-options li { padding: 8px; border: 1px solid #eee; margin-bottom: 5px; border-radius: 4px; font-size: 14px; background: #fafafa;}
+        .q-card-options li.correct { background-color: #d4edda; border-color: #c3e6cb; font-weight: bold; color: #155724;}
+        .q-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px; font-size: 12px; color: #7f8c8d; flex-wrap: wrap; gap: 10px;}
 
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
         .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #7f8c8d; font-weight: bold;}
@@ -53,7 +65,6 @@
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage All Questions</button>
         </div>
 
-        <!-- ADD / EDIT TAB -->
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
@@ -96,18 +107,20 @@
             </form>
         </div>
 
-        <!-- MANAGE TAB WITH FILTERS -->
         <div id="manage-tab" style="display: none;">
-            <h3 style="color: #2980b9;">📋 Questions Manage Karo</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <h3 style="color: #2980b9; margin-bottom: 10px;">📋 Questions Manage Karo</h3>
+                <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto;">👁️ Detailed View dekhein</button>
+            </div>
             
             <div class="filter-box">
-                <div style="flex: 1; min-width: 200px;">
+                <div style="flex: 1; min-width: 150px;">
                     <label style="color: #2c3e50;">Filter by Exam:</label>
                     <select id="filter-exam" onchange="handleFilterExamChange()">
                         <option value="">-- Sabhi Exams Dekho --</option>
                     </select>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
+                <div style="flex: 1; min-width: 150px;">
                     <label style="color: #2c3e50;">Filter by Test:</label>
                     <select id="filter-test" onchange="renderFilteredTable()">
                         <option value="">-- Sabhi Tests Dekho --</option>
@@ -115,7 +128,8 @@
                 </div>
             </div>
 
-            <div style="overflow-x: auto;">
+            <!-- Interface 1: Table View -->
+            <div id="table-view-container" style="overflow-x: auto;">
                 <table>
                     <thead>
                         <tr>
@@ -130,6 +144,11 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Interface 2: Detailed Card View -->
+            <div id="card-view-container" class="card-view">
+                <!-- Cards yahan aayenge -->
+            </div>
         </div>
 
         <div class="footer">Developed by Tomar Ji</div>
@@ -138,6 +157,7 @@
     <script>
         let allQuestions = [];
         let editingId = null;
+        let currentViewMode = 'table'; // Default view
 
         function checkAdminLogin() {
             if(localStorage.getItem('isAdminLoggedIn') === 'true') {
@@ -173,6 +193,25 @@
             document.getElementById('tab-add-btn').className = tab === 'add' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-manage-btn').className = tab === 'manage' ? 'tab-btn active' : 'tab-btn';
             if(tab === 'manage') fetchAllData();
+        }
+
+        // Naya Function: Interface change karne ke liye
+        function toggleViewMode() {
+            currentViewMode = currentViewMode === 'table' ? 'card' : 'table';
+            const btn = document.getElementById('view-toggle-btn');
+            
+            if (currentViewMode === 'table') {
+                btn.innerHTML = '👁️ Detailed View dekhein';
+                btn.style.background = '#9b59b6';
+                document.getElementById('table-view-container').style.display = 'block';
+                document.getElementById('card-view-container').style.display = 'none';
+            } else {
+                btn.innerHTML = '🗜️ Table View dekhein';
+                btn.style.background = '#34495e';
+                document.getElementById('table-view-container').style.display = 'none';
+                document.getElementById('card-view-container').style.display = 'block';
+            }
+            renderFilteredTable(); // Re-render content based on active mode
         }
 
         function toggleCustomInput(type) {
@@ -218,24 +257,21 @@
                 
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 
-                // ADD TAB Dropdowns
                 document.getElementById('exam-select').innerHTML = 
                     `<option value="">-- Select Exam --</option>` + 
                     exams.map(e => `<option value="${e}">${e}</option>`).join('') +
                     `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Pehle Exam Chuno --</option><option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
 
-                // MANAGE TAB Filter Dropdowns
                 document.getElementById('filter-exam').innerHTML = 
                     `<option value="">-- Sabhi Exams Dekho --</option>` + 
                     exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
-                handleFilterExamChange(); // Ye filter table ko initial load par set kar dega
+                handleFilterExamChange(); 
 
             } catch(e) { console.log(e); }
         }
 
-        // --- NEW: Filter Logic for Manage Table ---
         function handleFilterExamChange() {
             const examVal = document.getElementById('filter-exam').value;
             let tests = [];
@@ -262,24 +298,55 @@
             if(testVal) filtered = filtered.filter(q => q.testName === testVal);
 
             const tbody = document.getElementById('questions-table-body');
+            const cardContainer = document.getElementById('card-view-container');
+
             if(filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Is filter mein koi question nahi mila.</td></tr>';
+                const emptyMsg = '<tr><td colspan="4" style="text-align:center; color:red;">Is filter mein koi question nahi mila.</td></tr>';
+                tbody.innerHTML = emptyMsg;
+                cardContainer.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">Is filter mein koi question nahi mila.</p>';
                 return;
             }
             
+            // 1. Table View Data
             tbody.innerHTML = filtered.map(q => `
                 <tr>
                     <td><strong>${q.examName || '-'}</strong></td>
                     <td>${q.testName || '-'}</td>
-                    <td>${(q.text || '').substring(0, 50)}...</td>
+                    <td>${(q.text || '').substring(0, 45)}...</td>
                     <td>
                         <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
                         <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
                     </td>
                 </tr>
             `).join('');
+
+            // 2. Card (Detailed) View Data
+            cardContainer.innerHTML = filtered.map((q, qIndex) => {
+                let optionsHtml = '';
+                q.options.forEach((opt, optIndex) => {
+                    let isCorrectClass = optIndex === q.correctOptionIndex ? 'class="correct"' : '';
+                    let checkMark = optIndex === q.correctOptionIndex ? '✅' : '';
+                    optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} ${checkMark}</li>`;
+                });
+
+                return `
+                <div class="q-card">
+                    <h4>Q: ${q.text}</h4>
+                    <ul class="q-card-options">${optionsHtml}</ul>
+                    <div class="q-card-footer">
+                        <div>
+                            <strong>Exam:</strong> ${q.examName || '-'} <br>
+                            <strong>Test:</strong> ${q.testName || '-'} <br>
+                            <strong>Marks:</strong> <span style="color:green;">+${q.positiveMarks}</span> / <span style="color:red;">-${q.negativeMarks}</span>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 12px; font-size: 14px;">Edit</button>
+                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')" style="padding: 8px 12px; font-size: 14px;">Delete</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
         }
-        // ------------------------------------------
 
         async function deleteQuestion(id) {
             if(confirm("Pakka is question ko delete karna hai?")) {
