@@ -11,21 +11,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// NAYA FEATURE: Public folder ko allow karna taaki logo load ho sake
+app.use(express.static('public'));
+
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Database connected successfully!'))
     .catch((err) => console.log('❌ Error:', err.message));
 
-// --- ADMIN API ---
 app.post('/admin-login', (req, res) => {
     const { username, password } = req.body;
-    if (username === 'admin' && password === 'TomarJi123') {
-        res.status(200).json({ message: "Welcome Admin!" });
-    } else {
-        res.status(400).json({ error: "Invalid Credentials!" });
-    }
+    if (username === 'admin' && password === 'TomarJi123') { res.status(200).json({ message: "Welcome Admin!" }); } 
+    else { res.status(400).json({ error: "Invalid Credentials!" }); }
 });
 
-// --- STUDENT AUTH APIs ---
 app.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -46,76 +44,18 @@ app.post('/login', async (req, res) => {
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
-// --- FETCH DATA APIs ---
-app.get('/get-exams', async (req, res) => {
-    try { res.status(200).json(await Question.distinct('examName')); } 
-    catch (error) { res.status(500).json({ error: "Failed to fetch exams" }); }
-});
+app.get('/get-exams', async (req, res) => { try { res.status(200).json(await Question.distinct('examName')); } catch (error) { res.status(500).json({ error: "Failed" }); } });
+app.get('/get-tests/:examName', async (req, res) => { try { res.status(200).json(await Question.distinct('testName', { examName: req.params.examName })); } catch (error) { res.status(500).json({ error: "Failed" }); } });
+app.post('/get-test-questions', async (req, res) => { try { res.status(200).json(await Question.find({ examName: req.body.examName, testName: req.body.testName })); } catch (error) { res.status(500).json({ error: "Failed" }); } });
 
-app.get('/get-tests/:examName', async (req, res) => {
-    try { res.status(200).json(await Question.distinct('testName', { examName: req.params.examName })); } 
-    catch (error) { res.status(500).json({ error: "Failed to fetch tests" }); }
-});
+app.post('/save-result', async (req, res) => { try { const newResult = new Result(req.body); await newResult.save(); res.status(201).json({ message: "Saved!" }); } catch (error) { res.status(500).json({ error: error.message }); } });
+app.post('/leaderboard', async (req, res) => { try { const leaderboard = await Result.find({ examName: req.body.examName, testName: req.body.testName }).sort({ score: -1, date: 1 }); res.status(200).json(leaderboard); } catch (error) { res.status(500).json({ error: "Failed" }); } });
+app.get('/all-results', async (req, res) => { try { const results = await Result.find().sort({ date: -1 }); res.status(200).json(results); } catch (error) { res.status(500).json({ error: error.message }); } });
 
-app.post('/get-test-questions', async (req, res) => {
-    try { res.status(200).json(await Question.find({ examName: req.body.examName, testName: req.body.testName })); } 
-    catch (error) { res.status(500).json({ error: "Error fetching questions" }); }
-});
-
-// --- RESULTS & LEADERBOARD APIs ---
-app.post('/save-result', async (req, res) => {
-    try {
-        const newResult = new Result(req.body);
-        await newResult.save();
-        res.status(201).json({ message: "Result saved!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-app.post('/leaderboard', async (req, res) => {
-    try {
-        const { examName, testName } = req.body;
-        // Sort by score (descending) and then date (ascending) for tie-breakers
-        const leaderboard = await Result.find({ examName, testName }).sort({ score: -1, date: 1 });
-        res.status(200).json(leaderboard);
-    } catch (error) { res.status(500).json({ error: "Failed to fetch leaderboard" }); }
-});
-
-app.get('/all-results', async (req, res) => {
-    try {
-        const results = await Result.find().sort({ date: -1 }); 
-        res.status(200).json(results);
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-// --- ADMIN CRUD APIs ---
-app.post('/add-question', async (req, res) => {
-    try {
-        const newQuestion = new Question(req.body);
-        await newQuestion.save();
-        res.status(201).json({ message: "Question added successfully!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-app.get('/all-questions', async (req, res) => {
-    try {
-        const questions = await Question.find().sort({ examName: 1, testName: 1 });
-        res.status(200).json(questions);
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-app.put('/update-question/:id', async (req, res) => {
-    try {
-        await Question.findByIdAndUpdate(req.params.id, req.body);
-        res.status(200).json({ message: "Question updated successfully!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
-app.delete('/delete-question/:id', async (req, res) => {
-    try {
-        await Question.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "Question deleted successfully!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
+app.post('/add-question', async (req, res) => { try { const newQuestion = new Question(req.body); await newQuestion.save(); res.status(201).json({ message: "Added!" }); } catch (error) { res.status(500).json({ error: error.message }); } });
+app.get('/all-questions', async (req, res) => { try { const questions = await Question.find().sort({ examName: 1, testName: 1 }); res.status(200).json(questions); } catch (error) { res.status(500).json({ error: error.message }); } });
+app.put('/update-question/:id', async (req, res) => { try { await Question.findByIdAndUpdate(req.params.id, req.body); res.status(200).json({ message: "Updated!" }); } catch (error) { res.status(500).json({ error: error.message }); } });
+app.delete('/delete-question/:id', async (req, res) => { try { await Question.findByIdAndDelete(req.params.id); res.status(200).json({ message: "Deleted!" }); } catch (error) { res.status(500).json({ error: error.message }); } });
 
 app.get('/', (req, res) => { res.sendFile(path.join(__dirname, 'index.html')); });
 app.get('/admin', (req, res) => { res.sendFile(path.join(__dirname, 'admin.html')); });

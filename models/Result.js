@@ -9,6 +9,17 @@ const resultSchema = new mongoose.Schema({
     correct: { type: Number, required: true },
     wrong: { type: Number, required: true },
     skipped: { type: Number, required: true },
+    
+    // NAYA FEATURE: Phase 2 - Advanced Analytics Data Storage
+    totalTimeTaken: { type: Number, default: 0 },
+    questionAnalysis: [{
+        questionText: String,
+        subject: String,
+        topic: String,
+        timeSpent: Number,    // Kitne seconds lagaye
+        status: String        // 'correct', 'wrong', ya 'skipped'
+    }],
+    
     date: { type: Date, default: Date.now }
 });
 
