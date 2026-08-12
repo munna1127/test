@@ -32,12 +32,12 @@
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
         
         .watermark-bg {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 65vmin; height: 65vmin;
-            background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center;
-            opacity: 0.15; z-index: 0; z-index: -1; pointer-events: none;
-        }
-        [data-theme="dark"] .watermark-bg { opacity: 0.15; filter: grayscale(100%) invert(1); }
-        [data-theme="glass"] .watermark-bg { opacity: 0.25; mix-blend-mode: multiply; }
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin;
+    background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center;
+    opacity: 0.15; z-index: 9999; pointer-events: none; mix-blend-mode: multiply;
+}
+[data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.15; }
+[data-theme="glass"] .watermark-bg { opacity: 0.15; mix-blend-mode: multiply; }
 
         .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
         .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
