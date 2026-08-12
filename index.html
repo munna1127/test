@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Test Portal - Pro Interface</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js aur HTML2PDF Libraries for Phase 3 Analytics -->
+    <title>Safalta Quiz Bhagalpur - Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
     <script>
         const savedTheme = localStorage.getItem('portalTheme') || 'default';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -16,7 +14,6 @@
         window.addEventListener('DOMContentLoaded', () => { const select = document.getElementById('theme-switcher'); if(select) select.value = savedTheme; });
     </script>
     <style>
-        /* THEMES CSS */
         :root {
             --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.95); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #4299e1; --primary-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --danger-btn: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); --success-btn: linear-gradient(135deg, #48bb78 0%, #38a169 100%); --warning-btn: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%); --input-bg: #f8fafc; --input-border: #e2e8f0; --shadow: 0 20px 40px rgba(0,0,0,0.08); --table-head-bg: #2d3748; --table-head-text: #ffffff; --table-border: #edf2f7; --table-hover: #f7fafc; --correct-bg: #d4edda; --correct-text: #155724; --q-unvisited: #e2e8f0; --q-answered: #48bb78; --q-not-answered: #fc8181;
         }
@@ -44,17 +41,14 @@
         button { background: var(--primary-btn); color: white; padding: 14px; border: none; cursor: pointer; font-weight: 600; border-radius: 12px; font-size: 16px; width: 100%; margin-top: 15px; transition: all 0.3s ease; letter-spacing: 0.5px;}
         button:hover { filter: brightness(1.1); transform: translateY(-1px); }
         
-        /* PRO CBT INTERFACE STYLES */
         .test-layout { display: flex; flex-direction: row; width: 100%; gap: 20px; }
         @media (max-width: 768px) { .test-layout { flex-direction: column; } }
-        
         .main-q-area { flex: 3; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); position: relative;}
         .palette-area { flex: 1; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); display: flex; flex-direction: column;}
         
         .q-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--input-border); padding-bottom: 15px; margin-bottom: 20px; }
         .q-subject { background: var(--input-bg); padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--primary-color); border: 1px solid var(--primary-color);}
         .q-marks { color: var(--text-main); font-size: 14px; font-weight: 600; }
-        
         .q-text { font-size: 18px; margin-bottom: 25px; line-height: 1.5; font-weight: 500;}
         .options { list-style: none; padding: 0; margin-top: 15px;}
         .options li { margin: 12px 0; }
@@ -84,7 +78,6 @@
         .timer-badge { position: absolute; top: -20px; right: 20px; z-index: 10; background: var(--success-btn); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow); transition: all 0.3s; border: 2px solid #fff;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { filter: brightness(1.5); } 100% { transform: scale(1); } }
         
-        /* Analytics Result Styles */
         .result-box { margin-top: 25px; padding: 25px; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--primary-color); text-align: center; box-shadow: var(--shadow);}
         table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--table-border);}
         th, td { padding: 12px 15px; text-align: left; }
@@ -95,8 +88,21 @@
         
         .analytics-section { text-align: left; margin-top: 30px; border-top: 2px solid var(--input-border); padding-top: 20px;}
         .chart-container { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--input-border); margin-top: 15px;}
-        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; } /* PDF always white bg */
+        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; } 
         .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); font-weight: 600; opacity: 0.7;}
+
+        /* ✨ PREMIUM ANIMATED BRAND LOGO ✨ */
+        .brand-title {
+            font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase;
+            background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6);
+            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: shine 3s linear infinite; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px;
+        }
+        .brand-title span {
+            display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px;
+            color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
     </style>
 </head>
 <body>
@@ -111,7 +117,10 @@
 
     <!-- LOGIN SECTION -->
     <div id="auth-section" class="container">
-        <h2 id="auth-title">🎓 Student Login</h2>
+        <!-- PREMIUM LOGO -->
+        <h1 class="brand-title">Safalta Quiz<span>Bhagalpur</span></h1>
+
+        <h2 id="auth-title" style="font-size: 20px; color: var(--text-main); opacity:0.8;">🎓 Student Login</h2>
         <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
         <input type="email" id="auth-email" placeholder="Email Address">
         <input type="password" id="auth-password" placeholder="Password">
@@ -123,7 +132,7 @@
     <!-- SELECTION SECTION -->
     <div id="portal-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 25px;">
-            <h2 style="margin: 0;">📝 Test Selection</h2>
+            <h1 class="brand-title" style="font-size: 24px; margin-bottom: 0; text-align: left;">Safalta Quiz<span style="font-size: 12px; letter-spacing: 2px;">Bhagalpur</span></h1>
             <button onclick="logout()" style="width:auto; background: var(--danger-btn); padding:8px 20px; margin:0; font-size: 14px; border-radius: 8px;">Logout</button>
         </div>
         <h4 style="margin-bottom: 25px; font-size: 18px;">Welcome back, <span id="user-display-name" style="font-weight:700; color: var(--primary-color);"></span>!</h4>
@@ -133,8 +142,9 @@
             <select id="exam-select" onchange="fetchTests()"><option value="">-- Select Exam --</option></select>
             <label style="display:block; margin-top:20px;"><strong>Select Test:</strong></label>
             <select id="test-select"><option value="">-- Select Exam First --</option></select>
-            <label style="display:block; margin-top:20px;"><strong>⏱️ Custom Timer (Minutes):</strong></label>
-            <input type="number" id="custom-timer" placeholder="Default: 2 mins per question" min="1">
+            
+            <!-- STUDENT CUSTOM TIMER REMOVED AS REQUESTED -->
+            
             <button onclick="startTest()" style="margin-top: 25px;">🚀 Start Computer Based Test</button>
         </div>
     </div>
@@ -174,10 +184,7 @@
     <div id="result-area" class="container" style="display: none; max-width: 900px;">
         <button onclick="downloadPDF()" style="background: #e11d48; margin-bottom: 15px; width:auto; float:right; font-size:14px; padding:8px 15px;">📥 Download PDF Report</button>
         <div style="clear:both;"></div>
-        
-        <div id="pdf-content" class="pdf-wrapper">
-            <!-- Analytics data will be injected here -->
-        </div>
+        <div id="pdf-content" class="pdf-wrapper"></div>
         <button onclick="location.reload()" style="margin-top:25px; background: var(--table-head-bg);">Return to Dashboard</button>
     </div>
 
@@ -192,7 +199,7 @@
 
         function toggleAuth() {
             isLogin = !isLogin;
-            document.getElementById('auth-title').innerText = isLogin ? "🎓 Student Login" : "🎓 Student Registration";
+            document.getElementById('auth-title').innerText = isLogin ? "🎓 Student Login" : "📝 Student Registration";
             document.getElementById('auth-btn').innerText = isLogin ? "Login to Portal" : "Register Account";
             document.getElementById('auth-name').style.display = isLogin ? "none" : "block";
             document.getElementById('auth-status').innerText = "";
@@ -275,8 +282,6 @@
         function startTest() {
             const examName = document.getElementById('exam-select').value;
             const testName = document.getElementById('test-select').value;
-            const customTimer = document.getElementById('custom-timer').value;
-            
             if(!examName || !testName) return alert("Please select both Exam and Test!");
 
             document.getElementById('portal-section').style.display = 'none';
@@ -290,9 +295,15 @@
                 studentResponses = questionsData.map(q => ({ selectedOption: null, timeSpent: 0, status: 'unvisited' }));
                 currentQIndex = 0;
                 renderPalette(); loadQuestion(currentQIndex);
-                
                 testStartTime = Date.now();
-                let totalSeconds = (customTimer && parseInt(customTimer) > 0) ? parseInt(customTimer) * 60 : questionsData.length * 120;
+                
+                // ADMIN TIMER LOGIC APPLIED HERE
+                let totalSeconds = 0;
+                if (questionsData[0].testDuration && questionsData[0].testDuration > 0) {
+                    totalSeconds = questionsData[0].testDuration * 60; // Admin Timer
+                } else {
+                    totalSeconds = questionsData.length * 120; // Fallback to 2 min/question
+                }
                 startTimer(totalSeconds);
             });
         }
@@ -302,7 +313,6 @@
             recordTimeSpent();
             currentQIndex = index;
             const q = questionsData[index];
-            
             if(studentResponses[currentQIndex].status === 'unvisited') studentResponses[currentQIndex].status = 'not-answered';
             currentQuestionEntryTime = Date.now();
 
@@ -331,25 +341,9 @@
             }
         }
 
-        function recordOption(optIndex) {
-            studentResponses[currentQIndex].selectedOption = optIndex;
-            studentResponses[currentQIndex].status = 'answered';
-            renderPalette(); 
-        }
-
-        function clearResponse() {
-            studentResponses[currentQIndex].selectedOption = null;
-            studentResponses[currentQIndex].status = 'not-answered';
-            const radios = document.getElementsByName('current_q_opt');
-            radios.forEach(r => r.checked = false);
-            renderPalette();
-        }
-
-        function saveAndNext() {
-            if(currentQIndex === questionsData.length - 1) submitTestDialog();
-            else changeQuestion(currentQIndex + 1);
-        }
-
+        function recordOption(optIndex) { studentResponses[currentQIndex].selectedOption = optIndex; studentResponses[currentQIndex].status = 'answered'; renderPalette(); }
+        function clearResponse() { studentResponses[currentQIndex].selectedOption = null; studentResponses[currentQIndex].status = 'not-answered'; const radios = document.getElementsByName('current_q_opt'); radios.forEach(r => r.checked = false); renderPalette(); }
+        function saveAndNext() { if(currentQIndex === questionsData.length - 1) submitTestDialog(); else changeQuestion(currentQIndex + 1); }
         function changeQuestion(newIndex) { loadQuestion(newIndex); }
 
         function renderPalette() {
@@ -380,17 +374,15 @@
             const resultArea = document.getElementById('result-area');
             const pdfContent = document.getElementById('pdf-content');
             resultArea.style.display = 'block';
-            pdfContent.innerHTML = '<h3 style="text-align:center; color:#3b82f6;">Generating Pro Analysis Report... ⏳</h3>';
+            pdfContent.innerHTML = '<h3 style="text-align:center; color:var(--primary-color);">Generating Pro Analysis Report... ⏳</h3>';
 
             let score = 0, correct = 0, wrong = 0, skipped = 0;
             let finalAnalysisArray = [];
             let topicStats = {};
 
-            // Compile Analytics Data
             questionsData.forEach((q, idx) => {
                 const resp = studentResponses[idx];
                 let qStatus = 'skipped';
-                
                 if (resp.selectedOption !== null) {
                     if (resp.selectedOption === q.correctOptionIndex) { score += q.positiveMarks; correct++; qStatus = 'correct'; } 
                     else { score -= q.negativeMarks; wrong++; qStatus = 'wrong'; }
@@ -398,7 +390,6 @@
 
                 finalAnalysisArray.push({ questionText: q.text, subject: q.subject || 'General', topic: q.topic || 'Mixed', timeSpent: resp.timeSpent, status: qStatus });
 
-                // Topic Logic for Phase 3 Table
                 let key = (q.subject || 'General') + " - " + (q.topic || 'Mixed');
                 if(!topicStats[key]) topicStats[key] = { total: 0, correct: 0, wrong: 0, timeSpent: 0 };
                 topicStats[key].total++;
@@ -425,10 +416,9 @@
 
                 let userRank = leaderboard.findIndex(r => r.userEmail === userEmail && r.score === score) + 1;
                 
-                // Building the Premium PDF Report UI
                 let html = `
                     <div style="text-align:center; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px;">
-                        <h1 style="color:#1e293b; margin:0;">Tomar Ji EdTech</h1>
+                        <h1 style="color:#1e293b; margin:0; font-size:32px;">Safalta Quiz Bhagalpur</h1>
                         <p style="color:#64748b; margin:5px 0;">Performance Analysis Report</p>
                     </div>
                     
@@ -441,14 +431,14 @@
                         </div>
                         <div style="flex:1; min-width:200px; text-align:right;">
                             <h2 style="margin:0; color:#2563eb; font-size:32px;">Score: ${score}</h2>
-                            <p style="margin:5px 0; font-size:16px; font-weight:bold;">AIR (Rank): #${userRank} / ${leaderboard.length}</p>
+                            <p style="margin:5px 0; font-size:16px; font-weight:bold; color:#1e293b;">AIR (Rank): #${userRank} / ${leaderboard.length}</p>
                             <p style="margin:0; color:#64748b;">Time Taken: ${Math.floor(totalTimeTakenSeconds / 60)}m ${totalTimeTakenSeconds % 60}s</p>
                         </div>
                     </div>
 
                     <div class="analytics-section">
                         <h3 style="color:#1e293b;">🎯 Accuracy Breakdown</h3>
-                        <p>✅ Correct: <strong>${correct}</strong> &nbsp;|&nbsp; ❌ Incorrect: <strong>${wrong}</strong> &nbsp;|&nbsp; ⚠️ Skipped: <strong>${skipped}</strong></p>
+                        <p style="color:#333;">✅ Correct: <strong>${correct}</strong> &nbsp;|&nbsp; ❌ Incorrect: <strong>${wrong}</strong> &nbsp;|&nbsp; ⚠️ Skipped: <strong>${skipped}</strong></p>
                     </div>
 
                     <div class="analytics-section">
@@ -477,28 +467,24 @@
                     let accPercent = Math.round((stat.correct / stat.total) * 100);
                     let avgTime = Math.round(stat.timeSpent / stat.total);
                     let accColor = accPercent >= 70 ? '#10b981' : (accPercent >= 40 ? '#f59e0b' : '#ef4444');
-                    
-                    html += `
-                        <tr>
+                    html += `<tr>
                             <td><strong>${key}</strong></td>
                             <td>${stat.total}</td>
                             <td style="color:${accColor}; font-weight:bold;">${accPercent}%</td>
                             <td>${avgTime} sec</td>
-                        </tr>
-                    `;
+                        </tr>`;
                 }
 
                 html += `</tbody></table></div>`;
                 pdfContent.innerHTML = html;
 
-                // Render Chart.js
                 const ctx = document.getElementById('timeChart').getContext('2d');
                 const labels = finalAnalysisArray.map((_, i) => 'Q' + (i + 1));
                 const times = finalAnalysisArray.map(q => q.timeSpent);
                 const bgColors = finalAnalysisArray.map(q => {
-                    if(q.status === 'correct') return 'rgba(16, 185, 129, 0.7)'; // Green
-                    if(q.status === 'wrong') return 'rgba(239, 68, 68, 0.7)';   // Red
-                    return 'rgba(148, 163, 184, 0.7)'; // Gray
+                    if(q.status === 'correct') return 'rgba(16, 185, 129, 0.7)'; 
+                    if(q.status === 'wrong') return 'rgba(239, 68, 68, 0.7)';   
+                    return 'rgba(148, 163, 184, 0.7)'; 
                 });
 
                 new Chart(ctx, {
@@ -510,12 +496,11 @@
             } catch (error) { pdfContent.innerHTML = '<p style="color:red; text-align:center;">Error processing result.</p>'; }
         }
 
-        // PDF GENERATOR
         function downloadPDF() {
             const element = document.getElementById('pdf-content');
             const opt = {
                 margin:       0.5,
-                filename:     'TomarJi_Analysis_Report.pdf',
+                filename:     'Safalta_Quiz_Analysis.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
