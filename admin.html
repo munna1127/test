@@ -13,12 +13,11 @@
         input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;}
         button { background: #e74c3c; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;}
         button:hover { background: #c0392b; }
-        .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px;}
+        .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px; padding: 10px; font-size: 14px;}
         .tab-btn.active { background: #e74c3c; }
         
         .filter-box { background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;}
         
-        /* Table Styles */
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
         th { background-color: #34495e; color: white; }
@@ -29,10 +28,9 @@
         .del-btn { background: #e74c3c; }
         .del-btn:hover { background: #c0392b; }
 
-        /* Card View Styles (Naya Interface) */
         .view-toggle-btn { background: #9b59b6; margin-bottom: 10px; font-size: 13px; }
         .view-toggle-btn:hover { background: #8e44ad; }
-        .card-view { display: none; } /* Default hidden */
+        .card-view { display: none; } 
         .q-card { background: #fff; border: 1px solid #ddd; border-left: 4px solid #3498db; border-radius: 5px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .q-card h4 { margin-top: 0; margin-bottom: 10px; color: #2c3e50; font-size: 16px;}
         .q-card-options { list-style-type: none; padding-left: 0; margin-bottom: 15px; }
@@ -60,11 +58,13 @@
             <button onclick="adminLogout()" style="background:#7f8c8d;">Logout</button>
         </div>
         
-        <div style="margin-top: 20px; text-align: center;">
-            <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add / Edit Question</button>
-            <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage All Questions</button>
+        <div style="margin-top: 20px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px;">
+            <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add Question</button>
+            <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage Questions</button>
+            <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Student Results</button>
         </div>
 
+        <!-- 1. ADD / EDIT TAB -->
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
@@ -107,6 +107,7 @@
             </form>
         </div>
 
+        <!-- 2. MANAGE TAB WITH FILTERS & VIEW TOGGLE -->
         <div id="manage-tab" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
                 <h3 style="color: #2980b9; margin-bottom: 10px;">📋 Questions Manage Karo</h3>
@@ -128,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- Interface 1: Table View -->
+            <!-- Table View -->
             <div id="table-view-container" style="overflow-x: auto;">
                 <table>
                     <thead>
@@ -145,9 +146,30 @@
                 </table>
             </div>
 
-            <!-- Interface 2: Detailed Card View -->
+            <!-- Card View -->
             <div id="card-view-container" class="card-view">
                 <!-- Cards yahan aayenge -->
+            </div>
+        </div>
+
+        <!-- 3. STUDENT RESULTS TAB -->
+        <div id="results-tab" style="display: none;">
+            <h3 style="color: #2980b9; margin-bottom: 15px;">📊 Bacchon ka Performance</h3>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date / Time</th>
+                            <th>Student Details</th>
+                            <th>Test Details</th>
+                            <th>Final Score</th>
+                            <th>Result Breakdown</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-table-body">
+                        <tr><td colspan="5" style="text-align:center;">Loading...</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -157,7 +179,7 @@
     <script>
         let allQuestions = [];
         let editingId = null;
-        let currentViewMode = 'table'; // Default view
+        let currentViewMode = 'table'; 
 
         function checkAdminLogin() {
             if(localStorage.getItem('isAdminLoggedIn') === 'true') {
@@ -187,19 +209,57 @@
 
         function adminLogout() { localStorage.removeItem('isAdminLoggedIn'); checkAdminLogin(); }
 
+        // TAB SWITCHER
         function switchTab(tab) {
             document.getElementById('add-tab').style.display = tab === 'add' ? 'block' : 'none';
             document.getElementById('manage-tab').style.display = tab === 'manage' ? 'block' : 'none';
+            document.getElementById('results-tab').style.display = tab === 'results' ? 'block' : 'none';
+            
             document.getElementById('tab-add-btn').className = tab === 'add' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-manage-btn').className = tab === 'manage' ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('tab-results-btn').className = tab === 'results' ? 'tab-btn active' : 'tab-btn';
+            
             if(tab === 'manage') fetchAllData();
+            if(tab === 'results') fetchResultsData(); // Results load karo
         }
 
-        // Naya Function: Interface change karne ke liye
+        // RESULTS FETCH LOGIC
+        async function fetchResultsData() {
+            const tbody = document.getElementById('results-table-body');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Fetching Results...</td></tr>';
+            try {
+                const res = await fetch('/all-results');
+                const results = await res.json();
+                
+                if(results.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Abhi tak kisi bhi bachhe ne test submit nahi kiya hai.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = results.map(r => {
+                    // Date ko ache se dikhane ke liye format karna
+                    const dateObj = new Date(r.date);
+                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> ' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'});
+                    
+                    return `
+                    <tr>
+                        <td style="font-size:12px;">${formattedDate}</td>
+                        <td><strong>${r.userName}</strong><br><span style="font-size:12px; color:#7f8c8d;">${r.userEmail}</span></td>
+                        <td><strong>${r.examName}</strong><br><span style="font-size:12px;">${r.testName}</span></td>
+                        <td style="color:#27ae60; font-size:18px;"><strong>${r.score}</strong></td>
+                        <td style="font-size:12px;">✅ Sahi: ${r.correct}<br>❌ Galat: ${r.wrong}<br>⚠️ Skip: ${r.skipped}</td>
+                    </tr>
+                    `;
+                }).join('');
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Error fetching results!</td></tr>';
+            }
+        }
+
+        // VIEW MODE TOGGLE (Manage Questions)
         function toggleViewMode() {
             currentViewMode = currentViewMode === 'table' ? 'card' : 'table';
             const btn = document.getElementById('view-toggle-btn');
-            
             if (currentViewMode === 'table') {
                 btn.innerHTML = '👁️ Detailed View dekhein';
                 btn.style.background = '#9b59b6';
@@ -211,7 +271,7 @@
                 document.getElementById('table-view-container').style.display = 'none';
                 document.getElementById('card-view-container').style.display = 'block';
             }
-            renderFilteredTable(); // Re-render content based on active mode
+            renderFilteredTable(); 
         }
 
         function toggleCustomInput(type) {
@@ -230,17 +290,11 @@
         function handleExamChange() {
             const examVal = document.getElementById('exam-select').value;
             toggleCustomInput('exam');
-
             let tests = [];
-            if(examVal && examVal !== 'NEW_ITEM') {
-                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
-            }
-
-            document.getElementById('test-select').innerHTML = 
-                `<option value="">-- Select Test --</option>` + 
-                tests.map(t => `<option value="${t}">${t}</option>`).join('') +
-                `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
-
+            if(examVal && examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            
+            document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
+            
             if (examVal === 'NEW_ITEM') {
                 document.getElementById('test-select').value = 'NEW_ITEM';
                 toggleCustomInput('test');
@@ -254,45 +308,28 @@
             try {
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
-                
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 
-                document.getElementById('exam-select').innerHTML = 
-                    `<option value="">-- Select Exam --</option>` + 
-                    exams.map(e => `<option value="${e}">${e}</option>`).join('') +
-                    `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
+                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Pehle Exam Chuno --</option><option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
-
-                document.getElementById('filter-exam').innerHTML = 
-                    `<option value="">-- Sabhi Exams Dekho --</option>` + 
-                    exams.map(e => `<option value="${e}">${e}</option>`).join('');
+                document.getElementById('filter-exam').innerHTML = `<option value="">-- Sabhi Exams Dekho --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
                 handleFilterExamChange(); 
-
             } catch(e) { console.log(e); }
         }
 
         function handleFilterExamChange() {
             const examVal = document.getElementById('filter-exam').value;
             let tests = [];
-            
-            if(examVal) {
-                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
-            } else {
-                tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
-            }
-
-            document.getElementById('filter-test').innerHTML = 
-                `<option value="">-- Sabhi Tests Dekho --</option>` + 
-                tests.map(t => `<option value="${t}">${t}</option>`).join('');
-                
+            if(examVal) tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            else tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
+            document.getElementById('filter-test').innerHTML = `<option value="">-- Sabhi Tests Dekho --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('');
             renderFilteredTable();
         }
 
         function renderFilteredTable() {
             const examVal = document.getElementById('filter-exam').value;
             const testVal = document.getElementById('filter-test').value;
-
             let filtered = allQuestions;
             if(examVal) filtered = filtered.filter(q => q.examName === examVal);
             if(testVal) filtered = filtered.filter(q => q.testName === testVal);
@@ -307,7 +344,6 @@
                 return;
             }
             
-            // 1. Table View Data
             tbody.innerHTML = filtered.map(q => `
                 <tr>
                     <td><strong>${q.examName || '-'}</strong></td>
@@ -320,7 +356,6 @@
                 </tr>
             `).join('');
 
-            // 2. Card (Detailed) View Data
             cardContainer.innerHTML = filtered.map((q, qIndex) => {
                 let optionsHtml = '';
                 q.options.forEach((opt, optIndex) => {
@@ -328,7 +363,6 @@
                     let checkMark = optIndex === q.correctOptionIndex ? '✅' : '';
                     optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} ${checkMark}</li>`;
                 });
-
                 return `
                 <div class="q-card">
                     <h4>Q: ${q.text}</h4>
@@ -349,16 +383,12 @@
         }
 
         async function deleteQuestion(id) {
-            if(confirm("Pakka is question ko delete karna hai?")) {
-                await fetch(`/delete-question/${id}`, { method: 'DELETE' });
-                fetchAllData(); 
-            }
+            if(confirm("Pakka is question ko delete karna hai?")) { await fetch(`/delete-question/${id}`, { method: 'DELETE' }); fetchAllData(); }
         }
 
         function startEdit(id) {
             const q = allQuestions.find(x => x._id === id);
             if(!q) return;
-            
             editingId = id;
             document.getElementById('form-title').innerText = "✏️ Question Edit Karo";
             document.getElementById('submit-btn').innerText = "Update Data";
@@ -367,7 +397,6 @@
             
             document.getElementById('exam-select').value = q.examName || '';
             handleExamChange(); 
-            
             document.getElementById('test-select').value = q.testName || '';
             toggleCustomInput('test');
 
@@ -395,23 +424,14 @@
 
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             let finalExam = document.getElementById('exam-select').value;
             if(finalExam === 'NEW_ITEM') finalExam = document.getElementById('custom-exam').value.trim();
-            
             let finalTest = document.getElementById('test-select').value;
             if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
 
             const payload = {
-                examName: finalExam,
-                testName: finalTest,
-                text: document.getElementById('q-text').value,
-                options: [
-                    document.getElementById('opt-0').value,
-                    document.getElementById('opt-1').value,
-                    document.getElementById('opt-2').value,
-                    document.getElementById('opt-3').value
-                ],
+                examName: finalExam, testName: finalTest, text: document.getElementById('q-text').value,
+                options: [document.getElementById('opt-0').value, document.getElementById('opt-1').value, document.getElementById('opt-2').value, document.getElementById('opt-3').value],
                 correctOptionIndex: parseInt(document.getElementById('correct-opt').value),
                 positiveMarks: parseInt(document.getElementById('pos-marks').value),
                 negativeMarks: parseInt(document.getElementById('neg-marks').value)
@@ -419,7 +439,6 @@
 
             const statusDiv = document.getElementById('status');
             statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "orange";
-
             const endpoint = editingId ? `/update-question/${editingId}` : '/add-question';
             const method = editingId ? 'PUT' : 'POST';
 
@@ -429,7 +448,6 @@
                 if(res.ok) {
                     statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "green";
                     setTimeout(() => { statusDiv.innerHTML = ""; }, 2000);
-                    
                     if(editingId) cancelEdit(); 
                     else {
                         document.getElementById('q-text').value = '';

@@ -15,7 +15,6 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Database connected successfully!'))
     .catch((err) => console.log('❌ Error:', err.message));
 
-// --- ADMIN LOGIN API ---
 app.post('/admin-login', (req, res) => {
     const { username, password } = req.body;
     if (username === 'admin' && password === 'TomarJi123') {
@@ -25,7 +24,6 @@ app.post('/admin-login', (req, res) => {
     }
 });
 
-// --- STUDENT AUTH APIs ---
 app.post('/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -46,7 +44,6 @@ app.post('/login', async (req, res) => {
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
-// --- PORTAL APIs (Student) ---
 app.get('/get-exams', async (req, res) => {
     try { res.status(200).json(await Question.distinct('examName')); } 
     catch (error) { res.status(500).json({ error: "Exams nahi mile" }); }
@@ -70,7 +67,6 @@ app.post('/save-result', async (req, res) => {
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
-// --- NEW ADVANCED ADMIN APIs (CRUD) ---
 app.post('/add-question', async (req, res) => {
     try {
         const newQuestion = new Question(req.body);
@@ -97,6 +93,14 @@ app.delete('/delete-question/:id', async (req, res) => {
     try {
         await Question.findByIdAndDelete(req.params.id);
         res.status(200).json({ message: "Question delete ho gaya!" });
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+// --- NAYI API: Sabhi baccho ka Result fetch karne ke liye ---
+app.get('/all-results', async (req, res) => {
+    try {
+        const results = await Result.find().sort({ date: -1 }); // Naya sabse upar dikhega
+        res.status(200).json(results);
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
