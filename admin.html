@@ -54,11 +54,11 @@
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
-                <!-- Naya Dropdown System -->
+                <!-- Interlinked Dropdown System -->
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Exam Name:</label>
-                        <select id="exam-select" onchange="toggleCustomInput('exam')" required>
+                        <select id="exam-select" onchange="handleExamChange()" required>
                             <option value="">-- Select Exam --</option>
                         </select>
                         <input type="text" id="custom-exam" placeholder="Naye Exam ka naam likho..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
@@ -66,7 +66,7 @@
                     <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Test Name:</label>
                         <select id="test-select" onchange="toggleCustomInput('test')" required>
-                            <option value="">-- Select Test --</option>
+                            <option value="">-- Pehle Exam Chuno --</option>
                         </select>
                         <input type="text" id="custom-test" placeholder="Naye Test ka naam likho..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
                     </div>
@@ -156,7 +156,7 @@
             if(tab === 'manage') fetchAllData();
         }
 
-        // Dropdown toggle logic
+        // Toggle custom inputs
         function toggleCustomInput(type) {
             const selectVal = document.getElementById(type + '-select').value;
             const customInput = document.getElementById('custom-' + type);
@@ -170,24 +170,46 @@
             }
         }
 
+        // Yahan par EXAM chunne par Test filter honge
+        function handleExamChange() {
+            const examVal = document.getElementById('exam-select').value;
+            toggleCustomInput('exam');
+
+            let tests = [];
+            if(examVal && examVal !== 'NEW_ITEM') {
+                // Sirf wahi tests lo jo selected exam ke hain
+                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            }
+
+            document.getElementById('test-select').innerHTML = 
+                `<option value="">-- Select Test --</option>` + 
+                tests.map(t => `<option value="${t}">${t}</option>`).join('') +
+                `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
+
+            // Agar naya exam bana raha hai, toh test bhi automatically naya type karne ka option khul jaye
+            if (examVal === 'NEW_ITEM') {
+                document.getElementById('test-select').value = 'NEW_ITEM';
+                toggleCustomInput('test');
+            } else {
+                document.getElementById('custom-test').style.display = 'none';
+                document.getElementById('custom-test').removeAttribute('required');
+            }
+        }
+
         async function fetchAllData() {
             try {
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
                 
-                // Proper dropdown set karna
+                // Sirf Exams load karo shuru mein
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
-                const tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
-                
                 document.getElementById('exam-select').innerHTML = 
                     `<option value="">-- Select Exam --</option>` + 
                     exams.map(e => `<option value="${e}">${e}</option>`).join('') +
                     `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
                     
-                document.getElementById('test-select').innerHTML = 
-                    `<option value="">-- Select Test --</option>` + 
-                    tests.map(t => `<option value="${t}">${t}</option>`).join('') +
-                    `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
+                // Test dropdown ko khali kar do taaki jab tak Exam na chune tab tak band rahe
+                document.getElementById('test-select').innerHTML = `<option value="">-- Pehle Exam Chuno --</option><option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
 
                 const tbody = document.getElementById('questions-table-body');
                 if(allQuestions.length === 0) {
@@ -226,10 +248,10 @@
             document.getElementById('submit-btn').style.background = "#f39c12";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
-            // Set Dropdowns
             document.getElementById('exam-select').value = q.examName || '';
+            handleExamChange(); // Update tests list manually for selected exam
+            
             document.getElementById('test-select').value = q.testName || '';
-            toggleCustomInput('exam');
             toggleCustomInput('test');
 
             document.getElementById('q-text').value = q.text || '';
@@ -257,7 +279,6 @@
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Final Exam and Test names nikalna (Dropdown se ya Custom input se)
             let finalExam = document.getElementById('exam-select').value;
             if(finalExam === 'NEW_ITEM') finalExam = document.getElementById('custom-exam').value.trim();
             
@@ -300,7 +321,7 @@
                         document.getElementById('opt-2').value = '';
                         document.getElementById('opt-3').value = '';
                     }
-                    fetchAllData(); // Background me list update karega
+                    fetchAllData(); 
                 } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "red"; }
             } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
         });
