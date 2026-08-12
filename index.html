@@ -26,8 +26,6 @@
     </style>
 </head>
 <body>
-    
-    <!-- LOGIN / REGISTER SECTION -->
     <div id="auth-section" class="container">
         <h2 id="auth-title">🎓 Student Login</h2>
         <input type="text" id="auth-name" placeholder="Tumhara Poora Naam" style="display:none;">
@@ -38,7 +36,6 @@
         <div id="auth-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
     </div>
 
-    <!-- MAIN PORTAL SECTION (Hidden until login) -->
     <div id="portal-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <h2 style="margin: 0; border: none;">📝 Live Test Portal</h2>
@@ -48,15 +45,9 @@
         
         <div id="selection-area" class="selection-box">
             <label><strong>Select Exam:</strong></label>
-            <select id="exam-select" onchange="fetchTests()">
-                <option value="">-- Exam chuno --</option>
-            </select>
-
+            <select id="exam-select" onchange="fetchTests()"><option value="">-- Exam chuno --</option></select>
             <label style="display:block; margin-top:15px;"><strong>Select Test:</strong></label>
-            <select id="test-select">
-                <option value="">-- Pehle Exam chuno --</option>
-            </select>
-
+            <select id="test-select"><option value="">-- Pehle Exam chuno --</option></select>
             <button onclick="startTest()">🚀 Start Test</button>
         </div>
 
@@ -66,7 +57,6 @@
             <button class="submit-btn" onclick="submitTest()" id="submit-btn">Submit Test</button>
             <div id="result"></div>
         </div>
-
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
@@ -74,7 +64,6 @@
         let questionsData = [];
         let isLogin = true;
 
-        // AUTHENTICATION LOGIC
         function toggleAuth() {
             isLogin = !isLogin;
             document.getElementById('auth-title').innerText = isLogin ? "🎓 Student Login" : "📝 Student Register";
@@ -89,38 +78,24 @@
             const password = document.getElementById('auth-password').value;
             const status = document.getElementById('auth-status');
 
-            if(!email || !password || (!isLogin && !name)) {
-                status.innerText = "❌ Saari details fill karo!";
-                status.style.color = "red";
-                return;
-            }
-
+            if(!email || !password || (!isLogin && !name)) return status.innerText = "❌ Saari details fill karo!", status.style.color = "red";
             status.innerText = "Loading..."; status.style.color = "#007bff";
-            const endpoint = isLogin ? '/login' : '/signup';
-            const payload = isLogin ? { email, password } : { name, email, password };
 
             try {
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                const res = await fetch(isLogin ? '/login' : '/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(isLogin ? { email, password } : { name, email, password }) });
                 const data = await res.json();
 
                 if(res.ok) {
                     if(isLogin) {
                         localStorage.setItem('userName', data.name);
+                        localStorage.setItem('userEmail', data.email); // Email bhi save kar li
                         checkLogin();
                     } else {
                         status.innerText = "✅ " + data.message; status.style.color = "green";
                         setTimeout(toggleAuth, 1500);
                     }
-                } else {
-                    status.innerText = "❌ " + data.error; status.style.color = "red";
-                }
-            } catch (e) {
-                status.innerText = "❌ Server error!"; status.style.color = "red";
-            }
+                } else { status.innerText = "❌ " + data.error; status.style.color = "red"; }
+            } catch (e) { status.innerText = "❌ Server error!"; status.style.color = "red"; }
         }
 
         function checkLogin() {
@@ -136,21 +111,14 @@
             }
         }
 
-        function logout() {
-            localStorage.removeItem('userName');
-            checkLogin();
-        }
-
+        function logout() { localStorage.removeItem('userName'); localStorage.removeItem('userEmail'); checkLogin(); }
         window.onload = checkLogin;
 
-        // TEST PORTAL LOGIC
         function loadExams() {
             fetch('/get-exams').then(res => res.json()).then(exams => {
                 const examSelect = document.getElementById('exam-select');
                 examSelect.innerHTML = '<option value="">-- Exam chuno --</option>';
-                exams.forEach(exam => {
-                    if(exam) examSelect.innerHTML += `<option value="${exam}">${exam}</option>`;
-                });
+                exams.forEach(exam => { if(exam) examSelect.innerHTML += `<option value="${exam}">${exam}</option>`; });
             });
         }
 
@@ -158,15 +126,10 @@
             const examName = document.getElementById('exam-select').value;
             const testSelect = document.getElementById('test-select');
             testSelect.innerHTML = '<option value="">-- Loading... --</option>';
-            if(!examName) {
-                testSelect.innerHTML = '<option value="">-- Pehle Exam chuno --</option>';
-                return;
-            }
+            if(!examName) return testSelect.innerHTML = '<option value="">-- Pehle Exam chuno --</option>';
             fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => {
                 testSelect.innerHTML = '<option value="">-- Test chuno --</option>';
-                tests.forEach(test => {
-                    if(test) testSelect.innerHTML += `<option value="${test}">${test}</option>`;
-                });
+                tests.forEach(test => { if(test) testSelect.innerHTML += `<option value="${test}">${test}</option>`; });
             });
         }
 
@@ -180,27 +143,20 @@
             document.getElementById('test-title').innerText = `${examName} - ${testName}`;
             document.getElementById('test-container').innerHTML = 'Loading Questions...';
 
-            fetch('/get-test-questions', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ examName, testName })
-            }).then(res => res.json()).then(data => {
-                questionsData = data; renderTest();
-            });
+            fetch('/get-test-questions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) })
+            .then(res => res.json()).then(data => { questionsData = data; renderTest(); });
         }
 
         function renderTest() {
             const container = document.getElementById('test-container');
             container.innerHTML = '';
-            if(questionsData.length === 0) {
-                container.innerHTML = 'Is test mein koi questions nahi hain.';
-                document.getElementById('submit-btn').style.display = 'none'; return;
-            }
+            if(questionsData.length === 0) return container.innerHTML = 'Is test mein koi questions nahi hain.', document.getElementById('submit-btn').style.display = 'none';
             questionsData.forEach((q, index) => {
                 let html = `<div class="question"><p><strong>Q${index + 1}: ${q.text}</strong> <span class="marks">(+${q.positiveMarks} / -${q.negativeMarks})</span></p><ul class="options">`;
                 q.options.forEach((opt, optIndex) => { html += `<li><label><input type="radio" name="q${index}" value="${optIndex}"> ${opt}</label></li>`; });
                 html += `</ul></div>`; container.innerHTML += html;
             });
+            document.getElementById('submit-btn').style.display = 'block';
         }
 
         function submitTest() {
@@ -212,6 +168,16 @@
                     else { score -= q.negativeMarks; wrong++; }
                 } else { skipped++; }
             });
+
+            // DATABASE MEIN RESULT SAVE KARNE KI REQUEST
+            const payload = {
+                userName: localStorage.getItem('userName'),
+                userEmail: localStorage.getItem('userEmail'),
+                examName: document.getElementById('exam-select').value,
+                testName: document.getElementById('test-select').value,
+                score: score, correct: correct, wrong: wrong, skipped: skipped
+            };
+            fetch('/save-result', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
 
             const resDiv = document.getElementById('result');
             resDiv.style.display = 'block';
