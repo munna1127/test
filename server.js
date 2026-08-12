@@ -11,8 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// NAYA FEATURE: Public folder ko allow karna taaki logo load ho sake
-app.use(express.static('public'));
+// FIX: Absolute path for public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Database connected successfully!'))
