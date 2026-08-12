@@ -16,7 +16,6 @@
         .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px;}
         .tab-btn.active { background: #e74c3c; }
         
-        /* Table Styles */
         table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
         th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
         th { background-color: #34495e; color: white; }
@@ -33,7 +32,6 @@
 </head>
 <body>
 
-    <!-- ADMIN LOGIN SECTION -->
     <div id="admin-login-section" class="container" style="max-width: 500px;">
         <h2>🔒 Admin Login</h2>
         <div class="form-group"><label>Admin ID:</label><input type="text" id="admin-user" placeholder="Username daalo"></div>
@@ -42,7 +40,6 @@
         <div id="login-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
     </div>
 
-    <!-- MAIN ADMIN PANEL (Hidden until login) -->
     <div id="admin-panel-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <h2 style="margin: 0; border: none;">⚙️ Dashboard</h2>
@@ -54,20 +51,19 @@
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage All Questions</button>
         </div>
 
-        <!-- ADD / EDIT TAB -->
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>Exam Name:</label>
-                        <!-- list attribute datalist se connect karta hai -->
-                        <input type="text" id="exam-name" list="exams-list" placeholder="e.g. JEE" required>
+                        <!-- Added autocomplete="off" to force native datalist -->
+                        <input type="text" id="exam-name" list="exams-list" placeholder="e.g. JEE" required autocomplete="off">
                         <datalist id="exams-list"></datalist>
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>Test Name:</label>
-                        <input type="text" id="test-name" list="tests-list" placeholder="e.g. Mock 1" required>
+                        <input type="text" id="test-name" list="tests-list" placeholder="e.g. Mock 1" required autocomplete="off">
                         <datalist id="tests-list"></datalist>
                     </div>
                 </div>
@@ -93,7 +89,6 @@
             </form>
         </div>
 
-        <!-- MANAGE TAB -->
         <div id="manage-tab" style="display: none;">
             <h3 style="color: #2980b9;">Saare Tests aur Questions</h3>
             <div style="overflow-x: auto;">
@@ -124,7 +119,7 @@
             if(localStorage.getItem('isAdminLoggedIn') === 'true') {
                 document.getElementById('admin-login-section').style.display = 'none';
                 document.getElementById('admin-panel-section').style.display = 'block';
-                fetchAllData(); // Login hote hi data manga lo
+                fetchAllData(); 
             } else {
                 document.getElementById('admin-login-section').style.display = 'block';
                 document.getElementById('admin-panel-section').style.display = 'none';
@@ -145,6 +140,7 @@
                 else { status.innerText = "❌ Galat ID/Password!"; status.style.color = "red"; }
             } catch (err) { status.innerText = "❌ Server error!"; }
         }
+
         function adminLogout() { localStorage.removeItem('isAdminLoggedIn'); checkAdminLogin(); }
 
         function switchTab(tab) {
@@ -160,24 +156,23 @@
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
                 
-                // Dropdown Auto-complete set karna
-                const exams = [...new Set(allQuestions.map(q => q.examName))];
-                const tests = [...new Set(allQuestions.map(q => q.testName))];
-                document.getElementById('exams-list').innerHTML = exams.map(e => `<option value="${e}">`).join('');
-                document.getElementById('tests-list').innerHTML = tests.map(t => `<option value="${t}">`).join('');
+                // FIXED: Filter out empty/old data and add proper closing tags for mobile browsers
+                const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
+                const tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
+                document.getElementById('exams-list').innerHTML = exams.map(e => `<option value="${e}"></option>`).join('');
+                document.getElementById('tests-list').innerHTML = tests.map(t => `<option value="${t}"></option>`).join('');
 
-                // Table render karna
                 const tbody = document.getElementById('questions-table-body');
                 if(allQuestions.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Koi question nahi mila.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Koi question nahi mila. Pehle ek add karo!</td></tr>';
                     return;
                 }
                 
                 tbody.innerHTML = allQuestions.map(q => `
                     <tr>
-                        <td><strong>${q.examName}</strong></td>
-                        <td>${q.testName}</td>
-                        <td>${q.text.substring(0, 50)}...</td>
+                        <td><strong>${q.examName || '-'}</strong></td>
+                        <td>${q.testName || '-'}</td>
+                        <td>${(q.text || '').substring(0, 50)}...</td>
                         <td>
                             <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
                             <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
@@ -190,7 +185,7 @@
         async function deleteQuestion(id) {
             if(confirm("Pakka is question ko delete karna hai?")) {
                 await fetch(`/delete-question/${id}`, { method: 'DELETE' });
-                fetchAllData(); // Table refresh
+                fetchAllData(); 
             }
         }
 
@@ -204,13 +199,13 @@
             document.getElementById('submit-btn').style.background = "#f39c12";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
-            document.getElementById('exam-name').value = q.examName;
-            document.getElementById('test-name').value = q.testName;
-            document.getElementById('q-text').value = q.text;
-            document.getElementById('opt-0').value = q.options[0];
-            document.getElementById('opt-1').value = q.options[1];
-            document.getElementById('opt-2').value = q.options[2];
-            document.getElementById('opt-3').value = q.options[3];
+            document.getElementById('exam-name').value = q.examName || '';
+            document.getElementById('test-name').value = q.testName || '';
+            document.getElementById('q-text').value = q.text || '';
+            document.getElementById('opt-0').value = q.options[0] || '';
+            document.getElementById('opt-1').value = q.options[1] || '';
+            document.getElementById('opt-2').value = q.options[2] || '';
+            document.getElementById('opt-3').value = q.options[3] || '';
             document.getElementById('correct-opt').value = q.correctOptionIndex;
             document.getElementById('pos-marks').value = q.positiveMarks;
             document.getElementById('neg-marks').value = q.negativeMarks;
@@ -260,14 +255,13 @@
                     
                     if(editingId) cancelEdit(); 
                     else {
-                        // Naya add karne pe sirf text clear hoga, exam/test name wahi rahega taaki time bache
                         document.getElementById('q-text').value = '';
                         document.getElementById('opt-0').value = '';
                         document.getElementById('opt-1').value = '';
                         document.getElementById('opt-2').value = '';
                         document.getElementById('opt-3').value = '';
                     }
-                    fetchAllData(); // Background me list update
+                    fetchAllData(); 
                 } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "red"; }
             } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
         });
