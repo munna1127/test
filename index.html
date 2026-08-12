@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Test Portal</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f0f2f5; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h2 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        .question { margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-left: 4px solid #007bff; border-radius: 4px; }
+        .marks { color: #666; font-size: 0.9em; float: right; }
+        .options { list-style: none; padding: 0; }
+        .options li { margin: 10px 0; }
+        .options label { cursor: pointer; display: block; padding: 8px; border: 1px solid #ddd; border-radius: 4px; transition: 0.2s; }
+        .options label:hover { background: #e9ecef; }
+        button { background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; }
+        button:hover { background: #218838; }
+        #result { margin-top: 20px; padding: 20px; background: #d4edda; border-radius: 5px; display: none; border: 1px solid #c3e6cb;}
+        .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #888; font-weight: bold;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📝 Live Test</h2>
+        <div id="test-container">Loading... Server on karo bhai!</div>
+        <button onclick="submitTest()" id="submit-btn" style="display:none;">Submit Test</button>
+        <div id="result"></div>
+        <div class="footer">Developed by Tomar Ji</div>
+    </div>
+
+    <script>
+        let questionsData = [];
+
+        // Backend se automatically questions mangwana
+        fetch('http://localhost:5000/get-questions')
+            .then(response => response.json())
+            .then(data => {
+                questionsData = data;
+                renderTest();
+            })
+            .catch(err => {
+                document.getElementById('test-container').innerHTML = '<p style="color:red;">Error: Database se questions nahi aaye.</p>';
+            });
+
+        function renderTest() {
+            const container = document.getElementById('test-container');
+            container.innerHTML = '';
+            if(questionsData.length === 0) {
+                container.innerHTML = 'Abhi tak koi question add nahi hua hai.';
+                return;
+            }
+
+            questionsData.forEach((q, index) => {
+                let html = `<div class="question">
+                    <p><strong>Q${index + 1}: ${q.text}</strong> <span class="marks">(+${q.positiveMarks} / -${q.negativeMarks})</span></p>
+                    <ul class="options">`;
+                
+                q.options.forEach((opt, optIndex) => {
+                    html += `<li><label><input type="radio" name="q${index}" value="${optIndex}"> ${opt}</label></li>`;
+                });
+
+                html += `</ul></div>`;
+                container.innerHTML += html;
+            });
+            document.getElementById('submit-btn').style.display = 'block';
+        }
+
+        // Test Submit karne par Number calculate karna
+        function submitTest() {
+            let score = 0, correct = 0, wrong = 0, skipped = 0;
+
+            questionsData.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected) {
+                    if (parseInt(selected.value) === q.correctOptionIndex) {
+                        score += q.positiveMarks;
+                        correct++;
+                    } else {
+                        score -= q.negativeMarks;
+                        wrong++;
+                    }
+                } else {
+                    skipped++;
+                }
+            });
+
+            const resDiv = document.getElementById('result');
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = `
+                <h3 style="margin-top:0;">📊 Final Score: ${score}</h3>
+                <p>✅ Sahi Jawab: ${correct} | ❌ Galat Jawab: ${wrong} | ⚠️ Chhod diye: ${skipped}</p>
+            `;
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('test-container').style.pointerEvents = 'none'; // Test lock karna
+        }
+    </script>
+</body>
+</html>
