@@ -301,8 +301,19 @@
         function handleExamChange() {
             const examVal = document.getElementById('exam-select').value;
             toggleCustomInput('exam');
+            
+            // FIX: Agar exam select nahi hua hai, to "Add New Test" ka option mat dikhao
+            if (!examVal) {
+                document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
+                document.getElementById('custom-test').style.display = 'none';
+                document.getElementById('custom-test').removeAttribute('required');
+                return;
+            }
+
             let tests = [];
-            if(examVal && examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            if(examVal !== 'NEW_ITEM') {
+                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            }
             
             document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Add New Test</option>`;
             
@@ -322,7 +333,10 @@
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 
                 document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Add New Exam</option>`;
-                document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option><option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Add New Test</option>`;
+                
+                // FIX: Initial load par Test dropdown ekdum clear rahega
+                document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
+                
                 document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
                 handleFilterExamChange(); 
