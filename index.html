@@ -15,20 +15,41 @@
     </script>
     <style>
         :root {
-            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.95); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #4299e1; --primary-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --danger-btn: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); --success-btn: linear-gradient(135deg, #48bb78 0%, #38a169 100%); --warning-btn: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%); --input-bg: #f8fafc; --input-border: #e2e8f0; --shadow: 0 20px 40px rgba(0,0,0,0.08); --table-head-bg: #2d3748; --table-head-text: #ffffff; --table-border: #edf2f7; --table-hover: #f7fafc; --correct-bg: #d4edda; --correct-text: #155724; --q-unvisited: #e2e8f0; --q-answered: #48bb78; --q-not-answered: #fc8181;
+            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
+            --bg-card: rgba(255, 255, 255, 0.85); /* 0.95 se 0.85 kar diya taaki logo dikhe */
+            --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #4299e1; --primary-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --danger-btn: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); --success-btn: linear-gradient(135deg, #48bb78 0%, #38a169 100%); --warning-btn: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%); 
+            --input-bg: rgba(248, 250, 252, 0.9); --input-border: #e2e8f0; --shadow: 0 20px 40px rgba(0,0,0,0.08); --table-head-bg: rgba(45, 55, 72, 0.95); --table-head-text: #ffffff; --table-border: #edf2f7; --table-hover: rgba(247, 250, 252, 0.8); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(226, 232, 240, 0.8); --q-answered: #48bb78; --q-not-answered: #fc8181;
         }
         [data-theme="dark"] {
-            --bg-main: #0f172a; --bg-card: #1e293b; --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); --input-bg: #0f172a; --input-border: #334155; --shadow: 0 20px 40px rgba(0,0,0,0.4); --table-head-bg: #0f172a; --table-head-text: #f8fafc; --table-border: #334155; --table-hover: #334155; --correct-bg: #064e3b; --correct-text: #a7f3d0; --q-unvisited: #334155; --q-answered: #10b981; --q-not-answered: #ef4444;
+            --bg-main: #0f172a; 
+            --bg-card: rgba(30, 41, 59, 0.88); 
+            --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); 
+            --input-bg: rgba(15, 23, 42, 0.9); --input-border: #334155; --shadow: 0 20px 40px rgba(0,0,0,0.4); --table-head-bg: rgba(15, 23, 42, 0.95); --table-head-text: #f8fafc; --table-border: #334155; --table-hover: rgba(51, 65, 85, 0.8); --correct-bg: rgba(6, 78, 59, 0.8); --correct-text: #a7f3d0; --q-unvisited: rgba(51, 65, 85, 0.8); --q-answered: #10b981; --q-not-answered: #ef4444;
         }
         [data-theme="glass"] {
-            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(255,255,255,0.5); --q-answered: #43e97b; --q-not-answered: #ff0844;
+            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); 
+            --bg-card: rgba(255, 255, 255, 0.4); 
+            --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); 
+            --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(255,255,255,0.5); --q-answered: #43e97b; --q-not-answered: #ff0844;
         }
 
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); min-height: 100vh; color: var(--text-main); transition: background 0.3s ease;}
+        
+        /* ✨ WATERMARK CSS ✨ */
+        .watermark-bg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 65vmin; height: 65vmin;
+            background-image: url('/logo.jpg');
+            background-size: contain; background-repeat: no-repeat; background-position: center;
+            opacity: 0.06; z-index: -1; pointer-events: none;
+        }
+        [data-theme="dark"] .watermark-bg { opacity: 0.15; filter: grayscale(100%) invert(1); } /* Dark mode me logo clearly dikhega */
+        [data-theme="glass"] .watermark-bg { opacity: 0.1; mix-blend-mode: overlay; }
+
         .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
         .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
         
-        .container { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 650px; margin: 60px auto 20px auto; border: 1px solid var(--input-border); backdrop-filter: blur(15px); transition: all 0.3s ease;}
+        .container { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 650px; margin: 60px auto 20px auto; border: 1px solid var(--input-border); backdrop-filter: blur(12px); transition: all 0.3s ease;}
         .pro-test-container { max-width: 1000px; margin: 20px auto; padding: 25px; display: flex; gap: 25px; flex-wrap: wrap;}
         
         h2, h3, h4 { color: var(--text-heading); }
@@ -43,8 +64,8 @@
         
         .test-layout { display: flex; flex-direction: row; width: 100%; gap: 20px; }
         @media (max-width: 768px) { .test-layout { flex-direction: column; } }
-        .main-q-area { flex: 3; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); position: relative;}
-        .palette-area { flex: 1; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); display: flex; flex-direction: column;}
+        .main-q-area { flex: 3; background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); position: relative; backdrop-filter: blur(12px);}
+        .palette-area { flex: 1; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); display: flex; flex-direction: column; backdrop-filter: blur(12px);}
         
         .q-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--input-border); padding-bottom: 15px; margin-bottom: 20px; }
         .q-subject { background: var(--input-bg); padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--primary-color); border: 1px solid var(--primary-color);}
@@ -88,10 +109,9 @@
         
         .analytics-section { text-align: left; margin-top: 30px; border-top: 2px solid var(--input-border); padding-top: 20px;}
         .chart-container { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--input-border); margin-top: 15px;}
-        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; } 
+        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; position:relative; z-index: 1; } 
         .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); font-weight: 600; opacity: 0.7;}
 
-        /* ✨ PREMIUM ANIMATED BRAND LOGO ✨ */
         .brand-title {
             font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase;
             background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6);
@@ -107,6 +127,9 @@
 </head>
 <body>
     
+    <!-- WATERMARK IMAGE -->
+    <div class="watermark-bg"></div>
+
     <div class="theme-selector">
         <select id="theme-switcher" onchange="changeTheme(this.value)">
             <option value="default">🎨 Clean Premium</option>
@@ -115,11 +138,8 @@
         </select>
     </div>
 
-    <!-- LOGIN SECTION -->
     <div id="auth-section" class="container">
-        <!-- PREMIUM LOGO -->
         <h1 class="brand-title">Safalta Quiz<span>Bhagalpur</span></h1>
-
         <h2 id="auth-title" style="font-size: 20px; color: var(--text-main); opacity:0.8;">🎓 Student Login</h2>
         <input type="text" id="auth-name" placeholder="Full Name" style="display:none;">
         <input type="email" id="auth-email" placeholder="Email Address">
@@ -129,7 +149,6 @@
         <div id="auth-status" style="text-align:center; margin-top:15px; font-weight:600;"></div>
     </div>
 
-    <!-- SELECTION SECTION -->
     <div id="portal-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 25px;">
             <h1 class="brand-title" style="font-size: 24px; margin-bottom: 0; text-align: left;">Safalta Quiz<span style="font-size: 12px; letter-spacing: 2px;">Bhagalpur</span></h1>
@@ -142,14 +161,10 @@
             <select id="exam-select" onchange="fetchTests()"><option value="">-- Select Exam --</option></select>
             <label style="display:block; margin-top:20px;"><strong>Select Test:</strong></label>
             <select id="test-select"><option value="">-- Select Exam First --</option></select>
-            
-            <!-- STUDENT CUSTOM TIMER REMOVED AS REQUESTED -->
-            
             <button onclick="startTest()" style="margin-top: 25px;">🚀 Start Computer Based Test</button>
         </div>
     </div>
 
-    <!-- PRO CBT TEST INTERFACE -->
     <div id="test-area-container" class="container pro-test-container" style="display: none;">
         <div class="main-q-area">
             <div id="timer-badge" class="timer-badge">⏱️ <span id="time-left">00:00</span></div>
@@ -180,7 +195,6 @@
         </div>
     </div>
 
-    <!-- RESULT & ANALYTICS SECTION -->
     <div id="result-area" class="container" style="display: none; max-width: 900px;">
         <button onclick="downloadPDF()" style="background: #e11d48; margin-bottom: 15px; width:auto; float:right; font-size:14px; padding:8px 15px;">📥 Download PDF Report</button>
         <div style="clear:both;"></div>
@@ -297,12 +311,11 @@
                 renderPalette(); loadQuestion(currentQIndex);
                 testStartTime = Date.now();
                 
-                // ADMIN TIMER LOGIC APPLIED HERE
                 let totalSeconds = 0;
                 if (questionsData[0].testDuration && questionsData[0].testDuration > 0) {
-                    totalSeconds = questionsData[0].testDuration * 60; // Admin Timer
+                    totalSeconds = questionsData[0].testDuration * 60;
                 } else {
-                    totalSeconds = questionsData.length * 120; // Fallback to 2 min/question
+                    totalSeconds = questionsData.length * 120;
                 }
                 startTimer(totalSeconds);
             });
