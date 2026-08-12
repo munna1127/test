@@ -25,6 +25,11 @@
         input[type="radio"] { margin-right: 10px; transform: scale(1.2); accent-color: #4299e1;}
         .submit-btn { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); margin-top: 25px;}
         .submit-btn:hover { box-shadow: 0 8px 15px rgba(56, 161, 105, 0.3); }
+        
+        /* Sticky Timer Styles */
+        .timer-badge { position: sticky; top: 15px; z-index: 1000; background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); float: right; margin-bottom: 15px; transition: all 0.3s; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(229, 62, 62, 0.5); } 100% { transform: scale(1); } }
+        
         .result-box { margin-top: 25px; padding: 25px; background: #f0fff4; border-radius: 16px; border: 1px solid #c6f6d5; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05);}
         table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 14px; border-radius: 12px; overflow: hidden; border: 1px solid #edf2f7;}
         th, td { padding: 15px; text-align: left; }
@@ -69,7 +74,13 @@
         </div>
 
         <div id="test-area" style="display: none;">
+            <div id="timer-badge" class="timer-badge" style="display: none;">
+                ⏱️ <span id="time-left">00:00</span>
+            </div>
+            
+            <div style="clear: both;"></div> <!-- Clear float for timer -->
             <h3 id="test-title" style="color: #4299e1; text-align: center; margin-bottom: 25px; font-size: 22px;"></h3>
+            
             <div id="test-container"></div>
             <button class="submit-btn" onclick="submitTest()" id="submit-btn">Submit Test</button>
             <div id="result"></div>
@@ -81,6 +92,7 @@
     <script>
         let questionsData = [];
         let isLogin = true;
+        let timerInterval;
 
         function toggleAuth() {
             isLogin = !isLogin;
@@ -180,6 +192,38 @@
             });
         }
 
+        function startTimer(durationInSeconds) {
+            let timer = durationInSeconds, minutes, seconds;
+            const display = document.getElementById('time-left');
+            const badge = document.getElementById('timer-badge');
+            
+            badge.style.display = 'inline-flex';
+            badge.style.background = 'linear-gradient(135deg, #48bb78 0%, #38a169 100%)';
+            badge.style.animation = 'none';
+
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                // Aakhiri 1 minute bache toh red alert
+                if (timer <= 60) {
+                    badge.style.background = 'linear-gradient(135deg, #fc8181 0%, #e53e3e 100%)';
+                    badge.style.animation = 'pulse 1s infinite';
+                }
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    alert("⏰ Time is up! Auto-submitting your test.");
+                    submitTest(true); // true means auto-submitted
+                }
+            }, 1000);
+        }
+
         function startTest() {
             const examName = document.getElementById('exam-select').value;
             const testName = document.getElementById('test-select').value;
@@ -203,6 +247,12 @@
             .then(data => {
                 questionsData = data;
                 renderTest();
+                
+                if(questionsData.length > 0) {
+                    // 2 minutes (120 seconds) per question
+                    const totalSeconds = questionsData.length * 120;
+                    startTimer(totalSeconds);
+                }
             });
         }
 
@@ -230,8 +280,14 @@
             document.getElementById('submit-btn').style.display = 'block';
         }
 
-        async function submitTest() {
-            if(!confirm("Are you sure you want to submit the test?")) return;
+        async function submitTest(isAutoSubmit = false) {
+            if(!isAutoSubmit) {
+                if(!confirm("Are you sure you want to submit the test?")) return;
+            }
+
+            // Stop the timer
+            clearInterval(timerInterval);
+            document.getElementById('timer-badge').style.display = 'none';
 
             let score = 0, correct = 0, wrong = 0, skipped = 0;
             questionsData.forEach((q, index) => {
