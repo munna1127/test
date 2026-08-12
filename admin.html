@@ -3,90 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - Tomar Ji</title>
+    <title>Admin Dashboard - Tomar Ji</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #2c3e50; color: white;}
-        .container { background: #34495e; padding: 30px; border-radius: 10px; max-width: 600px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.3);}
-        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; margin-top:0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f4f6f9; color: #333;}
+        .container { background: white; padding: 30px; border-radius: 10px; max-width: 900px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);}
+        h2 { border-bottom: 2px solid #e74c3c; padding-bottom: 10px; text-align: center; margin-top:0; color: #2c3e50;}
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #bdc3c7;}
-        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: none; border-radius: 5px; box-sizing: border-box; font-size: 15px;}
-        button { background: #e74c3c; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 15px; font-size: 16px;}
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e;}
+        input[type="text"], input[type="password"], input[type="number"], select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px;}
+        button { background: #e74c3c; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s;}
         button:hover { background: #c0392b; }
+        .tab-btn { background: #34495e; margin-right: 5px; margin-bottom: 15px;}
+        .tab-btn.active { background: #e74c3c; }
+        
+        /* Table Styles */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 14px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #34495e; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .action-btn { padding: 5px 10px; margin: 2px; font-size: 12px; }
+        .edit-btn { background: #f39c12; }
+        .edit-btn:hover { background: #d68910; }
+        .del-btn { background: #e74c3c; }
+        .del-btn:hover { background: #c0392b; }
+
         #status { margin-top: 15px; text-align: center; font-weight: bold; }
-        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #95a5a6; font-weight: bold;}
+        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #7f8c8d; font-weight: bold;}
     </style>
 </head>
 <body>
 
     <!-- ADMIN LOGIN SECTION -->
-    <div id="admin-login-section" class="container">
+    <div id="admin-login-section" class="container" style="max-width: 500px;">
         <h2>🔒 Admin Login</h2>
-        <div class="form-group">
-            <label>Admin ID:</label>
-            <input type="text" id="admin-user" placeholder="Username daalo">
-        </div>
-        <div class="form-group">
-            <label>Password:</label>
-            <input type="password" id="admin-pass" placeholder="Password daalo">
-        </div>
-        <button onclick="handleAdminLogin()">Login as Admin</button>
+        <div class="form-group"><label>Admin ID:</label><input type="text" id="admin-user" placeholder="Username daalo"></div>
+        <div class="form-group"><label>Password:</label><input type="password" id="admin-pass" placeholder="Password daalo"></div>
+        <button onclick="handleAdminLogin()" style="width:100%">Login as Admin</button>
         <div id="login-status" style="text-align:center; margin-top:10px; font-weight:bold;"></div>
-        <div class="footer">Developed by Tomar Ji</div>
     </div>
 
     <!-- MAIN ADMIN PANEL (Hidden until login) -->
     <div id="admin-panel-section" class="container" style="display: none;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="margin: 0; border: none;">⚙️ Admin Panel</h2>
-            <button onclick="adminLogout()" style="width:auto; background:#7f8c8d; padding:8px 15px; margin:0;">Logout</button>
+            <h2 style="margin: 0; border: none;">⚙️ Dashboard</h2>
+            <button onclick="adminLogout()" style="background:#7f8c8d;">Logout</button>
         </div>
-        <p style="color: #2ecc71; text-align:center; font-weight:bold; margin-top:10px;">Welcome Back, Tomar Ji!</p>
         
-        <form id="add-q-form" style="margin-top: 20px;">
-            <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 1;">
-                    <label>Exam Name (e.g. JEE):</label>
-                    <input type="text" id="exam-name" required>
+        <div style="margin-top: 20px; text-align: center;">
+            <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add / Edit Question</button>
+            <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage All Questions</button>
+        </div>
+
+        <!-- ADD / EDIT TAB -->
+        <div id="add-tab">
+            <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
+            <form id="add-q-form">
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Exam Name:</label>
+                        <!-- list attribute datalist se connect karta hai -->
+                        <input type="text" id="exam-name" list="exams-list" placeholder="e.g. JEE" required>
+                        <datalist id="exams-list"></datalist>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Test Name:</label>
+                        <input type="text" id="test-name" list="tests-list" placeholder="e.g. Mock 1" required>
+                        <datalist id="tests-list"></datalist>
+                    </div>
                 </div>
-                <div class="form-group" style="flex: 1;">
-                    <label>Test Name (e.g. Mock 1):</label>
-                    <input type="text" id="test-name" required>
+                <div class="form-group"><label>Question Text:</label><textarea id="q-text" rows="3" required></textarea></div>
+                <div class="form-group"><label>Option 1:</label><input type="text" id="opt-0" required></div>
+                <div class="form-group"><label>Option 2:</label><input type="text" id="opt-1" required></div>
+                <div class="form-group"><label>Option 3:</label><input type="text" id="opt-2" required></div>
+                <div class="form-group"><label>Option 4:</label><input type="text" id="opt-3" required></div>
+                <div class="form-group">
+                    <label>Sahi Jawab:</label>
+                    <select id="correct-opt">
+                        <option value="0">Option 1</option><option value="1">Option 2</option>
+                        <option value="2">Option 3</option><option value="3">Option 4</option>
+                    </select>
                 </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 1;"><label>Marks (+):</label><input type="number" id="pos-marks" value="4" required></div>
+                    <div class="form-group" style="flex: 1;"><label>Minus (-):</label><input type="number" id="neg-marks" value="1" required></div>
+                </div>
+                <button type="submit" id="submit-btn" style="width:100%">Save Question</button>
+                <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:#95a5a6; margin-top:10px; display:none;">Cancel Edit</button>
+                <div id="status"></div>
+            </form>
+        </div>
+
+        <!-- MANAGE TAB -->
+        <div id="manage-tab" style="display: none;">
+            <h3 style="color: #2980b9;">Saare Tests aur Questions</h3>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exam</th>
+                            <th>Test</th>
+                            <th>Question</th>
+                            <th style="min-width: 120px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="questions-table-body">
+                        <tr><td colspan="4" style="text-align:center;">Loading...</td></tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label>Question Text:</label>
-                <textarea id="q-text" rows="3" required></textarea>
-            </div>
-            <div class="form-group"><label>Option 1:</label><input type="text" id="opt-0" required></div>
-            <div class="form-group"><label>Option 2:</label><input type="text" id="opt-1" required></div>
-            <div class="form-group"><label>Option 3:</label><input type="text" id="opt-2" required></div>
-            <div class="form-group"><label>Option 4:</label><input type="text" id="opt-3" required></div>
-            <div class="form-group">
-                <label>Sahi Jawab:</label>
-                <select id="correct-opt">
-                    <option value="0">Option 1</option>
-                    <option value="1">Option 2</option>
-                    <option value="2">Option 3</option>
-                    <option value="3">Option 4</option>
-                </select>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <div class="form-group" style="flex: 1;"><label>Marks (+):</label><input type="number" id="pos-marks" value="4" required></div>
-                <div class="form-group" style="flex: 1;"><label>Minus (-):</label><input type="number" id="neg-marks" value="1" required></div>
-            </div>
-            <button type="submit">Add Question</button>
-            <div id="status"></div>
-        </form>
+        </div>
+
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
     <script>
-        // Check Login Status on Page Load
+        let allQuestions = [];
+        let editingId = null;
+
         function checkAdminLogin() {
             if(localStorage.getItem('isAdminLoggedIn') === 'true') {
                 document.getElementById('admin-login-section').style.display = 'none';
                 document.getElementById('admin-panel-section').style.display = 'block';
+                fetchAllData(); // Login hote hi data manga lo
             } else {
                 document.getElementById('admin-login-section').style.display = 'block';
                 document.getElementById('admin-panel-section').style.display = 'none';
@@ -94,41 +132,102 @@
         }
         window.onload = checkAdminLogin;
 
-        // Handle Admin Login API Call
         async function handleAdminLogin() {
             const user = document.getElementById('admin-user').value;
             const pass = document.getElementById('admin-pass').value;
             const status = document.getElementById('login-status');
 
-            if(!user || !pass) return status.innerText = "❌ Details daalo!", status.style.color = "#e74c3c";
-            status.innerText = "Loading..."; status.style.color = "#f1c40f";
-
+            if(!user || !pass) return status.innerText = "❌ Details daalo!", status.style.color = "red";
+            status.innerText = "Loading..."; status.style.color = "orange";
             try {
-                const res = await fetch('/admin-login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: user, password: pass })
-                });
-                const data = await res.json();
+                const res = await fetch('/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) });
+                if(res.ok) { localStorage.setItem('isAdminLoggedIn', 'true'); checkAdminLogin(); } 
+                else { status.innerText = "❌ Galat ID/Password!"; status.style.color = "red"; }
+            } catch (err) { status.innerText = "❌ Server error!"; }
+        }
+        function adminLogout() { localStorage.removeItem('isAdminLoggedIn'); checkAdminLogin(); }
 
-                if(res.ok) {
-                    localStorage.setItem('isAdminLoggedIn', 'true');
-                    checkAdminLogin();
-                } else {
-                    status.innerText = "❌ " + data.error; status.style.color = "#e74c3c";
+        function switchTab(tab) {
+            document.getElementById('add-tab').style.display = tab === 'add' ? 'block' : 'none';
+            document.getElementById('manage-tab').style.display = tab === 'manage' ? 'block' : 'none';
+            document.getElementById('tab-add-btn').className = tab === 'add' ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('tab-manage-btn').className = tab === 'manage' ? 'tab-btn active' : 'tab-btn';
+            if(tab === 'manage') fetchAllData();
+        }
+
+        async function fetchAllData() {
+            try {
+                const res = await fetch('/all-questions');
+                allQuestions = await res.json();
+                
+                // Dropdown Auto-complete set karna
+                const exams = [...new Set(allQuestions.map(q => q.examName))];
+                const tests = [...new Set(allQuestions.map(q => q.testName))];
+                document.getElementById('exams-list').innerHTML = exams.map(e => `<option value="${e}">`).join('');
+                document.getElementById('tests-list').innerHTML = tests.map(t => `<option value="${t}">`).join('');
+
+                // Table render karna
+                const tbody = document.getElementById('questions-table-body');
+                if(allQuestions.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Koi question nahi mila.</td></tr>';
+                    return;
                 }
-            } catch (err) {
-                status.innerText = "❌ Server error!"; status.style.color = "#e74c3c";
+                
+                tbody.innerHTML = allQuestions.map(q => `
+                    <tr>
+                        <td><strong>${q.examName}</strong></td>
+                        <td>${q.testName}</td>
+                        <td>${q.text.substring(0, 50)}...</td>
+                        <td>
+                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
+                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch(e) { console.log(e); }
+        }
+
+        async function deleteQuestion(id) {
+            if(confirm("Pakka is question ko delete karna hai?")) {
+                await fetch(`/delete-question/${id}`, { method: 'DELETE' });
+                fetchAllData(); // Table refresh
             }
         }
 
-        // Handle Admin Logout
-        function adminLogout() {
-            localStorage.removeItem('isAdminLoggedIn');
-            checkAdminLogin();
+        function startEdit(id) {
+            const q = allQuestions.find(x => x._id === id);
+            if(!q) return;
+            
+            editingId = id;
+            document.getElementById('form-title').innerText = "✏️ Question Edit Karo";
+            document.getElementById('submit-btn').innerText = "Update Data";
+            document.getElementById('submit-btn').style.background = "#f39c12";
+            document.getElementById('cancel-edit-btn').style.display = "block";
+            
+            document.getElementById('exam-name').value = q.examName;
+            document.getElementById('test-name').value = q.testName;
+            document.getElementById('q-text').value = q.text;
+            document.getElementById('opt-0').value = q.options[0];
+            document.getElementById('opt-1').value = q.options[1];
+            document.getElementById('opt-2').value = q.options[2];
+            document.getElementById('opt-3').value = q.options[3];
+            document.getElementById('correct-opt').value = q.correctOptionIndex;
+            document.getElementById('pos-marks').value = q.positiveMarks;
+            document.getElementById('neg-marks').value = q.negativeMarks;
+
+            switchTab('add');
+            window.scrollTo(0, 0);
         }
 
-        // Add Question Logic
+        function cancelEdit() {
+            editingId = null;
+            document.getElementById('form-title').innerText = "Naya Question Jodo";
+            document.getElementById('submit-btn').innerText = "Save Question";
+            document.getElementById('submit-btn').style.background = "#e74c3c";
+            document.getElementById('cancel-edit-btn').style.display = "none";
+            document.getElementById('q-text').value = '';
+        }
+
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const payload = {
@@ -147,26 +246,30 @@
             };
 
             const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Loading..."; statusDiv.style.color = "#f1c40f";
+            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "orange";
+
+            const endpoint = editingId ? `/update-question/${editingId}` : '/add-question';
+            const method = editingId ? 'PUT' : 'POST';
 
             try {
-                const response = await fetch('/add-question', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const data = await response.json();
-                if(response.ok) {
-                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "#2ecc71";
-                    document.getElementById('q-text').value = '';
-                    document.getElementById('opt-0').value = '';
-                    document.getElementById('opt-1').value = '';
-                    document.getElementById('opt-2').value = '';
-                    document.getElementById('opt-3').value = '';
-                } else {
-                    statusDiv.innerHTML = "❌ " + data.error; statusDiv.style.color = "#e74c3c";
-                }
-            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "#e74c3c"; }
+                const res = await fetch(endpoint, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const data = await res.json();
+                if(res.ok) {
+                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "green";
+                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2000);
+                    
+                    if(editingId) cancelEdit(); 
+                    else {
+                        // Naya add karne pe sirf text clear hoga, exam/test name wahi rahega taaki time bache
+                        document.getElementById('q-text').value = '';
+                        document.getElementById('opt-0').value = '';
+                        document.getElementById('opt-1').value = '';
+                        document.getElementById('opt-2').value = '';
+                        document.getElementById('opt-3').value = '';
+                    }
+                    fetchAllData(); // Background me list update
+                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "red"; }
+            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
         });
     </script>
 </body>

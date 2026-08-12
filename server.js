@@ -18,7 +18,6 @@ mongoose.connect(process.env.MONGO_URI)
 // --- ADMIN LOGIN API ---
 app.post('/admin-login', (req, res) => {
     const { username, password } = req.body;
-    // Yahan tum apna admin ID aur password change kar sakte ho baad me
     if (username === 'admin' && password === 'TomarJi123') {
         res.status(200).json({ message: "Welcome Admin!" });
     } else {
@@ -47,15 +46,7 @@ app.post('/login', async (req, res) => {
     } catch (error) { res.status(500).json({ error: "Server error!" }); }
 });
 
-// --- PORTAL APIs ---
-app.post('/add-question', async (req, res) => {
-    try {
-        const newQuestion = new Question(req.body);
-        await newQuestion.save();
-        res.status(201).json({ message: "Ekdum Mast! Question add ho gaya!" });
-    } catch (error) { res.status(500).json({ error: error.message }); }
-});
-
+// --- PORTAL APIs (Student) ---
 app.get('/get-exams', async (req, res) => {
     try { res.status(200).json(await Question.distinct('examName')); } 
     catch (error) { res.status(500).json({ error: "Exams nahi mile" }); }
@@ -76,6 +67,36 @@ app.post('/save-result', async (req, res) => {
         const newResult = new Result(req.body);
         await newResult.save();
         res.status(201).json({ message: "Result saved!" });
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+// --- NEW ADVANCED ADMIN APIs (CRUD) ---
+app.post('/add-question', async (req, res) => {
+    try {
+        const newQuestion = new Question(req.body);
+        await newQuestion.save();
+        res.status(201).json({ message: "Question add ho gaya!" });
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+app.get('/all-questions', async (req, res) => {
+    try {
+        const questions = await Question.find().sort({ examName: 1, testName: 1 });
+        res.status(200).json(questions);
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+app.put('/update-question/:id', async (req, res) => {
+    try {
+        await Question.findByIdAndUpdate(req.params.id, req.body);
+        res.status(200).json({ message: "Question update ho gaya!" });
+    } catch (error) { res.status(500).json({ error: error.message }); }
+});
+
+app.delete('/delete-question/:id', async (req, res) => {
+    try {
+        await Question.findByIdAndDelete(req.params.id);
+        res.status(200).json({ message: "Question delete ho gaya!" });
     } catch (error) { res.status(500).json({ error: error.message }); }
 });
 
