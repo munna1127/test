@@ -54,19 +54,24 @@
         <div id="add-tab">
             <h3 id="form-title" style="color: #2980b9;">Naya Question Jodo</h3>
             <form id="add-q-form">
-                <div style="display: flex; gap: 10px;">
-                    <div class="form-group" style="flex: 1;">
+                <!-- Naya Dropdown System -->
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Exam Name:</label>
-                        <!-- Added autocomplete="off" to force native datalist -->
-                        <input type="text" id="exam-name" list="exams-list" placeholder="e.g. JEE" required autocomplete="off">
-                        <datalist id="exams-list"></datalist>
+                        <select id="exam-select" onchange="toggleCustomInput('exam')" required>
+                            <option value="">-- Select Exam --</option>
+                        </select>
+                        <input type="text" id="custom-exam" placeholder="Naye Exam ka naam likho..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="form-group" style="flex: 1; min-width: 45%;">
                         <label>Test Name:</label>
-                        <input type="text" id="test-name" list="tests-list" placeholder="e.g. Mock 1" required autocomplete="off">
-                        <datalist id="tests-list"></datalist>
+                        <select id="test-select" onchange="toggleCustomInput('test')" required>
+                            <option value="">-- Select Test --</option>
+                        </select>
+                        <input type="text" id="custom-test" placeholder="Naye Test ka naam likho..." style="display:none; margin-top:8px; border: 2px solid #e74c3c;">
                     </div>
                 </div>
+
                 <div class="form-group"><label>Question Text:</label><textarea id="q-text" rows="3" required></textarea></div>
                 <div class="form-group"><label>Option 1:</label><input type="text" id="opt-0" required></div>
                 <div class="form-group"><label>Option 2:</label><input type="text" id="opt-1" required></div>
@@ -151,16 +156,38 @@
             if(tab === 'manage') fetchAllData();
         }
 
+        // Dropdown toggle logic
+        function toggleCustomInput(type) {
+            const selectVal = document.getElementById(type + '-select').value;
+            const customInput = document.getElementById('custom-' + type);
+            if(selectVal === 'NEW_ITEM') {
+                customInput.style.display = 'block';
+                customInput.setAttribute('required', 'true');
+            } else {
+                customInput.style.display = 'none';
+                customInput.removeAttribute('required');
+                customInput.value = '';
+            }
+        }
+
         async function fetchAllData() {
             try {
                 const res = await fetch('/all-questions');
                 allQuestions = await res.json();
                 
-                // FIXED: Filter out empty/old data and add proper closing tags for mobile browsers
+                // Proper dropdown set karna
                 const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
                 const tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
-                document.getElementById('exams-list').innerHTML = exams.map(e => `<option value="${e}"></option>`).join('');
-                document.getElementById('tests-list').innerHTML = tests.map(t => `<option value="${t}"></option>`).join('');
+                
+                document.getElementById('exam-select').innerHTML = 
+                    `<option value="">-- Select Exam --</option>` + 
+                    exams.map(e => `<option value="${e}">${e}</option>`).join('') +
+                    `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Exam Jodo</option>`;
+                    
+                document.getElementById('test-select').innerHTML = 
+                    `<option value="">-- Select Test --</option>` + 
+                    tests.map(t => `<option value="${t}">${t}</option>`).join('') +
+                    `<option value="NEW_ITEM" style="font-weight:bold; color:#e74c3c;">➕ Naya Test Jodo</option>`;
 
                 const tbody = document.getElementById('questions-table-body');
                 if(allQuestions.length === 0) {
@@ -199,8 +226,12 @@
             document.getElementById('submit-btn').style.background = "#f39c12";
             document.getElementById('cancel-edit-btn').style.display = "block";
             
-            document.getElementById('exam-name').value = q.examName || '';
-            document.getElementById('test-name').value = q.testName || '';
+            // Set Dropdowns
+            document.getElementById('exam-select').value = q.examName || '';
+            document.getElementById('test-select').value = q.testName || '';
+            toggleCustomInput('exam');
+            toggleCustomInput('test');
+
             document.getElementById('q-text').value = q.text || '';
             document.getElementById('opt-0').value = q.options[0] || '';
             document.getElementById('opt-1').value = q.options[1] || '';
@@ -225,9 +256,17 @@
 
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Final Exam and Test names nikalna (Dropdown se ya Custom input se)
+            let finalExam = document.getElementById('exam-select').value;
+            if(finalExam === 'NEW_ITEM') finalExam = document.getElementById('custom-exam').value.trim();
+            
+            let finalTest = document.getElementById('test-select').value;
+            if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
+
             const payload = {
-                examName: document.getElementById('exam-name').value.trim(),
-                testName: document.getElementById('test-name').value.trim(),
+                examName: finalExam,
+                testName: finalTest,
                 text: document.getElementById('q-text').value,
                 options: [
                     document.getElementById('opt-0').value,
@@ -261,7 +300,7 @@
                         document.getElementById('opt-2').value = '';
                         document.getElementById('opt-3').value = '';
                     }
-                    fetchAllData(); 
+                    fetchAllData(); // Background me list update karega
                 } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "red"; }
             } catch (err) { statusDiv.innerHTML = "❌ Server error!"; }
         });
