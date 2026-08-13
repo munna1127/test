@@ -6,7 +6,7 @@ const Question = require('./models/Question');
 const User = require('./models/User');
 const Result = require('./models/Result');
 const AccessRequest = require('./models/AccessRequest');
-const TestSettings = require('./models/TestSettings'); // Naya Model Import
+const TestSettings = require('./models/TestSettings'); 
 require('dotenv').config();
 
 const app = express();
@@ -53,7 +53,6 @@ app.post('/request-access', async (req, res) => {
 app.get('/all-requests', async (req, res) => { try { res.status(200).json(await AccessRequest.find().sort({ date: -1 })); } catch (e) { res.status(500).json({ error: "Failed" }); } });
 app.put('/update-request/:id', async (req, res) => { try { await AccessRequest.findByIdAndUpdate(req.params.id, { status: req.body.status }); res.status(200).json({ message: "Updated" }); } catch (e) { res.status(500).json({ error: "Failed" }); } });
 
-// --- NAYI APIs: TEST RANKING SCHEDULER ---
 app.post('/get-test-settings', async (req, res) => {
     try { const settings = await TestSettings.findOne({ examName: req.body.examName, testName: req.body.testName }); res.status(200).json(settings || {}); } catch (e) { res.status(500).json({ error: "Failed" }); }
 });
@@ -68,7 +67,6 @@ app.post('/save-test-settings', async (req, res) => {
 
 app.post('/save-result', async (req, res) => { try { await new Result(req.body).save(); res.status(201).json({ message: "Saved!" }); } catch (e) { res.status(500).json({ error: "Failed" }); } });
 
-// UPDATED LEADERBOARD API: Ab ye limit check karega
 app.post('/leaderboard', async (req, res) => { 
     try { 
         const { examName, testName } = req.body;
@@ -91,6 +89,13 @@ app.post('/leaderboard', async (req, res) => {
 });
 
 app.get('/all-results', async (req, res) => { try { res.status(200).json(await Result.find().sort({ date: -1 })); } catch (e) { res.status(500).json({ error: "Failed" }); } });
+
+// ✨ NAYA: RESULT DELETE KARNE KI API ✨
+app.delete('/delete-result/:id', async (req, res) => { 
+    try { await Result.findByIdAndDelete(req.params.id); res.status(200).json({ message: "Result Deleted! Storage freed." }); } 
+    catch (e) { res.status(500).json({ error: "Failed to delete" }); } 
+});
+
 app.post('/add-question', async (req, res) => { try { await new Question(req.body).save(); res.status(201).json({ message: "Added!" }); } catch (e) { res.status(500).json({ error: "Failed" }); } });
 app.get('/all-questions', async (req, res) => { try { res.status(200).json(await Question.find().sort({ examName: 1, testName: 1 })); } catch (e) { res.status(500).json({ error: "Failed" }); } });
 app.put('/update-question/:id', async (req, res) => { try { await Question.findByIdAndUpdate(req.params.id, req.body); res.status(200).json({ message: "Updated!" }); } catch (e) { res.status(500).json({ error: "Failed" }); } });

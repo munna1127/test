@@ -92,7 +92,7 @@
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage</button>
             <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Results</button>
             <button class="tab-btn" id="tab-requests-btn" onclick="switchTab('requests')">🔑 Requests</button>
-            <button class="tab-btn" id="tab-settings-btn" onclick="switchTab('settings')">⚙️ Settings</button> <!-- NEW TAB -->
+            <button class="tab-btn" id="tab-settings-btn" onclick="switchTab('settings')">⚙️ Settings</button>
         </div>
 
         <div id="add-tab">
@@ -135,7 +135,16 @@
 
         <div id="results-tab" style="display: none;">
             <h3 style="margin-bottom: 20px; color: var(--primary-color);">📊 Student Performance</h3>
-            <div style="overflow-x: auto;"><table><thead><tr><th>Timestamp</th><th>Student Info</th><th>Exam & Test</th><th>Score</th><th>Breakdown</th></tr></thead><tbody id="results-table-body"><tr><td colspan="5" style="text-align:center; padding: 30px;">Loading results...</td></tr></tbody></table></div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr><th>Timestamp</th><th>Student Info</th><th>Exam & Test</th><th>Score</th><th>Breakdown</th><th>Action</th></tr>
+                    </thead>
+                    <tbody id="results-table-body">
+                        <tr><td colspan="6" style="text-align:center; padding: 30px;">Loading results...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div id="requests-tab" style="display: none;">
@@ -143,7 +152,6 @@
             <div style="overflow-x: auto;"><table><thead><tr><th>Date</th><th>Student</th><th>Exam & Test</th><th>Status</th><th>Action</th></tr></thead><tbody id="requests-table-body"><tr><td colspan="5" style="text-align:center; padding: 30px;">Loading requests...</td></tr></tbody></table></div>
         </div>
 
-        <!-- NEW TAB: SETTINGS -->
         <div id="settings-tab" style="display: none;">
             <h3 style="margin-bottom: 20px; color: var(--primary-color);">⚙️ Test Ranking & Scheduling Settings</h3>
             <div class="filter-box">
@@ -186,11 +194,10 @@
             if(tab === 'requests') fetchRequestsData();
         }
 
-        // --- NEW: SETTINGS LOGIC ---
         function fetchSettingsTests() {
             const examName = document.getElementById('settings-exam-select').value; const testSelect = document.getElementById('settings-test-select'); testSelect.innerHTML = '<option value="">-- Select Test --</option>';
             if(!examName) { document.getElementById('settings-form-area').style.display = 'none'; return; }
-            let tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; // Fallback if data is raw
+            let tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; 
             fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => { tests.forEach(t => { if(t) testSelect.innerHTML += `<option value="${t}">${t}</option>`; }); });
         }
         function loadTestSettings() {
@@ -206,7 +213,6 @@
             .then(res => res.json()).then(data => { document.getElementById('settings-status').style.color = "var(--success-btn)"; document.getElementById('settings-status').innerText = '✅ Settings Saved!'; setTimeout(() => document.getElementById('settings-status').innerText = '', 2000); });
         }
 
-        // Requests logic
         async function fetchRequestsData() {
             const tbody = document.getElementById('requests-table-body'); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Requests...</td></tr>';
             try {
@@ -222,17 +228,32 @@
         }
         async function updateReq(id, status) { try { await fetch(`/update-request/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({status}) }); fetchRequestsData(); } catch(e) { alert("Failed"); } }
         function startAddFromManage() { cancelEdit(); const currentFilterExam = document.getElementById('filter-exam').value; const currentFilterTest = document.getElementById('filter-test').value; switchTab('add'); if(currentFilterExam) { document.getElementById('exam-select').value = currentFilterExam; handleExamChange(); if(currentFilterTest) { document.getElementById('test-select').value = currentFilterTest; toggleCustomInput('test'); } } window.scrollTo(0, 0); }
+        
         async function fetchResultsData() {
-            const tbody = document.getElementById('results-table-body'); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
+            const tbody = document.getElementById('results-table-body'); tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
             try {
                 const res = await fetch('/all-results'); const results = await res.json();
-                if(results.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>'; return; }
+                if(results.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>'; return; }
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date); const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
-                    return `<tr><td style="font-size:13px;">${formattedDate}</td><td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td><td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td><td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td><td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td></tr>`;
+                    return `<tr><td style="font-size:13px;">${formattedDate}</td><td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td><td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td><td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td><td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
+                    <td><button class="action-btn del-btn" style="padding: 6px 12px;" onclick="deleteResult('${r._id}')">Delete</button></td></tr>`;
                 }).join('');
-            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn);">Error fetching results!</td></tr>'; }
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger-btn);">Error fetching results!</td></tr>'; }
         }
+
+        // ✨ NAYA: DELETE RESULT LOGIC ✨
+        async function deleteResult(id) {
+            if(confirm("Are you sure you want to delete this result? This will free up database storage.")) {
+                try {
+                    await fetch(`/delete-result/${id}`, { method: 'DELETE' });
+                    fetchResultsData(); 
+                } catch(e) {
+                    alert("Error deleting result!");
+                }
+            }
+        }
+
         function toggleViewMode() { currentViewMode = currentViewMode === 'table' ? 'card' : 'table'; const btn = document.getElementById('view-toggle-btn'); if (currentViewMode === 'table') { btn.innerHTML = '👁️ Detailed View'; document.getElementById('table-view-container').style.display = 'block'; document.getElementById('card-view-container').style.display = 'none'; } else { btn.innerHTML = '🗜️ Table View'; document.getElementById('table-view-container').style.display = 'none'; document.getElementById('card-view-container').style.display = 'block'; } renderFilteredTable(); }
         function toggleCustomInput(type) { const selectVal = document.getElementById(type + '-select').value; const customInput = document.getElementById('custom-' + type); if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; } }
         function handleExamChange() { const examVal = document.getElementById('exam-select').value; toggleCustomInput('exam'); if (!examVal) { document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`; document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); return; } let tests = []; if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`; if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); } }
@@ -246,7 +267,6 @@
                 document.getElementById('topic-list').innerHTML = topics.map(t => `<option value="${t}">`).join('');
                 document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
-                // ALSO LOAD SETTINGS DROPDOWN
                 document.getElementById('settings-exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
                 
                 handleFilterExamChange(); 
