@@ -14,15 +14,9 @@
         window.addEventListener('DOMContentLoaded', () => { const select = document.getElementById('theme-switcher'); if(select) select.value = savedTheme; });
     </script>
     <style>
-        :root {
-            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.85); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #4299e1; --primary-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --danger-btn: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); --success-btn: linear-gradient(135deg, #48bb78 0%, #38a169 100%); --warning-btn: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%); --input-bg: rgba(248, 250, 252, 0.9); --input-border: #e2e8f0; --shadow: 0 20px 40px rgba(0,0,0,0.08); --table-head-bg: rgba(45, 55, 72, 0.95); --table-head-text: #ffffff; --table-border: #edf2f7; --table-hover: rgba(247, 250, 252, 0.8); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(226, 232, 240, 0.8); --q-answered: #48bb78; --q-not-answered: #fc8181;
-        }
-        [data-theme="dark"] {
-            --bg-main: #0f172a; --bg-card: rgba(30, 41, 59, 0.88); --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); --input-bg: rgba(15, 23, 42, 0.9); --input-border: #334155; --shadow: 0 20px 40px rgba(0,0,0,0.4); --table-head-bg: rgba(15, 23, 42, 0.95); --table-head-text: #f8fafc; --table-border: #334155; --table-hover: rgba(51, 65, 85, 0.8); --correct-bg: rgba(6, 78, 59, 0.8); --correct-text: #a7f3d0; --q-unvisited: rgba(51, 65, 85, 0.8); --q-answered: #10b981; --q-not-answered: #ef4444;
-        }
-        [data-theme="glass"] {
-            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(255,255,255,0.5); --q-answered: #43e97b; --q-not-answered: #ff0844;
-        }
+        :root { --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.85); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #4299e1; --primary-btn: linear-gradient(135deg, #667eea 0%, #764ba2 100%); --danger-btn: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); --success-btn: linear-gradient(135deg, #48bb78 0%, #38a169 100%); --warning-btn: linear-gradient(135deg, #ecc94b 0%, #d69e2e 100%); --input-bg: rgba(248, 250, 252, 0.9); --input-border: #e2e8f0; --shadow: 0 20px 40px rgba(0,0,0,0.08); --table-head-bg: rgba(45, 55, 72, 0.95); --table-head-text: #ffffff; --table-border: #edf2f7; --table-hover: rgba(247, 250, 252, 0.8); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(226, 232, 240, 0.8); --q-answered: #48bb78; --q-not-answered: #fc8181; }
+        [data-theme="dark"] { --bg-main: #0f172a; --bg-card: rgba(30, 41, 59, 0.88); --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); --input-bg: rgba(15, 23, 42, 0.9); --input-border: #334155; --shadow: 0 20px 40px rgba(0,0,0,0.4); --table-head-bg: rgba(15, 23, 42, 0.95); --table-head-text: #f8fafc; --table-border: #334155; --table-hover: rgba(51, 65, 85, 0.8); --correct-bg: rgba(6, 78, 59, 0.8); --correct-text: #a7f3d0; --q-unvisited: rgba(51, 65, 85, 0.8); --q-answered: #10b981; --q-not-answered: #ef4444; }
+        [data-theme="glass"] { --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; --q-unvisited: rgba(255,255,255,0.5); --q-answered: #43e97b; --q-not-answered: #ff0844; }
 
         body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); min-height: 100vh; color: var(--text-main); transition: background 0.3s ease;}
         .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin; background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; z-index: 9999; pointer-events: none; mix-blend-mode: multiply; }
@@ -33,12 +27,10 @@
         .container { background: var(--bg-card); padding: 40px; border-radius: 20px; box-shadow: var(--shadow); max-width: 650px; margin: 60px auto 20px auto; border: 1px solid var(--input-border); backdrop-filter: blur(12px); transition: all 0.3s ease;}
         .pro-test-container { max-width: 1000px; margin: 20px auto; padding: 25px; display: flex; gap: 25px; flex-wrap: wrap;}
         h2, h3, h4 { color: var(--text-heading); }
-        h2 { border-bottom: none; padding-bottom: 0; text-align: center; font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 25px;}
         input[type="text"], input[type="email"], input[type="password"], input[type="number"] { width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1px solid var(--input-border); font-size: 15px; box-sizing: border-box; background: var(--input-bg); color: var(--text-main); transition: all 0.3s;}
         input:focus { border-color: var(--primary-color); outline: none; }
         .selection-box { background: var(--input-bg); padding: 25px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--input-border); }
         select { width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1px solid var(--input-border); font-size: 15px; background: var(--input-bg); color: var(--text-main); cursor: pointer; transition: all 0.3s;}
-        select:focus { border-color: var(--primary-color); outline: none;}
         button { background: var(--primary-btn); color: white; padding: 14px; border: none; cursor: pointer; font-weight: 600; border-radius: 12px; font-size: 16px; width: 100%; margin-top: 15px; transition: all 0.3s ease; letter-spacing: 0.5px;}
         button:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
         button:disabled { opacity: 0.7; cursor: not-allowed; }
@@ -48,7 +40,6 @@
         .palette-area { flex: 1; background: var(--bg-card); padding: 20px; border-radius: 16px; border: 1px solid var(--input-border); box-shadow: var(--shadow); display: flex; flex-direction: column; backdrop-filter: blur(12px);}
         .q-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--input-border); padding-bottom: 15px; margin-bottom: 20px; }
         .q-subject { background: var(--input-bg); padding: 5px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--primary-color); border: 1px solid var(--primary-color);}
-        .q-marks { color: var(--text-main); font-size: 14px; font-weight: 600; }
         .q-text { font-size: 18px; margin-bottom: 25px; line-height: 1.5; font-weight: 500;}
         .options { list-style: none; padding: 0; margin-top: 15px;}
         .options li { margin: 12px 0; }
@@ -57,43 +48,50 @@
         .options input[type="radio"] { margin-right: 15px; transform: scale(1.3); accent-color: var(--primary-color);}
         .action-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 10px;}
         .btn-prev { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); width: auto; padding: 10px 20px; margin-top: 0;}
-        .btn-prev:hover { background: var(--primary-color); color: white;}
-        .btn-clear { background: transparent; border: 2px solid var(--danger-btn); color: #e53e3e; width: auto; padding: 10px 20px; margin-top: 0;}
-        .btn-clear:hover { background: var(--danger-btn); color: white;}
         .btn-next { background: var(--success-btn); width: auto; padding: 10px 30px; margin-top: 0; flex-grow: 1;}
         .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 10px; margin-top: 20px; overflow-y: auto; max-height: 300px; padding-right: 5px;}
         .q-bubble { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; color: #1a202c; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
-        .q-bubble:hover { transform: scale(1.1); }
-        .q-unvisited { background: var(--q-unvisited); }
-        .q-answered { background: var(--q-answered); color: white; }
-        .q-not-answered { background: var(--q-not-answered); color: white; }
-        .q-active { outline: 3px solid var(--primary-color); outline-offset: 2px; }
-        .palette-legend { margin-top: 20px; font-size: 12px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--input-border); padding-top: 15px;}
-        .legend-item { display: flex; align-items: center; gap: 8px;}
-        .legend-box { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);}
+        .q-unvisited { background: var(--q-unvisited); } .q-answered { background: var(--q-answered); color: white; } .q-not-answered { background: var(--q-not-answered); color: white; } .q-active { outline: 3px solid var(--primary-color); outline-offset: 2px; }
         .timer-badge { position: absolute; top: -20px; right: 20px; z-index: 10; background: var(--success-btn); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; gap: 8px; box-shadow: var(--shadow); transition: all 0.3s; border: 2px solid #fff;}
         @keyframes pulse { 0% { transform: scale(1); } 50% { filter: brightness(1.5); } 100% { transform: scale(1); } }
-        .result-box { margin-top: 25px; padding: 25px; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--primary-color); text-align: center; box-shadow: var(--shadow);}
-        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 15px; font-size: 14px; border-radius: 12px; overflow: hidden; border: 1px solid var(--table-border);}
-        th, td { padding: 12px 15px; text-align: left; }
-        th { background-color: var(--table-head-bg); color: var(--table-head-text); font-weight: 500; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;}
-        td { border-bottom: 1px solid var(--table-border); background: var(--bg-card); color: var(--text-main);}
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background-color: var(--table-hover); }
         .analytics-section { text-align: left; margin-top: 30px; border-top: 2px solid var(--input-border); padding-top: 20px;}
-        .chart-container { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--input-border); margin-top: 15px;}
-        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; position:relative; z-index: 1; } 
-        .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); font-weight: 600; opacity: 0.7;}
+        .pdf-wrapper { background: #ffffff; padding: 30px; border-radius: 8px; color: #333; position:relative; z-index: 1; overflow: hidden; } 
         .brand-title { font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase; background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shine 3s linear infinite; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px; }
         .brand-title span { display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px; color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8; }
         @keyframes shine { to { background-position: 200% center; } }
-        @media (max-width: 650px) { .theme-selector { position: relative; top: 0; right: 0; text-align: center; margin-bottom: 15px; margin-top: 10px; } .container { margin-top: 15px; padding: 25px 15px; } .header-box { flex-direction: column; gap: 15px; text-align: center; } .header-box .brand-title { font-size: 32px !important; text-align: center !important; } .action-buttons { flex-direction: column; gap: 10px; } .btn-prev, .btn-clear, .btn-next { width: 100%; margin: 0; } .test-layout { flex-direction: column; } }
+        @media (max-width: 650px) { .header-box { flex-direction: column; gap: 15px; text-align: center; } .header-box .brand-title { font-size: 32px !important; text-align: center !important; } }
+
+        /* 🔥 PREMIUM LIVE RANKING CSS 🔥 */
+        .lr-wrapper { background-color: #f0edff; background-image: linear-gradient(rgba(200,190,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(200,190,255,0.3) 1px, transparent 1px); background-size: 30px 30px; padding: 60px 20px; border-radius: 20px; display: flex; justify-content: center; margin-bottom: 30px; overflow: hidden; }
+        [data-theme="dark"] .lr-wrapper { background-color: #0f172a; background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px); }
+        [data-theme="glass"] .lr-wrapper { background: transparent; }
+
+        .live-ranking-card { background: #ffffff; border-radius: 24px; padding: 40px; position: relative; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        [data-theme="dark"] .live-ranking-card { background: #1e293b; }
+        [data-theme="glass"] .live-ranking-card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); }
+
+        .lr-circle-top { position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: #ff7665; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; text-align: center; line-height: 1.2; box-shadow: 0 10px 20px rgba(255, 118, 101, 0.3); z-index: 2; transform: rotate(10deg); }
+        .lr-circle-bottom { position: absolute; bottom: -20px; left: -20px; width: 110px; height: 110px; background: #aef0c8; border-radius: 50%; color: #206b43; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; font-size: 26px; box-shadow: 0 10px 20px rgba(174, 240, 200, 0.4); z-index: 2; }
+        .lr-circle-bottom span { font-size: 13px; font-weight: 600; opacity: 0.8; }
+        .lr-header { color: #ff7665; font-weight: 700; letter-spacing: 2px; font-size: 13px; margin-bottom: 10px; text-transform: uppercase; }
+        .lr-rank { font-size: 85px; font-weight: 800; color: #6b5bed; line-height: 1; margin-bottom: 20px; }
+        [data-theme="dark"] .lr-rank { color: #8b7dff; }
+        .lr-user-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        [data-theme="dark"] .lr-user-row { border-bottom-color: #334155; }
+        .lr-name { font-weight: 700; font-size: 18px; color: #1a202c; }
+        [data-theme="dark"] .lr-name { color: #f8fafc; }
+        .lr-score { font-weight: 700; font-size: 18px; color: #10b981; }
+        .lr-bar-bg { background: #f1f5f9; height: 12px; border-radius: 10px; width: 100%; overflow: hidden; margin-bottom: 25px; }
+        [data-theme="dark"] .lr-bar-bg { background: #334155; }
+        .lr-bar-fill { background: #6b5bed; height: 100%; border-radius: 10px; }
+        .lr-others-row { display: flex; justify-content: space-between; font-size: 14px; color: #64748b; margin-bottom: 12px; font-weight: 500; }
+        .lr-others-row span:last-child { color: #1a202c; font-weight: 700; }
+        [data-theme="dark"] .lr-others-row span:last-child { color: #f8fafc; }
     </style>
 </head>
 <body>
     <div class="watermark-bg"></div>
     <div class="theme-selector"><select id="theme-switcher" onchange="changeTheme(this.value)"><option value="default">🎨 Clean Premium</option><option value="dark">🌙 Dark Hacker</option><option value="glass">🔮 Glassmorphism</option></select></div>
-
     <div id="auth-section" class="container">
         <h1 class="brand-title">Safalta Quiz<span>Bhagalpur</span></h1>
         <h2 id="auth-title" style="font-size: 20px; color: var(--text-main); opacity:0.8;">🎓 Student Login</h2>
@@ -104,172 +102,68 @@
         <p style="text-align:center; cursor:pointer; color:var(--primary-color); margin-top: 20px; font-weight: 500;" onclick="toggleAuth()">New user? <strong>Create an Account</strong></p>
         <div id="auth-status" style="text-align:center; margin-top:15px; font-weight:600;"></div>
     </div>
-
     <div id="portal-section" class="container" style="display: none;">
         <div class="header-box">
             <h1 class="brand-title" style="font-size: 26px; margin-bottom: 0; text-align: left;">Safalta Quiz<span style="font-size: 12px; letter-spacing: 2px;">Bhagalpur</span></h1>
             <button onclick="logout()" style="width:auto; background: var(--danger-btn); padding:8px 20px; margin:0; font-size: 14px; border-radius: 8px;">Logout</button>
         </div>
         <h4 style="margin-bottom: 25px; font-size: 18px;">Welcome back, <span id="user-display-name" style="font-weight:700; color: var(--primary-color);"></span>!</h4>
-        
         <div id="selection-area" class="selection-box">
-            <label><strong>Select Exam:</strong></label>
-            <select id="exam-select" onchange="fetchTests()"><option value="">-- Select Exam --</option></select>
-            <label style="display:block; margin-top:20px;"><strong>Select Test:</strong></label>
-            <select id="test-select" onchange="checkTestAccess()"><option value="">-- Select Exam First --</option></select>
-            
-            <!-- NEW DYNAMIC BUTTON AREA -->
-            <div id="action-button-container" style="margin-top: 25px;">
-                <button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button>
-            </div>
+            <label><strong>Select Exam:</strong></label><select id="exam-select" onchange="fetchTests()"><option value="">-- Select Exam --</option></select>
+            <label style="display:block; margin-top:20px;"><strong>Select Test:</strong></label><select id="test-select" onchange="checkTestAccess()"><option value="">-- Select Exam First --</option></select>
+            <div id="action-button-container" style="margin-top: 25px;"><button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button></div>
         </div>
     </div>
-
     <div id="test-area-container" class="container pro-test-container" style="display: none;">
         <div class="main-q-area">
             <div id="timer-badge" class="timer-badge">⏱️ <span id="time-left">00:00</span></div>
-            <div class="q-header">
-                <div><span style="font-weight: bold; font-size: 20px; margin-right: 10px;" id="q-number-display">Question 1</span><span class="q-subject" id="q-subject-display">Physics</span></div>
-                <div class="q-marks">Marks: <span style="color:var(--success-btn)">+<span id="q-pos-marks">4</span></span> / <span style="color:var(--danger-btn)">-<span id="q-neg-marks">1</span></span></div>
-            </div>
-            <div class="q-text" id="q-text-display">Loading question...</div>
-            <ul class="options" id="q-options-display"></ul>
-            <div class="action-buttons">
-                <button class="btn-prev" onclick="changeQuestion(currentQIndex - 1)">&larr; Previous</button>
-                <button class="btn-clear" onclick="clearResponse()">Clear Response</button>
-                <button class="btn-next" onclick="saveAndNext()">Save & Next &rarr;</button>
-            </div>
+            <div class="q-header"><div><span style="font-weight: bold; font-size: 20px; margin-right: 10px;" id="q-number-display">Question 1</span><span class="q-subject" id="q-subject-display">Physics</span></div><div class="q-marks">Marks: <span style="color:var(--success-btn)">+<span id="q-pos-marks">4</span></span> / <span style="color:var(--danger-btn)">-<span id="q-neg-marks">1</span></span></div></div>
+            <div class="q-text" id="q-text-display">Loading question...</div><ul class="options" id="q-options-display"></ul>
+            <div class="action-buttons"><button class="btn-prev" onclick="changeQuestion(currentQIndex - 1)">&larr; Previous</button><button class="btn-clear" onclick="clearResponse()">Clear Response</button><button class="btn-next" onclick="saveAndNext()">Save & Next &rarr;</button></div>
         </div>
         <div class="palette-area">
-            <h3 style="margin-top:0; border-bottom: 2px solid var(--input-border); padding-bottom: 10px; font-size: 16px;">Question Palette</h3>
-            <div class="palette-grid" id="palette-grid-display"></div>
-            <div class="palette-legend">
-                <div class="legend-item"><div class="legend-box q-answered"></div> Answered</div>
-                <div class="legend-item"><div class="legend-box q-not-answered"></div> Not Answered</div>
-                <div class="legend-item"><div class="legend-box q-unvisited"></div> Not Visited</div>
-            </div>
+            <h3 style="margin-top:0; border-bottom: 2px solid var(--input-border); padding-bottom: 10px; font-size: 16px;">Question Palette</h3><div class="palette-grid" id="palette-grid-display"></div>
             <button onclick="submitTestDialog()" style="background: var(--danger-btn); margin-top: auto; border-radius: 8px;">Submit Final Test</button>
         </div>
     </div>
-
     <div id="result-area" class="container" style="display: none; max-width: 900px;">
         <button onclick="downloadPDF()" style="background: #e11d48; margin-bottom: 15px; width:auto; float:right; font-size:14px; padding:8px 15px;">📥 Download PDF Report</button>
-        <div style="clear:both;"></div>
-        <div id="pdf-content" class="pdf-wrapper"></div>
+        <div style="clear:both;"></div><div id="pdf-content" class="pdf-wrapper"></div>
         <button onclick="location.reload()" style="margin-top:25px; background: var(--table-head-bg);">Return to Dashboard</button>
     </div>
 
     <script>
         let questionsData = []; let isLogin = true; let timerInterval; let testStartTime; let currentQIndex = 0; let studentResponses = []; let currentQuestionEntryTime = 0;
         function toggleAuth() { isLogin = !isLogin; document.getElementById('auth-title').innerText = isLogin ? "🎓 Student Login" : "📝 Student Registration"; document.getElementById('auth-btn').innerText = isLogin ? "Login to Portal" : "Register Account"; document.getElementById('auth-name').style.display = isLogin ? "none" : "block"; document.getElementById('auth-status').innerText = ""; }
-        async function handleAuth() {
-            const name = document.getElementById('auth-name').value, email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value, status = document.getElementById('auth-status');
-            if(!email || !password || (!isLogin && !name)) { status.innerText = "❌ Please fill all fields!"; status.style.color = "var(--danger-btn)"; return; }
-            status.innerText = "Processing..."; status.style.color = "var(--primary-color)";
-            try {
-                const res = await fetch(isLogin ? '/login' : '/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(isLogin ? { email, password } : { name, email, password }) });
-                const data = await res.json();
-                if(res.ok) { if(isLogin) { localStorage.setItem('userName', data.name); localStorage.setItem('userEmail', data.email); checkLogin(); } else { status.innerText = "✅ " + data.message; status.style.color = "var(--success-btn)"; setTimeout(toggleAuth, 1500); } } 
-                else { status.innerText = "❌ " + data.error; status.style.color = "var(--danger-btn)"; }
-            } catch (e) { status.innerText = "❌ Server error!"; status.style.color = "var(--danger-btn)"; }
-        }
+        async function handleAuth() { const name = document.getElementById('auth-name').value, email = document.getElementById('auth-email').value, password = document.getElementById('auth-password').value, status = document.getElementById('auth-status'); if(!email || !password || (!isLogin && !name)) { status.innerText = "❌ Please fill all fields!"; status.style.color = "var(--danger-btn)"; return; } status.innerText = "Processing..."; status.style.color = "var(--primary-color)"; try { const res = await fetch(isLogin ? '/login' : '/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(isLogin ? { email, password } : { name, email, password }) }); const data = await res.json(); if(res.ok) { if(isLogin) { localStorage.setItem('userName', data.name); localStorage.setItem('userEmail', data.email); checkLogin(); } else { status.innerText = "✅ " + data.message; status.style.color = "var(--success-btn)"; setTimeout(toggleAuth, 1500); } } else { status.innerText = "❌ " + data.error; status.style.color = "var(--danger-btn)"; } } catch (e) { status.innerText = "❌ Server error!"; status.style.color = "var(--danger-btn)"; } }
         function checkLogin() { const userName = localStorage.getItem('userName'); if(userName) { document.getElementById('auth-section').style.display = 'none'; document.getElementById('portal-section').style.display = 'block'; document.getElementById('user-display-name').innerText = userName; loadExams(); } else { document.getElementById('auth-section').style.display = 'block'; document.getElementById('portal-section').style.display = 'none'; } }
         function logout() { localStorage.removeItem('userName'); localStorage.removeItem('userEmail'); location.reload(); }
         window.onload = checkLogin;
         function loadExams() { fetch('/get-exams').then(res => res.json()).then(exams => { const examSelect = document.getElementById('exam-select'); examSelect.innerHTML = '<option value="">-- Select Exam --</option>'; exams.forEach(exam => { if(exam) examSelect.innerHTML += `<option value="${exam}">${exam}</option>`; }); }); }
-        function fetchTests() {
-            const examName = document.getElementById('exam-select').value; const testSelect = document.getElementById('test-select');
-            testSelect.innerHTML = '<option value="">-- Loading... --</option>';
-            document.getElementById('action-button-container').innerHTML = '<button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button>';
-            if(!examName) { testSelect.innerHTML = '<option value="">-- Select Exam First --</option>'; return; }
-            fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => {
-                testSelect.innerHTML = '<option value="">-- Select Test --</option>';
-                tests.forEach(test => { if(test) testSelect.innerHTML += `<option value="${test}">${test}</option>`; });
-            });
-        }
-
-        // --- ACCESS CONTROL SYSTEM ---
-        async function checkTestAccess() {
-            const examName = document.getElementById('exam-select').value;
-            const testName = document.getElementById('test-select').value;
-            const btnContainer = document.getElementById('action-button-container');
-
-            if(!examName || !testName) { btnContainer.innerHTML = '<button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button>'; return; }
-            btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">Checking access... ⏳</button>';
-
-            try {
-                const res = await fetch('/check-access', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({userEmail: localStorage.getItem('userEmail'), examName, testName}) });
-                const data = await res.json();
-                
-                if(data.status === 'approved') { btnContainer.innerHTML = '<button onclick="startTest()">🚀 Start Computer Based Test</button>'; } 
-                else if(data.status === 'pending') { btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">⏳ Approval Pending from Admin</button>'; } 
-                else { btnContainer.innerHTML = `<button onclick="requestTestAccess()" style="background: var(--primary-btn);">✋ Request Access to Test</button>`; }
-            } catch(e) { btnContainer.innerHTML = '<button disabled style="background: var(--danger-btn);">Error checking access</button>'; }
-        }
-
-        async function requestTestAccess() {
-            const btnContainer = document.getElementById('action-button-container');
-            btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">Sending Request... ⏳</button>';
-            try {
-                await fetch('/request-access', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({userName: localStorage.getItem('userName'), userEmail: localStorage.getItem('userEmail'), examName: document.getElementById('exam-select').value, testName: document.getElementById('test-select').value}) });
-                checkTestAccess(); 
-            } catch(e) { alert('Failed to send request'); checkTestAccess(); }
-        }
-
-        function startTimer(durationInSeconds) {
-            let timer = durationInSeconds, minutes, seconds; const display = document.getElementById('time-left'); const badge = document.getElementById('timer-badge');
-            badge.style.background = 'var(--success-btn)'; badge.style.animation = 'none';
-            timerInterval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10); seconds = parseInt(timer % 60, 10); minutes = minutes < 10 ? "0" + minutes : minutes; seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-                if (timer <= 60) { badge.style.background = 'var(--danger-btn)'; badge.style.animation = 'pulse 1s infinite'; }
-                if (--timer < 0) { clearInterval(timerInterval); alert("⏰ Time is up! Auto-submitting your test."); submitTestCore(true); }
-            }, 1000);
-        }
-
-        function startTest() {
-            const examName = document.getElementById('exam-select').value, testName = document.getElementById('test-select').value;
-            document.getElementById('portal-section').style.display = 'none'; document.getElementById('test-area-container').style.display = 'flex';
-            fetch('/get-test-questions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) })
-            .then(res => res.json()).then(data => {
-                questionsData = data;
-                if(questionsData.length === 0) { alert("No questions in this test."); location.reload(); return; }
-                studentResponses = questionsData.map(q => ({ selectedOption: null, timeSpent: 0, status: 'unvisited' }));
-                currentQIndex = 0; renderPalette(); loadQuestion(currentQIndex); testStartTime = Date.now();
-                let totalSeconds = (questionsData[0].testDuration && questionsData[0].testDuration > 0) ? questionsData[0].testDuration * 60 : questionsData.length * 120;
-                startTimer(totalSeconds);
-            });
-        }
-        function loadQuestion(index) {
-            if(index < 0 || index >= questionsData.length) return;
-            recordTimeSpent(); currentQIndex = index; const q = questionsData[index];
-            if(studentResponses[currentQIndex].status === 'unvisited') studentResponses[currentQIndex].status = 'not-answered';
-            currentQuestionEntryTime = Date.now();
-            document.getElementById('q-number-display').innerText = `Question ${index + 1}`; document.getElementById('q-subject-display').innerText = q.subject || 'General'; document.getElementById('q-pos-marks').innerText = q.positiveMarks; document.getElementById('q-neg-marks').innerText = q.negativeMarks; document.getElementById('q-text-display').innerText = q.text;
-            let optionsHtml = '';
-            q.options.forEach((opt, optIndex) => { const isChecked = studentResponses[currentQIndex].selectedOption === optIndex ? 'checked' : ''; optionsHtml += `<li><label><input type="radio" name="current_q_opt" value="${optIndex}" onchange="recordOption(${optIndex})" ${isChecked}> ${opt}</label></li>`; });
-            document.getElementById('q-options-display').innerHTML = optionsHtml;
-            document.querySelector('.btn-prev').style.visibility = index === 0 ? 'hidden' : 'visible'; document.querySelector('.btn-next').innerText = index === questionsData.length - 1 ? 'Save & Finish' : 'Save & Next \u2192'; renderPalette();
-        }
+        function fetchTests() { const examName = document.getElementById('exam-select').value; const testSelect = document.getElementById('test-select'); testSelect.innerHTML = '<option value="">-- Loading... --</option>'; document.getElementById('action-button-container').innerHTML = '<button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button>'; if(!examName) { testSelect.innerHTML = '<option value="">-- Select Exam First --</option>'; return; } fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => { testSelect.innerHTML = '<option value="">-- Select Test --</option>'; tests.forEach(test => { if(test) testSelect.innerHTML += `<option value="${test}">${test}</option>`; }); }); }
+        
+        async function checkTestAccess() { const examName = document.getElementById('exam-select').value; const testName = document.getElementById('test-select').value; const btnContainer = document.getElementById('action-button-container'); if(!examName || !testName) { btnContainer.innerHTML = '<button disabled style="background: var(--input-bg); color: var(--text-main); border: 1px solid var(--input-border);">Please select a test first</button>'; return; } btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">Checking access... ⏳</button>'; try { const res = await fetch('/check-access', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({userEmail: localStorage.getItem('userEmail'), examName, testName}) }); const data = await res.json(); if(data.status === 'approved') { btnContainer.innerHTML = '<button onclick="startTest()">🚀 Start Computer Based Test</button>'; } else if(data.status === 'pending') { btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">⏳ Approval Pending from Admin</button>'; } else { btnContainer.innerHTML = `<button onclick="requestTestAccess()" style="background: var(--primary-btn);">✋ Request Access to Test</button>`; } } catch(e) { btnContainer.innerHTML = '<button disabled style="background: var(--danger-btn);">Error checking access</button>'; } }
+        async function requestTestAccess() { const btnContainer = document.getElementById('action-button-container'); btnContainer.innerHTML = '<button disabled style="background: var(--warning-btn);">Sending Request... ⏳</button>'; try { await fetch('/request-access', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({userName: localStorage.getItem('userName'), userEmail: localStorage.getItem('userEmail'), examName: document.getElementById('exam-select').value, testName: document.getElementById('test-select').value}) }); checkTestAccess(); } catch(e) { alert('Failed to send request'); checkTestAccess(); } }
+        function startTimer(durationInSeconds) { let timer = durationInSeconds, minutes, seconds; const display = document.getElementById('time-left'); const badge = document.getElementById('timer-badge'); badge.style.background = 'var(--success-btn)'; badge.style.animation = 'none'; timerInterval = setInterval(function () { minutes = parseInt(timer / 60, 10); seconds = parseInt(timer % 60, 10); minutes = minutes < 10 ? "0" + minutes : minutes; seconds = seconds < 10 ? "0" + seconds : seconds; display.textContent = minutes + ":" + seconds; if (timer <= 60) { badge.style.background = 'var(--danger-btn)'; badge.style.animation = 'pulse 1s infinite'; } if (--timer < 0) { clearInterval(timerInterval); alert("⏰ Time is up! Auto-submitting your test."); submitTestCore(true); } }, 1000); }
+        function startTest() { const examName = document.getElementById('exam-select').value, testName = document.getElementById('test-select').value; document.getElementById('portal-section').style.display = 'none'; document.getElementById('test-area-container').style.display = 'flex'; fetch('/get-test-questions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) }) .then(res => res.json()).then(data => { questionsData = data; if(questionsData.length === 0) { alert("No questions in this test."); location.reload(); return; } studentResponses = questionsData.map(q => ({ selectedOption: null, timeSpent: 0, status: 'unvisited' })); currentQIndex = 0; renderPalette(); loadQuestion(currentQIndex); testStartTime = Date.now(); let totalSeconds = (questionsData[0].testDuration && questionsData[0].testDuration > 0) ? questionsData[0].testDuration * 60 : questionsData.length * 120; startTimer(totalSeconds); }); }
+        function loadQuestion(index) { if(index < 0 || index >= questionsData.length) return; recordTimeSpent(); currentQIndex = index; const q = questionsData[index]; if(studentResponses[currentQIndex].status === 'unvisited') studentResponses[currentQIndex].status = 'not-answered'; currentQuestionEntryTime = Date.now(); document.getElementById('q-number-display').innerText = `Question ${index + 1}`; document.getElementById('q-subject-display').innerText = q.subject || 'General'; document.getElementById('q-pos-marks').innerText = q.positiveMarks; document.getElementById('q-neg-marks').innerText = q.negativeMarks; document.getElementById('q-text-display').innerText = q.text; let optionsHtml = ''; q.options.forEach((opt, optIndex) => { const isChecked = studentResponses[currentQIndex].selectedOption === optIndex ? 'checked' : ''; optionsHtml += `<li><label><input type="radio" name="current_q_opt" value="${optIndex}" onchange="recordOption(${optIndex})" ${isChecked}> ${opt}</label></li>`; }); document.getElementById('q-options-display').innerHTML = optionsHtml; document.querySelector('.btn-prev').style.visibility = index === 0 ? 'hidden' : 'visible'; document.querySelector('.btn-next').innerText = index === questionsData.length - 1 ? 'Save & Finish' : 'Save & Next \u2192'; renderPalette(); }
         function recordTimeSpent() { if(currentQuestionEntryTime > 0) { studentResponses[currentQIndex].timeSpent += Math.floor((Date.now() - currentQuestionEntryTime) / 1000); } }
         function recordOption(optIndex) { studentResponses[currentQIndex].selectedOption = optIndex; studentResponses[currentQIndex].status = 'answered'; renderPalette(); }
         function clearResponse() { studentResponses[currentQIndex].selectedOption = null; studentResponses[currentQIndex].status = 'not-answered'; document.getElementsByName('current_q_opt').forEach(r => r.checked = false); renderPalette(); }
         function saveAndNext() { if(currentQIndex === questionsData.length - 1) submitTestDialog(); else changeQuestion(currentQIndex + 1); }
         function changeQuestion(newIndex) { loadQuestion(newIndex); }
-        function renderPalette() {
-            const paletteGrid = document.getElementById('palette-grid-display'); let html = '';
-            questionsData.forEach((_, idx) => {
-                const status = studentResponses[idx].status; let cssClass = 'q-unvisited';
-                if(status === 'answered') cssClass = 'q-answered'; if(status === 'not-answered') cssClass = 'q-not-answered';
-                html += `<div class="q-bubble ${cssClass} ${idx === currentQIndex ? 'q-active' : ''}" onclick="changeQuestion(${idx})">${idx + 1}</div>`;
-            }); paletteGrid.innerHTML = html;
-        }
+        function renderPalette() { const paletteGrid = document.getElementById('palette-grid-display'); let html = ''; questionsData.forEach((_, idx) => { const status = studentResponses[idx].status; let cssClass = 'q-unvisited'; if(status === 'answered') cssClass = 'q-answered'; if(status === 'not-answered') cssClass = 'q-not-answered'; html += `<div class="q-bubble ${cssClass} ${idx === currentQIndex ? 'q-active' : ''}" onclick="changeQuestion(${idx})">${idx + 1}</div>`; }); paletteGrid.innerHTML = html; }
         function submitTestDialog() { const unansCount = studentResponses.filter(r => r.status !== 'answered').length; if(confirm(unansCount > 0 ? `You have ${unansCount} unanswered questions. Submit?` : "Submit the test?")) { submitTestCore(false); } }
+
+        // --- UPDATED LIVE RANKING SUBMISSION LOGIC ---
         async function submitTestCore(isAutoSubmit = false) {
             clearInterval(timerInterval); recordTimeSpent(); 
-            document.getElementById('test-area-container').style.display = 'none'; const resultArea = document.getElementById('result-area'); const pdfContent = document.getElementById('pdf-content'); resultArea.style.display = 'block'; pdfContent.innerHTML = '<h3 style="text-align:center; color:var(--primary-color);">Generating Pro Analysis Report... ⏳</h3>';
+            document.getElementById('test-area-container').style.display = 'none'; const resultArea = document.getElementById('result-area'); const pdfContent = document.getElementById('pdf-content'); resultArea.style.display = 'block'; pdfContent.innerHTML = '<h3 style="text-align:center; color:var(--primary-color);">Generating Premium Analysis... ⏳</h3>';
             let score = 0, correct = 0, wrong = 0, skipped = 0; let finalAnalysisArray = []; let topicStats = {};
+            
+            let maxPossibleScore = 0;
             questionsData.forEach((q, idx) => {
+                maxPossibleScore += q.positiveMarks;
                 const resp = studentResponses[idx]; let qStatus = 'skipped';
                 if (resp.selectedOption !== null) { if (resp.selectedOption === q.correctOptionIndex) { score += q.positiveMarks; correct++; qStatus = 'correct'; } else { score -= q.negativeMarks; wrong++; qStatus = 'wrong'; } } else { skipped++; }
                 finalAnalysisArray.push({ questionText: q.text, subject: q.subject || 'General', topic: q.topic || 'Mixed', timeSpent: resp.timeSpent, status: qStatus });
@@ -278,19 +172,63 @@
             });
             const totalTimeTakenSeconds = Math.floor((Date.now() - testStartTime) / 1000), userEmail = localStorage.getItem('userEmail'), userName = localStorage.getItem('userName'), examName = document.getElementById('exam-select').value, testName = document.getElementById('test-select').value;
             const payload = { userName, userEmail, examName, testName, score, correct, wrong, skipped, totalTimeTaken: totalTimeTakenSeconds, questionAnalysis: finalAnalysisArray };
+            
             try {
                 await fetch('/save-result', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                const lbRes = await fetch('/leaderboard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) }); const leaderboard = await lbRes.json();
+                const lbRes = await fetch('/leaderboard', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ examName, testName }) }); 
+                const data = await lbRes.json();
+                
+                const leaderboard = data.leaderboard;
+                const showRank = data.showRank;
+                const hideMessage = data.hideMessage;
+
                 let userRank = leaderboard.findIndex(r => r.userEmail === userEmail && r.score === score) + 1;
+                let displayRank = userRank < 10 ? '0' + userRank : userRank;
+                let scorePercent = maxPossibleScore > 0 ? Math.max(0, Math.min(100, (score / maxPossibleScore) * 100)) : 0;
+                let accuracy = (correct + wrong) > 0 ? Math.round((correct / (correct + wrong)) * 100) : 0;
+
+                let otherHtml = '';
+                let others = leaderboard.filter(r => r.userEmail !== userEmail).slice(0, 2);
+                others.forEach(o => { otherHtml += `<div class="lr-others-row"><span>${o.userName}</span><span>${o.score} pts</span></div>`; });
+
                 let html = `
-                    <div style="text-align:center; border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px;"><h1 style="color:#1e293b; margin:0; font-size:32px;">Safalta Quiz Bhagalpur</h1><p style="color:#64748b; margin:5px 0;">Performance Analysis Report</p></div>
-                    <div style="display:flex; justify-content:space-between; flex-wrap:wrap; background:#f8fafc; padding:20px; border-radius:12px; border:1px solid #e2e8f0;">
-                        <div style="flex:1; min-width:200px;"><h3 style="margin-top:0; color:#334155;">Student Profile</h3><strong>Name:</strong> ${userName}<br><strong>Exam:</strong> ${examName}<br><strong>Test:</strong> ${testName}</div>
-                        <div style="flex:1; min-width:200px; text-align:right;"><h2 style="margin:0; color:#2563eb; font-size:32px;">Score: ${score}</h2><p style="margin:5px 0; font-size:16px; font-weight:bold; color:#1e293b;">AIR (Rank): #${userRank} / ${leaderboard.length}</p><p style="margin:0; color:#64748b;">Time Taken: ${Math.floor(totalTimeTakenSeconds / 60)}m ${totalTimeTakenSeconds % 60}s</p></div>
-                    </div>
-                    <div class="analytics-section"><h3 style="color:#1e293b;">🎯 Accuracy Breakdown</h3><p style="color:#333;">✅ Correct: <strong>${correct}</strong> &nbsp;|&nbsp; ❌ Incorrect: <strong>${wrong}</strong> &nbsp;|&nbsp; ⚠️ Skipped: <strong>${skipped}</strong></p></div>
-                    <div class="analytics-section"><h3 style="color:#1e293b;">⏱️ Time Management (Seconds per Question)</h3><div class="chart-container"><canvas id="timeChart" height="100"></canvas></div></div>
-                    <div class="analytics-section"><h3 style="color:#1e293b;">📚 Chapter & Topic Wise Weakness</h3><table style="color:#333; background:#fff;"><thead><tr style="background:#f1f5f9; color:#334155;"><th>Subject - Topic</th><th>Total Qs</th><th>Accuracy</th><th>Avg Time/Q</th></tr></thead><tbody>`;
+                    <div style="text-align:center; border-bottom: 2px solid var(--input-border); padding-bottom: 20px; margin-bottom: 20px;">
+                        <h1 class="brand-title" style="font-size:32px;">Safalta Quiz<span>Bhagalpur</span></h1>
+                        <p style="color:var(--text-main); margin:5px 0; opacity:0.8;">Performance Analysis Report</p>
+                    </div>`;
+
+                if (showRank) {
+                    html += `
+                    <div class="lr-wrapper">
+                        <div class="live-ranking-card">
+                            <div class="lr-circle-top">QUIZ<br>LIVE</div>
+                            <div class="lr-circle-bottom">${accuracy}%<br><span>accuracy</span></div>
+                            <div class="lr-header">LIVE RANKING</div>
+                            <div class="lr-rank">${displayRank}</div>
+                            <div class="lr-user-row">
+                                <div class="lr-name">${userName} (You)</div>
+                                <div class="lr-score">+${score} pts</div>
+                            </div>
+                            <div class="lr-bar-bg"><div class="lr-bar-fill" style="width: ${scorePercent}%"></div></div>
+                            ${otherHtml}
+                        </div>
+                    </div>`;
+                } else {
+                    html += `
+                    <div class="lr-wrapper">
+                        <div class="live-ranking-card" style="text-align:center;">
+                            <div class="lr-header" style="color:var(--danger-btn)">RANKING HIDDEN</div>
+                            <p style="color:var(--text-main); font-weight:600; margin-bottom:20px;">${hideMessage}</p>
+                            <div class="lr-rank" style="font-size:48px; color:var(--success-btn);">${score} pts</div>
+                            <div class="lr-name">${userName}</div>
+                        </div>
+                    </div>`;
+                }
+
+                html += `
+                    <div class="analytics-section"><h3 style="color:var(--text-heading);">🎯 Accuracy Breakdown</h3><p style="color:var(--text-main);">✅ Correct: <strong>${correct}</strong> &nbsp;|&nbsp; ❌ Incorrect: <strong>${wrong}</strong> &nbsp;|&nbsp; ⚠️ Skipped: <strong>${skipped}</strong></p></div>
+                    <div class="analytics-section"><h3 style="color:var(--text-heading);">⏱️ Time Management (Seconds per Question)</h3><div class="chart-container"><canvas id="timeChart" height="100"></canvas></div></div>
+                    <div class="analytics-section"><h3 style="color:var(--text-heading);">📚 Chapter & Topic Wise Weakness</h3><table style="color:#333; background:#fff;"><thead><tr style="background:#f1f5f9; color:#334155;"><th>Subject - Topic</th><th>Total Qs</th><th>Accuracy</th><th>Avg Time/Q</th></tr></thead><tbody>`;
                 for (let key in topicStats) {
                     let stat = topicStats[key]; let accPercent = Math.round((stat.correct / stat.total) * 100); let avgTime = Math.round(stat.timeSpent / stat.total); let accColor = accPercent >= 70 ? '#10b981' : (accPercent >= 40 ? '#f59e0b' : '#ef4444');
                     html += `<tr><td><strong>${key}</strong></td><td>${stat.total}</td><td style="color:${accColor}; font-weight:bold;">${accPercent}%</td><td>${avgTime} sec</td></tr>`;
