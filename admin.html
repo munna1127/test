@@ -32,9 +32,12 @@
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color);}
         button { background: var(--primary-btn); color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
         button:hover { filter: brightness(1.1); transform: translateY(-1px);}
+        
+        /* Fixed tab buttons to look better on mobile */
         .tab-btn { background: var(--input-bg); color: var(--text-main); margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; border: 1px solid var(--input-border);}
         .tab-btn:hover { filter: brightness(0.9); }
         .tab-btn.active { background: var(--primary-btn); color: white; border: none;}
+        
         .filter-box { background: var(--input-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid var(--input-border);}
         table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--table-border); margin-top:10px;}
         th, td { padding: 14px 16px; text-align: left; }
@@ -60,11 +63,14 @@
         .brand-title span { display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px; color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8; }
         @keyframes shine { to { background-position: 200% center; } }
         .header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
         @media (max-width: 650px) {
             .theme-selector { position: relative; top: 0; right: 0; text-align: center; margin-bottom: 15px; margin-top: 10px; }
             .container { margin-top: 15px; padding: 25px 15px; }
             .header-box { flex-direction: column; gap: 15px; text-align: center; }
             .header-box .brand-title { font-size: 32px !important; text-align: center !important; }
+            /* Better tab wrapping on mobile */
+            .tab-btn { padding: 8px 10px; font-size: 12px; margin-right: 5px; margin-bottom: 8px; }
         }
     </style>
 </head>
@@ -87,7 +93,7 @@
             <button onclick="adminLogout()" style="background:var(--danger-btn); padding: 8px 16px;">Logout</button>
         </div>
         
-        <div style="margin-bottom: 25px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+        <div style="margin-bottom: 25px; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;">
             <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add Question</button>
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage</button>
             <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Results</button>
@@ -194,12 +200,22 @@
             if(tab === 'requests') fetchRequestsData();
         }
 
+        // --- BUG FIX: FETCH SETTINGS TESTS ---
         function fetchSettingsTests() {
-            const examName = document.getElementById('settings-exam-select').value; const testSelect = document.getElementById('settings-test-select'); testSelect.innerHTML = '<option value="">-- Select Test --</option>';
-            if(!examName) { document.getElementById('settings-form-area').style.display = 'none'; return; }
-            let tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; 
-            fetch(`/get-tests/${examName}`).then(res => res.json()).then(tests => { tests.forEach(t => { if(t) testSelect.innerHTML += `<option value="${t}">${t}</option>`; }); });
+            const examName = document.getElementById('settings-exam-select').value; 
+            const testSelect = document.getElementById('settings-test-select'); 
+            testSelect.innerHTML = '<option value="">-- Select Test --</option>';
+            document.getElementById('settings-form-area').style.display = 'none'; // hide until selected
+            
+            if(!examName) return;
+            
+            // Extract unique tests for the selected exam directly from allQuestions array
+            let testsList = [...new Set(allQuestions.filter(q => q.examName === examName).map(q => q.testName).filter(Boolean))]; 
+            testsList.forEach(t => { 
+                testSelect.innerHTML += `<option value="${t}">${t}</option>`; 
+            });
         }
+        
         function loadTestSettings() {
             const examName = document.getElementById('settings-exam-select').value; const testName = document.getElementById('settings-test-select').value;
             if(!examName || !testName) { document.getElementById('settings-form-area').style.display = 'none'; return; }
@@ -242,21 +258,16 @@
             } catch(e) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger-btn);">Error fetching results!</td></tr>'; }
         }
 
-        // ✨ NAYA: DELETE RESULT LOGIC ✨
         async function deleteResult(id) {
             if(confirm("Are you sure you want to delete this result? This will free up database storage.")) {
-                try {
-                    await fetch(`/delete-result/${id}`, { method: 'DELETE' });
-                    fetchResultsData(); 
-                } catch(e) {
-                    alert("Error deleting result!");
-                }
+                try { await fetch(`/delete-result/${id}`, { method: 'DELETE' }); fetchResultsData(); } catch(e) { alert("Error deleting result!"); }
             }
         }
 
         function toggleViewMode() { currentViewMode = currentViewMode === 'table' ? 'card' : 'table'; const btn = document.getElementById('view-toggle-btn'); if (currentViewMode === 'table') { btn.innerHTML = '👁️ Detailed View'; document.getElementById('table-view-container').style.display = 'block'; document.getElementById('card-view-container').style.display = 'none'; } else { btn.innerHTML = '🗜️ Table View'; document.getElementById('table-view-container').style.display = 'none'; document.getElementById('card-view-container').style.display = 'block'; } renderFilteredTable(); }
         function toggleCustomInput(type) { const selectVal = document.getElementById(type + '-select').value; const customInput = document.getElementById('custom-' + type); if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; } }
         function handleExamChange() { const examVal = document.getElementById('exam-select').value; toggleCustomInput('exam'); if (!examVal) { document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`; document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); return; } let tests = []; if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`; if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); } }
+        
         async function fetchAllData() {
             try {
                 const res = await fetch('/all-questions'); allQuestions = await res.json();
