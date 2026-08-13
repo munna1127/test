@@ -13,36 +13,24 @@
     </script>
     <style>
         :root {
-            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
-            --bg-card: rgba(255, 255, 255, 0.85); 
-            --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
-            --input-bg: rgba(248, 250, 252, 0.9); --input-border: #e2e8f0; --shadow: 0 10px 30px rgba(0,0,0,0.06); --table-head-bg: rgba(241, 245, 249, 0.9); --table-head-text: #475569; --table-border: #e2e8f0; --table-hover: rgba(248, 250, 252, 0.8); --correct-bg: rgba(236, 253, 245, 0.8); --correct-text: #065f46;
+            --bg-main: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); --bg-card: rgba(255, 255, 255, 0.85); --text-main: #2d3748; --text-heading: #1a202c; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); --input-bg: rgba(248, 250, 252, 0.9); --input-border: #e2e8f0; --shadow: 0 10px 30px rgba(0,0,0,0.06); --table-head-bg: rgba(241, 245, 249, 0.9); --table-head-text: #475569; --table-border: #e2e8f0; --table-hover: rgba(248, 250, 252, 0.8); --correct-bg: rgba(236, 253, 245, 0.8); --correct-text: #065f46;
         }
         [data-theme="dark"] {
-            --bg-main: #0f172a; --bg-card: rgba(30, 41, 59, 0.88); 
-            --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); 
-            --input-bg: rgba(15, 23, 42, 0.9); --input-border: #334155; --shadow: 0 10px 30px rgba(0,0,0,0.4); --table-head-bg: rgba(15, 23, 42, 0.95); --table-head-text: #f8fafc; --table-border: #334155; --table-hover: rgba(51, 65, 85, 0.8); --correct-bg: rgba(6, 78, 59, 0.8); --correct-text: #a7f3d0;
+            --bg-main: #0f172a; --bg-card: rgba(30, 41, 59, 0.88); --text-main: #cbd5e1; --text-heading: #f8fafc; --primary-color: #3b82f6; --primary-btn: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%); --danger-btn: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); --success-btn: linear-gradient(135deg, #10b981 0%, #059669 100%); --warning-btn: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); --input-bg: rgba(15, 23, 42, 0.9); --input-border: #334155; --shadow: 0 10px 30px rgba(0,0,0,0.4); --table-head-bg: rgba(15, 23, 42, 0.95); --table-head-text: #f8fafc; --table-border: #334155; --table-hover: rgba(51, 65, 85, 0.8); --correct-bg: rgba(6, 78, 59, 0.8); --correct-text: #a7f3d0;
         }
         [data-theme="glass"] {
-            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); 
-            --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); 
-            --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724;
+            --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724;
         }
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
-        
-        .watermark-bg {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin;
-    background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center;
-    opacity: 0.15; z-index: 9999; pointer-events: none; mix-blend-mode: multiply;
-}
-[data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.15; }
-[data-theme="glass"] .watermark-bg { opacity: 0.15; mix-blend-mode: multiply; }
+        .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin; background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; z-index: 9999; pointer-events: none; mix-blend-mode: multiply; }
+        [data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.15; }
+        [data-theme="glass"] .watermark-bg { opacity: 0.15; mix-blend-mode: multiply; }
 
         .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
         .theme-selector select { padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--bg-card); color: var(--text-heading); border: 1px solid var(--input-border); cursor: pointer; backdrop-filter: blur(10px); outline: none;}
         
-        .container { background: var(--bg-card); padding: 35px; border-radius: 16px; max-width: 950px; margin: 60px auto 20px auto; box-shadow: var(--shadow); border: 1px solid var(--input-border); backdrop-filter: blur(12px); transition: all 0.3s ease;}
+        .container { background: var(--bg-card); padding: 35px; border-radius: 16px; max-width: 1050px; margin: 60px auto 20px auto; box-shadow: var(--shadow); border: 1px solid var(--input-border); backdrop-filter: blur(12px); transition: all 0.3s ease;}
         h2, h3, h4 { color: var(--text-heading); }
         .form-group { margin-bottom: 18px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;}
@@ -75,19 +63,10 @@
         #status { margin-top: 15px; text-align: center; font-weight: 600; font-size: 14px; }
         .footer { text-align: center; margin-top: 40px; font-size: 0.85em; color: var(--text-main); opacity: 0.7; font-weight: 600; letter-spacing: 1px;}
 
-        .brand-title {
-            font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase;
-            background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6);
-            background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
-            animation: shine 3s linear infinite; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px;
-        }
-        .brand-title span {
-            display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px;
-            color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8;
-        }
+        .brand-title { font-size: 38px; font-weight: 800; text-align: center; text-transform: uppercase; background: linear-gradient(to right, #3b82f6, #ec4899, #8b5cf6, #3b82f6); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shine 3s linear infinite; margin-top: 0; margin-bottom: 25px; letter-spacing: 1px; }
+        .brand-title span { display: block; font-size: 18px; font-weight: 600; letter-spacing: 4px; color: var(--text-main); margin-top: 5px; text-transform: uppercase; -webkit-text-fill-color: initial; opacity: 0.8; }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* 🔥 MOBILE RESPONSIVENESS FIX FOR OVERLAP 🔥 */
         .header-box { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         @media (max-width: 650px) {
             .theme-selector { position: relative; top: 0; right: 0; text-align: center; margin-bottom: 15px; margin-top: 10px; }
@@ -100,18 +79,10 @@
 <body>
 
     <div class="watermark-bg"></div>
-
-    <div class="theme-selector">
-        <select id="theme-switcher" onchange="changeTheme(this.value)">
-            <option value="default">🎨 Clean Premium</option>
-            <option value="dark">🌙 Dark Hacker</option>
-            <option value="glass">🔮 Glassmorphism</option>
-        </select>
-    </div>
+    <div class="theme-selector"><select id="theme-switcher" onchange="changeTheme(this.value)"><option value="default">🎨 Clean Premium</option><option value="dark">🌙 Dark Hacker</option><option value="glass">🔮 Glassmorphism</option></select></div>
 
     <div id="admin-login-section" class="container" style="max-width: 450px;">
         <h1 class="brand-title">Safalta Quiz<span>Bhagalpur</span></h1>
-        
         <h2 style="font-size: 20px; color: var(--text-main); opacity:0.8;">🔒 Admin Access</h2>
         <div class="form-group"><label>Admin ID</label><input type="text" id="admin-user" placeholder="Enter Username"></div>
         <div class="form-group"><label>Password</label><input type="password" id="admin-pass" placeholder="Enter Password"></div>
@@ -129,61 +100,39 @@
             <button class="tab-btn active" id="tab-add-btn" onclick="switchTab('add')">➕ Add Question</button>
             <button class="tab-btn" id="tab-manage-btn" onclick="switchTab('manage')">📋 Manage Questions</button>
             <button class="tab-btn" id="tab-results-btn" onclick="switchTab('results')">📊 Student Results</button>
+            <button class="tab-btn" id="tab-requests-btn" onclick="switchTab('requests')">🔑 Access Requests</button>
         </div>
 
+        <!-- TAB 1: ADD QUESTION -->
         <div id="add-tab">
             <h3 id="form-title" style="margin-bottom: 20px; color: var(--primary-color);">Add New Question</h3>
             <form id="add-q-form">
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Exam Name</label>
-                        <select id="exam-select" onchange="handleExamChange()" required><option value="">-- Select Exam --</option></select>
-                        <input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
-                    </div>
-                    <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Test Name</label>
-                        <select id="test-select" onchange="toggleCustomInput('test')" required><option value="">-- Select Exam First --</option></select>
-                        <input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);">
-                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Exam Name</label><select id="exam-select" onchange="handleExamChange()" required><option value="">-- Select Exam --</option></select><input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);"></div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Test Name</label><select id="test-select" onchange="toggleCustomInput('test')" required><option value="">-- Select Exam First --</option></select><input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);"></div>
                 </div>
-
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Subject</label><input type="text" id="subject-name" list="subject-list" required placeholder="Enter Subject...">
-                        <datalist id="subject-list"></datalist>
-                    </div>
-                    <div class="form-group" style="flex: 1; min-width: 45%;">
-                        <label>Chapter / Topic</label><input type="text" id="topic-name" list="topic-list" required placeholder="Enter Topic...">
-                        <datalist id="topic-list"></datalist>
-                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Subject</label><input type="text" id="subject-name" list="subject-list" required placeholder="Enter Subject..."><datalist id="subject-list"></datalist></div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Chapter / Topic</label><input type="text" id="topic-name" list="topic-list" required placeholder="Enter Topic..."><datalist id="topic-list"></datalist></div>
                 </div>
-
                 <div class="form-group"><label>Question Text</label><textarea id="q-text" rows="3" required placeholder="Type the question here..."></textarea></div>
                 <div class="form-group"><label>Option 1</label><input type="text" id="opt-0" required></div>
                 <div class="form-group"><label>Option 2</label><input type="text" id="opt-1" required></div>
                 <div class="form-group"><label>Option 3</label><input type="text" id="opt-2" required></div>
                 <div class="form-group"><label>Option 4</label><input type="text" id="opt-3" required></div>
-                
-                <div class="form-group">
-                    <label>Correct Answer</label>
-                    <select id="correct-opt">
-                        <option value="0">Option 1</option><option value="1">Option 2</option>
-                        <option value="2">Option 3</option><option value="3">Option 4</option>
-                    </select>
-                </div>
-                
+                <div class="form-group"><label>Correct Answer</label><select id="correct-opt"><option value="0">Option 1</option><option value="1">Option 2</option><option value="2">Option 3</option><option value="3">Option 4</option></select></div>
                 <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
                     <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>Positive Marks (+)</label><input type="number" step="any" id="pos-marks" value="4" required></div>
                     <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>Negative Marks (-)</label><input type="number" step="any" id="neg-marks" value="1" required></div>
                     <div class="form-group" style="flex: 1; min-width: 30%; margin-bottom:0;"><label>⏱️ Test Duration (Mins)</label><input type="number" id="test-duration" value="60" required title="This sets the timer for the entire test."></div>
                 </div>
-                
                 <button type="submit" id="submit-btn" style="width:100%; padding: 14px; font-size: 15px;">Save Question</button>
                 <button type="button" id="cancel-edit-btn" onclick="cancelEdit()" style="width:100%; background:var(--input-bg); color:var(--text-main); border:1px solid var(--input-border); margin-top:10px; padding: 14px; display:none;">Cancel Edit</button>
                 <div id="status"></div>
             </form>
         </div>
 
+        <!-- TAB 2: MANAGE -->
         <div id="manage-tab" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 20px; gap: 10px;">
                 <h3 style="margin: 0; color: var(--primary-color);">📋 Manage All Questions</h3>
@@ -192,175 +141,132 @@
                     <button class="view-toggle-btn" id="view-toggle-btn" onclick="toggleViewMode()" style="width: auto; margin: 0;">👁️ Detailed View</button>
                 </div>
             </div>
-            
             <div class="filter-box">
-                <div style="flex: 1; min-width: 150px;">
-                    <label>Filter by Exam</label>
-                    <select id="filter-exam" onchange="handleFilterExamChange()"><option value="">-- All Exams --</option></select>
-                </div>
-                <div style="flex: 1; min-width: 150px;">
-                    <label>Filter by Test</label>
-                    <select id="filter-test" onchange="renderFilteredTable()"><option value="">-- All Tests --</option></select>
-                </div>
+                <div style="flex: 1; min-width: 150px;"><label>Filter by Exam</label><select id="filter-exam" onchange="handleFilterExamChange()"><option value="">-- All Exams --</option></select></div>
+                <div style="flex: 1; min-width: 150px;"><label>Filter by Test</label><select id="filter-test" onchange="renderFilteredTable()"><option value="">-- All Tests --</option></select></div>
             </div>
-
             <div id="table-view-container" style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr><th>Exam / Subject</th><th>Test / Topic</th><th>Question</th><th style="min-width: 130px;">Action</th></tr>
-                    </thead>
-                    <tbody id="questions-table-body">
-                        <tr><td colspan="4" style="text-align:center; padding: 30px;">Loading data...</td></tr>
-                    </tbody>
-                </table>
+                <table><thead><tr><th>Exam / Subject</th><th>Test / Topic</th><th>Question</th><th style="min-width: 130px;">Action</th></tr></thead><tbody id="questions-table-body"><tr><td colspan="4" style="text-align:center; padding: 30px;">Loading data...</td></tr></tbody></table>
             </div>
             <div id="card-view-container" class="card-view"></div>
         </div>
 
+        <!-- TAB 3: RESULTS -->
         <div id="results-tab" style="display: none;">
             <h3 style="margin-bottom: 20px; color: var(--primary-color);">📊 Student Performance</h3>
             <div style="overflow-x: auto;">
+                <table><thead><tr><th>Timestamp</th><th>Student Info</th><th>Exam & Test</th><th>Score</th><th>Breakdown</th></tr></thead><tbody id="results-table-body"><tr><td colspan="5" style="text-align:center; padding: 30px;">Loading results...</td></tr></tbody></table>
+            </div>
+        </div>
+
+        <!-- TAB 4: ACCESS REQUESTS -->
+        <div id="requests-tab" style="display: none;">
+            <h3 style="margin-bottom: 20px; color: var(--primary-color);">🔑 Student Access Requests</h3>
+            <div style="overflow-x: auto;">
                 <table>
-                    <thead>
-                        <tr><th>Timestamp</th><th>Student Info</th><th>Exam & Test</th><th>Score</th><th>Breakdown</th></tr>
-                    </thead>
-                    <tbody id="results-table-body">
-                        <tr><td colspan="5" style="text-align:center; padding: 30px;">Loading results...</td></tr>
-                    </tbody>
+                    <thead><tr><th>Date</th><th>Student</th><th>Exam & Test</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="requests-table-body"><tr><td colspan="5" style="text-align:center; padding: 30px;">Loading requests...</td></tr></tbody>
                 </table>
             </div>
         </div>
+        
         <div class="footer">Developed by Tomar Ji</div>
     </div>
 
     <script>
-        let allQuestions = [];
-        let editingId = null;
-        let currentViewMode = 'table'; 
+        let allQuestions = []; let editingId = null; let currentViewMode = 'table'; 
 
         function checkAdminLogin() {
-            if(localStorage.getItem('isAdminLoggedIn') === 'true') {
-                document.getElementById('admin-login-section').style.display = 'none';
-                document.getElementById('admin-panel-section').style.display = 'block';
-                fetchAllData(); 
-            } else {
-                document.getElementById('admin-login-section').style.display = 'block';
-                document.getElementById('admin-panel-section').style.display = 'none';
-            }
+            if(localStorage.getItem('isAdminLoggedIn') === 'true') { document.getElementById('admin-login-section').style.display = 'none'; document.getElementById('admin-panel-section').style.display = 'block'; fetchAllData(); } 
+            else { document.getElementById('admin-login-section').style.display = 'block'; document.getElementById('admin-panel-section').style.display = 'none'; }
         }
         window.onload = checkAdminLogin;
 
         async function handleAdminLogin() {
-            const user = document.getElementById('admin-user').value;
-            const pass = document.getElementById('admin-pass').value;
-            const status = document.getElementById('login-status');
+            const user = document.getElementById('admin-user').value, pass = document.getElementById('admin-pass').value, status = document.getElementById('login-status');
             if(!user || !pass) return status.innerText = "❌ Please enter details!", status.style.color = "var(--danger-btn)";
             status.innerText = "Authenticating..."; status.style.color = "var(--primary-color)";
             try {
                 const res = await fetch('/admin-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: user, password: pass }) });
-                if(res.ok) { localStorage.setItem('isAdminLoggedIn', 'true'); checkAdminLogin(); } 
-                else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "var(--danger-btn)"; }
+                if(res.ok) { localStorage.setItem('isAdminLoggedIn', 'true'); checkAdminLogin(); } else { status.innerText = "❌ Invalid Credentials!"; status.style.color = "var(--danger-btn)"; }
             } catch (err) { status.innerText = "❌ Server error!"; }
         }
-
         function adminLogout() { localStorage.removeItem('isAdminLoggedIn'); checkAdminLogin(); }
 
         function switchTab(tab) {
             document.getElementById('add-tab').style.display = tab === 'add' ? 'block' : 'none';
             document.getElementById('manage-tab').style.display = tab === 'manage' ? 'block' : 'none';
             document.getElementById('results-tab').style.display = tab === 'results' ? 'block' : 'none';
+            document.getElementById('requests-tab').style.display = tab === 'requests' ? 'block' : 'none';
+            
             document.getElementById('tab-add-btn').className = tab === 'add' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-manage-btn').className = tab === 'manage' ? 'tab-btn active' : 'tab-btn';
             document.getElementById('tab-results-btn').className = tab === 'results' ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('tab-requests-btn').className = tab === 'requests' ? 'tab-btn active' : 'tab-btn';
+            
             if(tab === 'manage') fetchAllData();
             if(tab === 'results') fetchResultsData(); 
+            if(tab === 'requests') fetchRequestsData();
         }
 
-        function startAddFromManage() {
-            cancelEdit(); 
-            const currentFilterExam = document.getElementById('filter-exam').value;
-            const currentFilterTest = document.getElementById('filter-test').value;
-            switchTab('add');
-            if(currentFilterExam) {
-                document.getElementById('exam-select').value = currentFilterExam;
-                handleExamChange(); 
-                if(currentFilterTest) {
-                    document.getElementById('test-select').value = currentFilterTest;
-                    toggleCustomInput('test');
-                }
-            }
-            window.scrollTo(0, 0);
-        }
-
-        async function fetchResultsData() {
-            const tbody = document.getElementById('results-table-body');
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
+        // --- NEW: FETCH & UPDATE REQUESTS ---
+        async function fetchRequestsData() {
+            const tbody = document.getElementById('requests-table-body');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Requests...</td></tr>';
             try {
-                const res = await fetch('/all-results');
-                const results = await res.json();
-                if(results.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>';
-                    return;
-                }
+                const res = await fetch('/all-requests'); const requests = await res.json();
+                if(requests.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No requests found.</td></tr>'; return; }
+                tbody.innerHTML = requests.map(r => {
+                    const d = new Date(r.date); const fDate = d.toLocaleDateString('en-IN') + '<br><span style="font-size:11px;opacity:0.7;">' + d.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'}) + '</span>';
+                    let badge = r.status === 'approved' ? '<span style="color:var(--success-btn);font-weight:bold;">✅ Approved</span>' : (r.status === 'rejected' ? '<span style="color:var(--danger-btn);font-weight:bold;">❌ Rejected</span>' : '<span style="color:var(--warning-btn);font-weight:bold;">⏳ Pending</span>');
+                    let btns = r.status === 'pending' ? `<button class="action-btn" style="background:var(--success-btn);color:white;" onclick="updateReq('${r._id}', 'approved')">Approve</button> <button class="action-btn" style="background:var(--danger-btn);color:white;" onclick="updateReq('${r._id}', 'rejected')">Reject</button>` : `<button class="action-btn" style="background:var(--warning-btn);color:white;" onclick="updateReq('${r._id}', 'pending')">Reset Status</button>`;
+                    return `<tr><td style="font-size:13px;">${fDate}</td><td><strong>${r.userName}</strong><br><span style="font-size:12px;opacity:0.7;">${r.userEmail}</span></td><td><strong>${r.examName}</strong><br><span style="font-size:12px;opacity:0.7;">${r.testName}</span></td><td>${badge}</td><td>${btns}</td></tr>`;
+                }).join('');
+            } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn);">Error fetching requests!</td></tr>'; }
+        }
+
+        async function updateReq(id, status) {
+            try { await fetch(`/update-request/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({status}) }); fetchRequestsData(); } catch(e) { alert("Failed"); }
+        }
+
+        function startAddFromManage() { cancelEdit(); const currentFilterExam = document.getElementById('filter-exam').value; const currentFilterTest = document.getElementById('filter-test').value; switchTab('add'); if(currentFilterExam) { document.getElementById('exam-select').value = currentFilterExam; handleExamChange(); if(currentFilterTest) { document.getElementById('test-select').value = currentFilterTest; toggleCustomInput('test'); } } window.scrollTo(0, 0); }
+        async function fetchResultsData() {
+            const tbody = document.getElementById('results-table-body'); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
+            try {
+                const res = await fetch('/all-results'); const results = await res.json();
+                if(results.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>'; return; }
                 tbody.innerHTML = results.map(r => {
-                    const dateObj = new Date(r.date);
-                    const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
-                    return `<tr>
-                        <td style="font-size:13px;">${formattedDate}</td>
-                        <td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td>
-                        <td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td>
-                        <td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td>
-                        <td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
-                    </tr>`;
+                    const dateObj = new Date(r.date); const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
+                    return `<tr><td style="font-size:13px;">${formattedDate}</td><td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td><td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td><td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td><td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td></tr>`;
                 }).join('');
             } catch(e) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn);">Error fetching results!</td></tr>'; }
         }
 
         function toggleViewMode() {
-            currentViewMode = currentViewMode === 'table' ? 'card' : 'table';
-            const btn = document.getElementById('view-toggle-btn');
-            if (currentViewMode === 'table') {
-                btn.innerHTML = '👁️ Detailed View';
-                document.getElementById('table-view-container').style.display = 'block';
-                document.getElementById('card-view-container').style.display = 'none';
-            } else {
-                btn.innerHTML = '🗜️ Table View';
-                document.getElementById('table-view-container').style.display = 'none';
-                document.getElementById('card-view-container').style.display = 'block';
-            }
+            currentViewMode = currentViewMode === 'table' ? 'card' : 'table'; const btn = document.getElementById('view-toggle-btn');
+            if (currentViewMode === 'table') { btn.innerHTML = '👁️ Detailed View'; document.getElementById('table-view-container').style.display = 'block'; document.getElementById('card-view-container').style.display = 'none'; } 
+            else { btn.innerHTML = '🗜️ Table View'; document.getElementById('table-view-container').style.display = 'none'; document.getElementById('card-view-container').style.display = 'block'; }
             renderFilteredTable(); 
         }
 
         function toggleCustomInput(type) {
-            const selectVal = document.getElementById(type + '-select').value;
-            const customInput = document.getElementById('custom-' + type);
+            const selectVal = document.getElementById(type + '-select').value; const customInput = document.getElementById('custom-' + type);
             if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } 
             else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; }
         }
 
         function handleExamChange() {
-            const examVal = document.getElementById('exam-select').value;
-            toggleCustomInput('exam');
-            if (!examVal) {
-                document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required');
-                return;
-            }
-            let tests = [];
-            if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
+            const examVal = document.getElementById('exam-select').value; toggleCustomInput('exam');
+            if (!examVal) { document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`; document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); return; }
+            let tests = []; if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`;
-            if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } 
-            else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); }
+            if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); }
         }
 
         async function fetchAllData() {
             try {
-                const res = await fetch('/all-questions');
-                allQuestions = await res.json();
-                const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
-                const subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))];
-                const topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
-                
+                const res = await fetch('/all-questions'); allQuestions = await res.json();
+                const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))], subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))], topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
                 document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
                 document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
                 document.getElementById('subject-list').innerHTML = subjects.map(s => `<option value="${s}">`).join('');
@@ -371,8 +277,7 @@
         }
 
         function handleFilterExamChange() {
-            const examVal = document.getElementById('filter-exam').value;
-            let tests = [];
+            const examVal = document.getElementById('filter-exam').value; let tests = [];
             if(examVal) tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))];
             else tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))];
             document.getElementById('filter-test').innerHTML = `<option value="">-- All Tests --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('');
@@ -380,148 +285,32 @@
         }
 
         function renderFilteredTable() {
-            const examVal = document.getElementById('filter-exam').value;
-            const testVal = document.getElementById('filter-test').value;
-            let filtered = allQuestions;
-            if(examVal) filtered = filtered.filter(q => q.examName === examVal);
-            if(testVal) filtered = filtered.filter(q => q.testName === testVal);
-
-            const tbody = document.getElementById('questions-table-body');
-            const cardContainer = document.getElementById('card-view-container');
-
-            if(filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:var(--danger-btn);">No questions found for this filter.</td></tr>';
-                cardContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--danger-btn); background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>';
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(q => `
-                <tr>
-                    <td><strong>${q.examName || '-'}</strong><br><span style="font-size:11px; opacity:0.7;">${q.subject || 'General'}</span></td>
-                    <td>${q.testName || '-'}<br><span style="font-size:11px; opacity:0.7;">${q.topic || 'Mixed'}</span></td>
-                    <td>${(q.text || '').substring(0, 50)}...</td>
-                    <td>
-                        <button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button>
-                        <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-
+            const examVal = document.getElementById('filter-exam').value, testVal = document.getElementById('filter-test').value;
+            let filtered = allQuestions; if(examVal) filtered = filtered.filter(q => q.examName === examVal); if(testVal) filtered = filtered.filter(q => q.testName === testVal);
+            const tbody = document.getElementById('questions-table-body'), cardContainer = document.getElementById('card-view-container');
+            if(filtered.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:var(--danger-btn);">No questions found for this filter.</td></tr>'; cardContainer.innerHTML = '<div style="text-align:center; padding:30px; color:var(--danger-btn); background:var(--bg-card); border-radius:10px; border:1px solid var(--input-border);">No questions found for this filter.</div>'; return; }
+            tbody.innerHTML = filtered.map(q => `<tr><td><strong>${q.examName || '-'}</strong><br><span style="font-size:11px; opacity:0.7;">${q.subject || 'General'}</span></td><td>${q.testName || '-'}<br><span style="font-size:11px; opacity:0.7;">${q.topic || 'Mixed'}</span></td><td>${(q.text || '').substring(0, 50)}...</td><td><button class="action-btn edit-btn" onclick="startEdit('${q._id}')">Edit</button><button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')">Delete</button></td></tr>`).join('');
             cardContainer.innerHTML = filtered.map((q, qIndex) => {
-                let optionsHtml = '';
-                q.options.forEach((opt, optIndex) => {
-                    let isCorrectClass = optIndex === q.correctOptionIndex ? 'class="correct"' : '';
-                    let checkMark = optIndex === q.correctOptionIndex ? '✅' : '';
-                    optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} <span style="float:right;">${checkMark}</span></li>`;
-                });
-                return `
-                <div class="q-card">
-                    <h4>Q: ${q.text}</h4>
-                    <ul class="q-card-options">${optionsHtml}</ul>
-                    <div class="q-card-footer">
-                        <div>
-                            <strong>Exam:</strong> <span>${q.examName || '-'}</span> <br>
-                            <strong>Test:</strong> <span>${q.testName || '-'}</span> <br>
-                            <strong>Sub/Topic:</strong> <span style="color:var(--primary-color);">${q.subject || 'General'}</span> / <span>${q.topic || 'Mixed'}</span> <br>
-                            <strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span> <br>
-                            <strong>Timer:</strong> <span>${q.testDuration || 60} mins</span>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Edit</button>
-                            <button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Delete</button>
-                        </div>
-                    </div>
-                </div>`;
+                let optionsHtml = ''; q.options.forEach((opt, optIndex) => { let isCorrectClass = optIndex === q.correctOptionIndex ? 'class="correct"' : ''; let checkMark = optIndex === q.correctOptionIndex ? '✅' : ''; optionsHtml += `<li ${isCorrectClass}>${optIndex + 1}. ${opt} <span style="float:right;">${checkMark}</span></li>`; });
+                return `<div class="q-card"><h4>Q: ${q.text}</h4><ul class="q-card-options">${optionsHtml}</ul><div class="q-card-footer"><div><strong>Exam:</strong> <span>${q.examName || '-'}</span> <br><strong>Test:</strong> <span>${q.testName || '-'}</span> <br><strong>Sub/Topic:</strong> <span style="color:var(--primary-color);">${q.subject || 'General'}</span> / <span>${q.topic || 'Mixed'}</span> <br><strong>Marks:</strong> <span style="color:var(--success-btn); font-weight:600;">+${q.positiveMarks}</span> / <span style="color:var(--danger-btn); font-weight:600;">-${q.negativeMarks}</span> <br><strong>Timer:</strong> <span>${q.testDuration || 60} mins</span></div><div style="margin-top: 10px;"><button class="action-btn edit-btn" onclick="startEdit('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Edit</button><button class="action-btn del-btn" onclick="deleteQuestion('${q._id}')" style="padding: 8px 16px; font-size: 13px;">Delete</button></div></div></div>`;
             }).join('');
         }
 
-        async function deleteQuestion(id) {
-            if(confirm("Are you sure you want to delete this question?")) { await fetch(`/delete-question/${id}`, { method: 'DELETE' }); fetchAllData(); }
-        }
-
+        async function deleteQuestion(id) { if(confirm("Are you sure you want to delete this question?")) { await fetch(`/delete-question/${id}`, { method: 'DELETE' }); fetchAllData(); } }
         function startEdit(id) {
-            const q = allQuestions.find(x => x._id === id);
-            if(!q) return;
-            editingId = id;
-            document.getElementById('form-title').innerText = "✏️ Edit Question";
-            document.getElementById('submit-btn').innerText = "Update Question";
-            document.getElementById('submit-btn').style.background = "var(--warning-btn)";
-            document.getElementById('cancel-edit-btn').style.display = "block";
-            
-            document.getElementById('exam-select').value = q.examName || '';
-            handleExamChange(); 
-            document.getElementById('test-select').value = q.testName || '';
-            toggleCustomInput('test');
-
-            document.getElementById('subject-name').value = q.subject || 'General';
-            document.getElementById('topic-name').value = q.topic || 'Mixed';
-
-            document.getElementById('q-text').value = q.text || '';
-            document.getElementById('opt-0').value = q.options[0] || '';
-            document.getElementById('opt-1').value = q.options[1] || '';
-            document.getElementById('opt-2').value = q.options[2] || '';
-            document.getElementById('opt-3').value = q.options[3] || '';
-            document.getElementById('correct-opt').value = q.correctOptionIndex;
-            
-            document.getElementById('pos-marks').value = q.positiveMarks;
-            document.getElementById('neg-marks').value = q.negativeMarks;
-            document.getElementById('test-duration').value = q.testDuration || 60;
-
-            switchTab('add');
-            window.scrollTo(0, 0);
+            const q = allQuestions.find(x => x._id === id); if(!q) return; editingId = id; document.getElementById('form-title').innerText = "✏️ Edit Question"; document.getElementById('submit-btn').innerText = "Update Question"; document.getElementById('submit-btn').style.background = "var(--warning-btn)"; document.getElementById('cancel-edit-btn').style.display = "block";
+            document.getElementById('exam-select').value = q.examName || ''; handleExamChange(); document.getElementById('test-select').value = q.testName || ''; toggleCustomInput('test'); document.getElementById('subject-name').value = q.subject || 'General'; document.getElementById('topic-name').value = q.topic || 'Mixed'; document.getElementById('q-text').value = q.text || ''; document.getElementById('opt-0').value = q.options[0] || ''; document.getElementById('opt-1').value = q.options[1] || ''; document.getElementById('opt-2').value = q.options[2] || ''; document.getElementById('opt-3').value = q.options[3] || ''; document.getElementById('correct-opt').value = q.correctOptionIndex; document.getElementById('pos-marks').value = q.positiveMarks; document.getElementById('neg-marks').value = q.negativeMarks; document.getElementById('test-duration').value = q.testDuration || 60;
+            switchTab('add'); window.scrollTo(0, 0);
         }
-
-        function cancelEdit() {
-            editingId = null;
-            document.getElementById('form-title').innerText = "Add New Question";
-            document.getElementById('submit-btn').innerText = "Save Question";
-            document.getElementById('submit-btn').style.background = "var(--primary-btn)";
-            document.getElementById('cancel-edit-btn').style.display = "none";
-            document.getElementById('q-text').value = '';
-        }
+        function cancelEdit() { editingId = null; document.getElementById('form-title').innerText = "Add New Question"; document.getElementById('submit-btn').innerText = "Save Question"; document.getElementById('submit-btn').style.background = "var(--primary-btn)"; document.getElementById('cancel-edit-btn').style.display = "none"; document.getElementById('q-text').value = ''; }
 
         document.getElementById('add-q-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            let finalExam = document.getElementById('exam-select').value;
-            if(finalExam === 'NEW_ITEM') finalExam = document.getElementById('custom-exam').value.trim();
-            let finalTest = document.getElementById('test-select').value;
-            if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
-
-            const payload = {
-                examName: finalExam, 
-                testName: finalTest, 
-                subject: document.getElementById('subject-name').value.trim() || 'General',
-                topic: document.getElementById('topic-name').value.trim() || 'Mixed',
-                text: document.getElementById('q-text').value,
-                options: [document.getElementById('opt-0').value, document.getElementById('opt-1').value, document.getElementById('opt-2').value, document.getElementById('opt-3').value],
-                correctOptionIndex: parseInt(document.getElementById('correct-opt').value),
-                positiveMarks: parseFloat(document.getElementById('pos-marks').value), 
-                negativeMarks: parseFloat(document.getElementById('neg-marks').value), 
-                testDuration: parseInt(document.getElementById('test-duration').value)
-            };
-
-            const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "var(--warning-btn)";
-            const endpoint = editingId ? `/update-question/${editingId}` : '/add-question';
-            const method = editingId ? 'PUT' : 'POST';
-
-            try {
-                const res = await fetch(endpoint, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                const data = await res.json();
-                if(res.ok) {
-                    statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "var(--success-btn)";
-                    setTimeout(() => { statusDiv.innerHTML = ""; }, 2500);
-                    if(editingId) cancelEdit(); 
-                    else {
-                        document.getElementById('q-text').value = '';
-                        document.getElementById('opt-0').value = '';
-                        document.getElementById('opt-1').value = '';
-                        document.getElementById('opt-2').value = '';
-                        document.getElementById('opt-3').value = '';
-                    }
-                    fetchAllData(); 
-                } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "var(--danger-btn)"; }
-            } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "var(--danger-btn)"; }
+            let finalExam = document.getElementById('exam-select').value; if(finalExam === 'NEW_ITEM') finalExam = document.getElementById('custom-exam').value.trim();
+            let finalTest = document.getElementById('test-select').value; if(finalTest === 'NEW_ITEM') finalTest = document.getElementById('custom-test').value.trim();
+            const payload = { examName: finalExam, testName: finalTest, subject: document.getElementById('subject-name').value.trim() || 'General', topic: document.getElementById('topic-name').value.trim() || 'Mixed', text: document.getElementById('q-text').value, options: [document.getElementById('opt-0').value, document.getElementById('opt-1').value, document.getElementById('opt-2').value, document.getElementById('opt-3').value], correctOptionIndex: parseInt(document.getElementById('correct-opt').value), positiveMarks: parseFloat(document.getElementById('pos-marks').value), negativeMarks: parseFloat(document.getElementById('neg-marks').value), testDuration: parseInt(document.getElementById('test-duration').value) };
+            const statusDiv = document.getElementById('status'); statusDiv.innerHTML = "Saving..."; statusDiv.style.color = "var(--warning-btn)";
+            try { const res = await fetch(editingId ? `/update-question/${editingId}` : '/add-question', { method: editingId ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); const data = await res.json(); if(res.ok) { statusDiv.innerHTML = "✅ " + data.message; statusDiv.style.color = "var(--success-btn)"; setTimeout(() => { statusDiv.innerHTML = ""; }, 2500); if(editingId) cancelEdit(); else { document.getElementById('q-text').value = ''; document.getElementById('opt-0').value = ''; document.getElementById('opt-1').value = ''; document.getElementById('opt-2').value = ''; document.getElementById('opt-3').value = ''; } fetchAllData(); } else { statusDiv.innerHTML = "❌ Error!"; statusDiv.style.color = "var(--danger-btn)"; } } catch (err) { statusDiv.innerHTML = "❌ Server error!"; statusDiv.style.color = "var(--danger-btn)"; }
         });
     </script>
 </body>
