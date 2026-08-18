@@ -17,8 +17,6 @@
         [data-theme="glass"] { --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; }
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
-        
-        /* Adjusted logo opacity for better readability */
         .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin; background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.1; z-index: 9999; pointer-events: none; mix-blend-mode: multiply; }
         [data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.08; }
         [data-theme="glass"] .watermark-bg { opacity: 0.15; mix-blend-mode: multiply; }
@@ -103,7 +101,7 @@
             <h3 id="form-title" style="margin-bottom: 20px; color: var(--primary-color);">Add New Question</h3>
             <form id="add-q-form">
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Exam Name</label><select id="exam-select" onchange="handleExamChange()" required><option value="">-- Select Exam --</option></select><input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);"></div>
+                    <div class="form-group" style="flex: 1; min-width: 45%;"><label>Exam Name</label><select id="exam-select" onchange="handleExamChange()" required><option value="">-- Select Exam --</option><option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option></select><input type="text" id="custom-exam" placeholder="Enter New Exam Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);"></div>
                     <div class="form-group" style="flex: 1; min-width: 45%;"><label>Test Name</label><select id="test-select" onchange="toggleCustomInput('test')" required><option value="">-- Select Exam First --</option></select><input type="text" id="custom-test" placeholder="Enter New Test Name..." style="display:none; margin-top:8px; border: 2px solid var(--primary-color);"></div>
                 </div>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
@@ -221,7 +219,7 @@
             const tbody = document.getElementById('requests-table-body'); tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:30px;">Fetching Requests...</td></tr>';
             try {
                 const res = await fetch('/all-requests'); const requests = await res.json();
-                if(requests.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No requests found.</td></tr>'; return; }
+                if(!Array.isArray(requests) || requests.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--danger-btn); padding:30px;">No requests found.</td></tr>'; return; }
                 tbody.innerHTML = requests.map(r => {
                     const d = new Date(r.date); const fDate = d.toLocaleDateString('en-IN') + '<br><span style="font-size:11px;opacity:0.7;">' + d.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'}) + '</span>';
                     let badge = r.status === 'approved' ? '<span style="color:var(--success-btn);font-weight:bold;">✅ Approved</span>' : (r.status === 'rejected' ? '<span style="color:var(--danger-btn);font-weight:bold;">❌ Rejected</span>' : '<span style="color:var(--warning-btn);font-weight:bold;">⏳ Pending</span>');
@@ -237,7 +235,7 @@
             const tbody = document.getElementById('results-table-body'); tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px;">Fetching Results...</td></tr>';
             try {
                 const res = await fetch('/all-results'); const results = await res.json();
-                if(results.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>'; return; }
+                if(!Array.isArray(results) || results.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--danger-btn); padding:30px;">No student submissions found.</td></tr>'; return; }
                 tbody.innerHTML = results.map(r => {
                     const dateObj = new Date(r.date); const formattedDate = dateObj.toLocaleDateString('en-IN') + ' <br> <span style="font-size:11px; opacity:0.7;">' + dateObj.toLocaleTimeString('en-IN', {hour: '2-digit', minute:'2-digit'}) + '</span>';
                     return `<tr><td style="font-size:13px;">${formattedDate}</td><td><strong>${r.userName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.userEmail}</span></td><td><strong>${r.examName}</strong><br><span style="font-size:12px; opacity:0.7;">${r.testName}</span></td><td style="color:var(--success-btn); font-size:18px; font-weight:700;">${r.score}</td><td style="font-size:13px;">✅ Correct: ${r.correct}<br>❌ Wrong: ${r.wrong}<br>⚠️ Skipped: ${r.skipped}</td>
@@ -255,7 +253,6 @@
         function toggleViewMode() { currentViewMode = currentViewMode === 'table' ? 'card' : 'table'; const btn = document.getElementById('view-toggle-btn'); if (currentViewMode === 'table') { btn.innerHTML = '👁️ Detailed View'; document.getElementById('table-view-container').style.display = 'block'; document.getElementById('card-view-container').style.display = 'none'; } else { btn.innerHTML = '🗜️ Table View'; document.getElementById('table-view-container').style.display = 'none'; document.getElementById('card-view-container').style.display = 'block'; } renderFilteredTable(); }
         function toggleCustomInput(type) { const selectVal = document.getElementById(type + '-select').value; const customInput = document.getElementById('custom-' + type); if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; } }
         
-        // FIX: The core issue was right here in handleExamChange
         function handleExamChange() { 
             const examVal = document.getElementById('exam-select').value; 
             toggleCustomInput('exam'); 
@@ -270,7 +267,7 @@
             } 
             
             let tests = []; 
-            if(examVal !== 'NEW_ITEM') {
+            if(examVal !== 'NEW_ITEM' && Array.isArray(allQuestions)) {
                 tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; 
             }
             
@@ -283,23 +280,41 @@
             } 
         }
         
+        // ✨ THE BULLETPROOF FIX ✨
         async function fetchAllData() {
+            // STEP 1: Set the button IMMEDIATELY so it never hides even if API fails
+            document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option><option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
+            document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
+
             try {
-                const res = await fetch('/all-questions'); allQuestions = await res.json();
-                const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))], subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))], topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
-                document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
-                document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`;
-                document.getElementById('subject-list').innerHTML = subjects.map(s => `<option value="${s}">`).join('');
-                document.getElementById('topic-list').innerHTML = topics.map(t => `<option value="${t}">`).join('');
-                document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
+                const res = await fetch('/all-questions');
+                const data = await res.json();
                 
-                document.getElementById('settings-exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
-                
-                handleFilterExamChange(); 
-            } catch(e) { console.log(e); }
+                if(Array.isArray(data)) { allQuestions = data; } 
+                else { allQuestions = []; }
+            } catch(e) {
+                console.log("Server waking up or empty");
+                allQuestions = [];
+            }
+
+            // STEP 2: Only update if there are old exams to show
+            const exams = [...new Set(allQuestions.map(q => q.examName).filter(Boolean))];
+            const subjects = [...new Set(allQuestions.map(q => q.subject).filter(Boolean))];
+            const topics = [...new Set(allQuestions.map(q => q.topic).filter(Boolean))];
+
+            document.getElementById('exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Exam</option>`;
+            document.getElementById('subject-list').innerHTML = subjects.map(s => `<option value="${s}">`).join('');
+            document.getElementById('topic-list').innerHTML = topics.map(t => `<option value="${t}">`).join('');
+            document.getElementById('filter-exam').innerHTML = `<option value="">-- All Exams --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
+            document.getElementById('settings-exam-select').innerHTML = `<option value="">-- Select Exam --</option>` + exams.map(e => `<option value="${e}">${e}</option>`).join('');
+            
+            handleFilterExamChange(); 
         }
-        function handleFilterExamChange() { const examVal = document.getElementById('filter-exam').value; let tests = []; if(examVal) tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; else tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))]; document.getElementById('filter-test').innerHTML = `<option value="">-- All Tests --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join(''); renderFilteredTable(); }
+
+        function handleFilterExamChange() { const examVal = document.getElementById('filter-exam').value; let tests = []; if(examVal && Array.isArray(allQuestions)) tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; else if (Array.isArray(allQuestions)) tests = [...new Set(allQuestions.map(q => q.testName).filter(Boolean))]; document.getElementById('filter-test').innerHTML = `<option value="">-- All Tests --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join(''); renderFilteredTable(); }
+        
         function renderFilteredTable() {
+            if(!Array.isArray(allQuestions)) return;
             const examVal = document.getElementById('filter-exam').value, testVal = document.getElementById('filter-test').value;
             let filtered = allQuestions; if(examVal) filtered = filtered.filter(q => q.examName === examVal); if(testVal) filtered = filtered.filter(q => q.testName === testVal);
             const tbody = document.getElementById('questions-table-body'), cardContainer = document.getElementById('card-view-container');
