@@ -17,8 +17,10 @@
         [data-theme="glass"] { --bg-main: linear-gradient(45deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); --bg-card: rgba(255, 255, 255, 0.4); --text-main: #1f2937; --text-heading: #111827; --primary-color: #e11d48; --primary-btn: linear-gradient(135deg, #f6d365 0%, #fda085 100%); --danger-btn: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); --success-btn: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); --warning-btn: linear-gradient(135deg, #f6d365 0%, #f59e0b 100%); --input-bg: rgba(255, 255, 255, 0.6); --input-border: rgba(255, 255, 255, 0.4); --shadow: 0 8px 32px rgba(31, 38, 135, 0.15); --table-head-bg: rgba(255,255,255,0.6); --table-head-text: #111827; --table-border: rgba(255,255,255,0.4); --table-hover: rgba(255,255,255,0.5); --correct-bg: rgba(212, 237, 218, 0.8); --correct-text: #155724; }
 
         body { font-family: 'Inter', sans-serif; margin: 0; padding: 20px; background: var(--bg-main); color: var(--text-main); transition: background 0.3s ease;}
-        .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin; background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.15; z-index: 9999; pointer-events: none; mix-blend-mode: multiply; }
-        [data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.15; }
+        
+        /* Adjusted logo opacity for better readability */
+        .watermark-bg { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75vmin; height: 75vmin; background-image: url('/logo.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.1; z-index: 9999; pointer-events: none; mix-blend-mode: multiply; }
+        [data-theme="dark"] .watermark-bg { filter: invert(1); mix-blend-mode: screen; opacity: 0.08; }
         [data-theme="glass"] .watermark-bg { opacity: 0.15; mix-blend-mode: multiply; }
 
         .theme-selector { position: absolute; top: 20px; right: 20px; z-index: 1000; }
@@ -32,12 +34,9 @@
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color);}
         button { background: var(--primary-btn); color: white; padding: 12px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px;}
         button:hover { filter: brightness(1.1); transform: translateY(-1px);}
-        
-        /* Fixed tab buttons to look better on mobile */
         .tab-btn { background: var(--input-bg); color: var(--text-main); margin-right: 8px; margin-bottom: 15px; padding: 10px 18px; border-radius: 8px; font-size: 14px; border: 1px solid var(--input-border);}
         .tab-btn:hover { filter: brightness(0.9); }
         .tab-btn.active { background: var(--primary-btn); color: white; border: none;}
-        
         .filter-box { background: var(--input-bg); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; border: 1px solid var(--input-border);}
         table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--table-border); margin-top:10px;}
         th, td { padding: 14px 16px; text-align: left; }
@@ -69,7 +68,6 @@
             .container { margin-top: 15px; padding: 25px 15px; }
             .header-box { flex-direction: column; gap: 15px; text-align: center; }
             .header-box .brand-title { font-size: 32px !important; text-align: center !important; }
-            /* Better tab wrapping on mobile */
             .tab-btn { padding: 8px 10px; font-size: 12px; margin-right: 5px; margin-bottom: 8px; }
         }
     </style>
@@ -200,22 +198,12 @@
             if(tab === 'requests') fetchRequestsData();
         }
 
-        // --- BUG FIX: FETCH SETTINGS TESTS ---
         function fetchSettingsTests() {
-            const examName = document.getElementById('settings-exam-select').value; 
-            const testSelect = document.getElementById('settings-test-select'); 
-            testSelect.innerHTML = '<option value="">-- Select Test --</option>';
-            document.getElementById('settings-form-area').style.display = 'none'; // hide until selected
-            
-            if(!examName) return;
-            
-            // Extract unique tests for the selected exam directly from allQuestions array
-            let testsList = [...new Set(allQuestions.filter(q => q.examName === examName).map(q => q.testName).filter(Boolean))]; 
-            testsList.forEach(t => { 
-                testSelect.innerHTML += `<option value="${t}">${t}</option>`; 
-            });
+            const examName = document.getElementById('settings-exam-select').value; const testSelect = document.getElementById('settings-test-select'); testSelect.innerHTML = '<option value="">-- Select Test --</option>';
+            if(!examName) { document.getElementById('settings-form-area').style.display = 'none'; return; }
+            let tests = [...new Set(allQuestions.filter(q => q.examName === examName).map(q => q.testName).filter(Boolean))]; 
+            tests.forEach(t => { if(t) testSelect.innerHTML += `<option value="${t}">${t}</option>`; });
         }
-        
         function loadTestSettings() {
             const examName = document.getElementById('settings-exam-select').value; const testName = document.getElementById('settings-test-select').value;
             if(!examName || !testName) { document.getElementById('settings-form-area').style.display = 'none'; return; }
@@ -266,7 +254,34 @@
 
         function toggleViewMode() { currentViewMode = currentViewMode === 'table' ? 'card' : 'table'; const btn = document.getElementById('view-toggle-btn'); if (currentViewMode === 'table') { btn.innerHTML = '👁️ Detailed View'; document.getElementById('table-view-container').style.display = 'block'; document.getElementById('card-view-container').style.display = 'none'; } else { btn.innerHTML = '🗜️ Table View'; document.getElementById('table-view-container').style.display = 'none'; document.getElementById('card-view-container').style.display = 'block'; } renderFilteredTable(); }
         function toggleCustomInput(type) { const selectVal = document.getElementById(type + '-select').value; const customInput = document.getElementById('custom-' + type); if(selectVal === 'NEW_ITEM') { customInput.style.display = 'block'; customInput.setAttribute('required', 'true'); } else { customInput.style.display = 'none'; customInput.removeAttribute('required'); customInput.value = ''; } }
-        function handleExamChange() { const examVal = document.getElementById('exam-select').value; toggleCustomInput('exam'); if (!examVal) { document.getElementById('test-select').innerHTML = `<option value="">-- Select Exam First --</option>`; document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); return; } let tests = []; if(examVal !== 'NEW_ITEM') tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; document.getElementById('test-select').innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`; if (examVal === 'NEW_ITEM') { document.getElementById('test-select').value = 'NEW_ITEM'; toggleCustomInput('test'); } else { document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); } }
+        
+        // FIX: The core issue was right here in handleExamChange
+        function handleExamChange() { 
+            const examVal = document.getElementById('exam-select').value; 
+            toggleCustomInput('exam'); 
+            
+            const testSelect = document.getElementById('test-select');
+            
+            if (!examVal) { 
+                testSelect.innerHTML = `<option value="">-- Select Exam First --</option>`; 
+                document.getElementById('custom-test').style.display = 'none'; 
+                document.getElementById('custom-test').removeAttribute('required'); 
+                return; 
+            } 
+            
+            let tests = []; 
+            if(examVal !== 'NEW_ITEM') {
+                tests = [...new Set(allQuestions.filter(q => q.examName === examVal).map(q => q.testName).filter(Boolean))]; 
+            }
+            
+            testSelect.innerHTML = `<option value="">-- Select Test --</option>` + tests.map(t => `<option value="${t}">${t}</option>`).join('') + `<option value="NEW_ITEM" style="font-weight:bold; color:var(--primary-color);">➕ Add New Test</option>`; 
+            
+            if (examVal === 'NEW_ITEM') { 
+                testSelect.value = 'NEW_ITEM'; toggleCustomInput('test'); 
+            } else { 
+                document.getElementById('custom-test').style.display = 'none'; document.getElementById('custom-test').removeAttribute('required'); 
+            } 
+        }
         
         async function fetchAllData() {
             try {
